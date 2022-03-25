@@ -21,7 +21,7 @@ public class MapGeneratorManager : MonoBehaviour
     private int height;
 
     [SerializeField]
-    private RandomGeenrateAlgorithum algorithum;
+    private ProcessorRule[] processorList;
 
     void Start()
     {
@@ -30,7 +30,20 @@ public class MapGeneratorManager : MonoBehaviour
 
     public void Generate()
     {
-        int[,] maps = algorithum.GenerateMap(width, height);
+        int[,] map = new int[width, height];
+
+        for (int i = 0; i < processorList.Length; i++)
+        {
+            switch (processorList[i].processorType)
+            {
+                case ProcessorType.RandomPlace:
+                    processorList[i].randomPlaceProcessor.Process(ref map);
+                    break;
+                case ProcessorType.Smooth:
+                    processorList[i].smoothProcessor.Process(ref map);
+                    break;
+            }
+        }
 
         int xOffset = width / 2;
         int yOffset = height / 2;
@@ -39,9 +52,24 @@ public class MapGeneratorManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                baseMap.SetTile(new Vector3Int(x - xOffset, y - yOffset, 0), baseMapTileSet[maps[x, y]]);
+                baseMap.SetTile(new Vector3Int(x - xOffset, y - yOffset, 0), baseMapTileSet[map[x, y]]);
             }
         }
+    }
+
+    [System.Serializable]
+    public struct ProcessorRule
+    {
+        public ProcessorType processorType;
+
+        public RandomPlaceProcessor randomPlaceProcessor;
+        public SmoothProcessor smoothProcessor;
+    }
+
+    public enum ProcessorType
+    {
+        RandomPlace,
+        Smooth,
     }
 }
 
