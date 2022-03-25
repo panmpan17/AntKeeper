@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2523993819
+    locked: 0
+  - name: Ant
+    uniqueID: 1446004333
+    locked: 0
+  - name: Animal
+    uniqueID: 437408591
+    locked: 0
+  - name: PlayerInteractable
+    uniqueID: 3524796693
+    locked: 0
+  - name: Player
+    uniqueID: 1026775461
+    locked: 0
+  - name: UI
+    uniqueID: 3600138531
+    locked: 0
