@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MPack;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,6 +13,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float walkSpeed;
+
+    [SerializeField]
+    private DashInfo dashInfo;
+    [SerializeField]
+    private Timer dashColddownTimer;
+    private DashInfo _runningDash;
+    private bool _dashing;
 
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
@@ -26,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _playerInput.OnDashPerformedEvent += Dash;
+
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     
@@ -37,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (HandleDash()) return;
+
         Vector2 axis = _playerInput.MovementAxis;
 
         if (axis.sqrMagnitude > 0.01f)
@@ -59,10 +71,76 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.velocity = Vector3.zero;
     }
 
+
+    bool HandleDash()
+    {
+        if (_dashing)
+        {
+            if (_runningDash.Timer.FixedUpdateEnd)
+            {
+                _dashing = false;
+                _runningDash.InvokeEndEvent();
+            }
+            else
+            {
+                _rigidbody.velocity = _runningDash.DashForceWithDirection * _runningDash.Curve.Evaluate(_runningDash.Timer.Progress);
+            }
+
+            OnPositionChange?.Invoke();
+            return true;
+        }
+
+        if (dashColddownTimer.Running)
+        {
+            if (dashColddownTimer.FixedUpdateEnd)
+            {
+                dashColddownTimer.Running = false;
+            }
+        }
+        return false;
+    }
+
     void ApplyFacing(Facing newFacing)
     {
         OnFacingChange?.Invoke(newFacing);
         _facing = newFacing;
+    }
+
+    void Dash()
+    {
+        if (_dashing) return;
+        if (dashColddownTimer.Running) return;
+
+        dashColddownTimer.Reset();
+
+        _dashing = true;
+        _runningDash = dashInfo;
+
+
+        // Set dash direction
+        if (_playerInput.MovementAxis.sqrMagnitude > 0.01f)
+        {
+            _runningDash.DashForceWithDirection = dashInfo.Force * _playerInput.MovementAxis.normalized;
+        }
+        else
+        {
+            switch (_facing)
+            {
+                case Facing.Up:
+                    _runningDash.DashForceWithDirection = new Vector2(0, dashInfo.Force);
+                    break;
+                case Facing.Down:
+                    _runningDash.DashForceWithDirection = new Vector2(0, -dashInfo.Force);
+                    break;
+                case Facing.Right:
+                    _runningDash.DashForceWithDirection = new Vector2(dashInfo.Force, 0);
+                    break;
+                case Facing.Left:
+                    _runningDash.DashForceWithDirection = new Vector2(-dashInfo.Force, 0);
+                    break;
+            }
+            // _runningDash.DashForceWithDirection = dashInfo.Force *
+        }
     }
 }
 

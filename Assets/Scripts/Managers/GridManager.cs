@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 
 public class GridManager : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Grid grid;
     public Grid Grid => grid;
+
+    [SerializeField]
+    private Tilemap baseMap;
 
     private List<AbstractGroundInteractive> _groundInteractives;
 
@@ -37,5 +42,13 @@ public class GridManager : MonoBehaviour
 
         groundInteractve = null;
         return false;
+    }
+
+    public bool RaycastCell(Vector3 position, out Vector3Int cellPosition, out Vector3 centerPosition)
+    {
+        cellPosition = grid.WorldToCell(position);
+        centerPosition = grid.GetCellCenterWorld(cellPosition);
+
+        return baseMap.HasTile(cellPosition);
     }
 }

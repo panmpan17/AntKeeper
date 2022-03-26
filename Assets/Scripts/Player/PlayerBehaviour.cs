@@ -106,20 +106,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     void RaycasyCell(Vector3 position)
     {
-        Grid grid = GridManager.ins.Grid;
-        Vector3Int cellPos = grid.WorldToCell(position);
-        // if (tilemap.HasTile(cellPos))
-        // {
+        if (GridManager.ins.RaycastCell(position, out Vector3Int cellPosition, out Vector3 centerPosition))
+        {
+            SelectedGridPosition = cellPosition;
+            SelectedGridCenterPosition = centerPosition;
+            selectedGridIndicator.transform.position = centerPosition;
 
-        SelectedGridPosition = cellPos;
-        SelectedGridCenterPosition = grid.GetCellCenterWorld(cellPos);
-        selectedGridIndicator.transform.position = SelectedGridCenterPosition;
-        // selectedGridIndicator.gameObject.SetActive(true);
-        // }
-        // else
-        // {
-        //     gridIndicate.gameObject.SetActive(false);
-        // }
+            selectedGridIndicator.gameObject.SetActive(true);
+        }
+        else
+        {
+            selectedGridIndicator.gameObject.SetActive(false);
+        }
     }
 
     public void SetHandItem(AbstractHoldItem item)

@@ -10,6 +10,8 @@ public class PlayerInput : MonoBehaviour
     public event Action OnInteractPerformedEvent;
     public event Action OnInteractCanceledEvent;
 
+    public event Action OnDashPerformedEvent;
+
     private InputScheme _inputScheme;
 
     void Awake()
@@ -21,6 +23,8 @@ public class PlayerInput : MonoBehaviour
 
         _inputScheme.Game.Interact.performed += HandleInteractPerformed;
         _inputScheme.Game.Interact.canceled += HandleInteractCanceled;
+
+        _inputScheme.Game.Dash.performed += HandleDashPerformed;
     }
 
     void HandleMovementPerformed(CallbackContext callbackContext)
@@ -37,6 +41,11 @@ public class PlayerInput : MonoBehaviour
     void HandleInteractCanceled(CallbackContext callbackContext)
     {
         OnInteractCanceledEvent?.Invoke();
+    }
+
+    void HandleDashPerformed(CallbackContext callbackContext)
+    {
+        OnDashPerformedEvent?.Invoke();
     }
 
     void OnEnable()
