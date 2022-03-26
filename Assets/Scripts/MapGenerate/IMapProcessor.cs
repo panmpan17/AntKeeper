@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMapProcessor
+namespace MapGenerate
 {
-    void Process(ref int[,] map);
+    public interface IMapProcessor
+    {
+        void Process(ref int[,] map);
+    }
 }

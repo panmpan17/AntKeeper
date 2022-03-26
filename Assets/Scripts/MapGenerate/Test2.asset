@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32fe8c0b7f42f466ab1e50241e8329ad, type: 3}
+  m_Name: Test2
+  m_EditorClassIdentifier: 
+  processorList:
+  - processorType: 2
+    randomPlaceProcessor:
+      coverage: 0.319
+    smoothProcessor:
+      smoothCount: 0
+      keepAliveNeighborNeedCount: 0
+      becomeAliveNeighborNeedCount: 0
+    placeCircleProcessor:
+      circleMinSize: 22
+      circleMaxSize: 33
+  - processorType: 2
+    randomPlaceProcessor:
+      coverage: 0.319
+    smoothProcessor:
+      smoothCount: 0
+      keepAliveNeighborNeedCount: 0
+      becomeAliveNeighborNeedCount: 0
+    placeCircleProcessor:
+      circleMinSize: 15
+      circleMaxSize: 25
+  - processorType: 2
+    randomPlaceProcessor:
+      coverage: 0.319
+    smoothProcessor:
+      smoothCount: 0
+      keepAliveNeighborNeedCount: 0
+      becomeAliveNeighborNeedCount: 0
+    placeCircleProcessor:
+      circleMinSize: 9
+      circleMaxSize: 16
+  - processorType: 1
+    randomPlaceProcessor:
+      coverage: 0
+    smoothProcessor:
+      smoothCount: 3
+      keepAliveNeighborNeedCount: 4
+      becomeAliveNeighborNeedCount: 5
+    placeCircleProcessor:
+      circleMinSize: 15
+      circleMaxSize: 43
