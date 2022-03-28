@@ -77,6 +77,8 @@ public class AntNest : MonoBehaviour
     bool BranchSpread()
     {
         AntRouteBranch branch = routeBranches[Random.Range(0, routeBranches.Count)];
+        if (!branch.IsConnectedToNest)
+            return false;
 
         float randomValue = Random.value;
 
@@ -86,7 +88,16 @@ public class AntNest : MonoBehaviour
             {
                 Vector3Int position = branch.FindNextSpreadPosition();
 
-                if (!IsGridPositionOverlapBranch(position))
+                if (IsGridPositionOverlapBranch(position, out AntRouteBranch overlapBranch))
+                {
+                    if (!overlapBranch.IsConnectedToNest)
+                    {
+                        overlapBranch.IsConnectedToNest = true;
+                        branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
+                        return true;
+                    }
+                }
+                else
                 {
                     branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
                     routeMap.SetTile(position, routeTile);
@@ -141,10 +152,13 @@ public class AntNest : MonoBehaviour
 
     public void TryKillSpot(Vector3Int position, AntRouteBranch branch)
     {
-        Vector3Int[] removedPositions = branch.KillSpot(position);
-        for (int i = 0; i < removedPositions.Length; i++)
+        Vector3Int[] removedPositions = branch.KillSpot(position, out AntRouteBranch newBranch);
+        routeMap.SetTile(position, null);
+
+        if (newBranch != null)
         {
-            routeMap.SetTile(removedPositions[i], null);
+            newBranch.RecalculateLineRenderer(routeMap);
+            routeBranches.Add(newBranch);
         }
 
         if (branch.IsEmpty)
