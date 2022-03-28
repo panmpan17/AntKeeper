@@ -59,6 +59,11 @@ public class Bucket : AbstractHoldItem
                 _pouring = false;
                 pourEffect.Stop();
             }
+
+            if (GridManager.ins.TryFindAntNestBranch(PlayerBahviour.SelectedGridPosition, out AntNest antNest, out AntRouteBranch branch))
+            {
+                antNest.TryKillSpot(PlayerBahviour.SelectedGridPosition, branch);
+            }
         }
     }
 

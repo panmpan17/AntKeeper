@@ -16,17 +16,24 @@ public class GridManager : MonoBehaviour
     private Tilemap baseMap;
 
     private List<AbstractGroundInteractive> _groundInteractives;
+    private List<AntNest> _antNests;
 
     void Awake()
     {
         ins = this;
         _groundInteractives = new List<AbstractGroundInteractive>();
+        _antNests = new List<AntNest>();
     }
 
     public void RegisterGroundInteractive(AbstractGroundInteractive groundInteractive, out Vector3Int gridPosition)
     {
         _groundInteractives.Add(groundInteractive);
         gridPosition = grid.WorldToCell(groundInteractive.transform.position);
+    }
+
+    public void RegisterAntNest(AntNest antNest)
+    {
+        _antNests.Add(antNest);
     }
 
     public bool TryFindGroundInteractive(Vector3Int gridPosition, out AbstractGroundInteractive groundInteractve)
@@ -41,6 +48,22 @@ public class GridManager : MonoBehaviour
         }
 
         groundInteractve = null;
+        return false;
+    }
+
+    public bool TryFindAntNestBranch(Vector3Int gridPosition, out AntNest antNest, out AntRouteBranch branch)
+    {
+        for (int i = 0; i < _antNests.Count; i++)
+        {
+            if (_antNests[i].IsGridPositionOverlapBranch(gridPosition, out branch))
+            {
+                antNest = _antNests[i];
+                return true;
+            }
+        }
+
+        antNest = null;
+        branch = null;
         return false;
     }
 

@@ -22,58 +22,43 @@ public class AntNest : MonoBehaviour
     private RuleTile routeTile;
 
     [SerializeField]
-    private SpreadType spreadType;
-    [SerializeField]
     private Timer spreadSpeed;
     [SerializeField]
     private int maxSpreadSize;
 
     private List<Vector3Int> routePositions;
 
-    private List<Branch> routeBranches;
+    private List<AntRouteBranch> routeBranches;
 
     void Awake()
     {
         Vector3Int rootPosition = routeMap.WorldToCell(transform.position);
         routeMap.SetTile(rootPosition, routeTile);
 
-        switch (spreadType)
-        {
-            case SpreadType.RandomSpreadFromExistRoute:
-                routePositions = new List<Vector3Int>();
-                routePositions.Add(rootPosition);
-                break;
-            case SpreadType.BranchSpread:
-                routeBranches = new List<Branch>();
+        routeBranches = new List<AntRouteBranch>();
 
-                for (int i = 0; i < FourDirections.Length; i++)
-                {
-                    routeBranches.Add(new Branch(
-                        rootPosition,
-                        routeMap.GetCellCenterWorld(rootPosition),
-                        FourDirections[i],
-                        Instantiate(lineRenderer, transform)
-                        ));
-                }
-                break;
+        for (int i = 0; i < FourDirections.Length; i++)
+        {
+            routeBranches.Add(new AntRouteBranch(
+                rootPosition,
+                routeMap.GetCellCenterWorld(rootPosition),
+                FourDirections[i],
+                Instantiate(lineRenderer, transform)
+                ));
         }
+    }
+
+    void Start()
+    {
+        GridManager.ins.RegisterAntNest(this);
     }
 
     void Update()
     {
         if (spreadSpeed.UpdateEnd)
         {
-            switch(spreadType)
-            {
-                case SpreadType.RandomSpreadFromExistRoute:
-                    RandomSpreadFromExistRoute();
-                    spreadSpeed.Reset();
-                    break;
-                case SpreadType.BranchSpread:
-                    if (BranchSpread())
-                        spreadSpeed.Reset();
-                    break;
-            }
+            if (BranchSpread())
+                spreadSpeed.Reset();
         }
     }
 
@@ -89,7 +74,48 @@ public class AntNest : MonoBehaviour
         }
     }
 
-    public bool IsOverlapBranch(Vector3Int position)
+    bool BranchSpread()
+    {
+        AntRouteBranch branch = routeBranches[Random.Range(0, routeBranches.Count)];
+
+        float randomValue = Random.value;
+
+        if (randomValue > 0.05f)
+        {
+            if (branch.Size < maxSpreadSize)
+            {
+                Vector3Int position = branch.FindNextSpreadPosition();
+
+                if (!IsGridPositionOverlapBranch(position))
+                {
+                    branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
+                    routeMap.SetTile(position, routeTile);
+                    return true;
+                }
+            }
+        }
+        else if (branch.BranchOff(out BranchData newBranchData))
+        {
+            if (newBranchData.ExccedPositionCount < maxSpreadSize && !IsGridPositionOverlapBranch(newBranchData.NextPosition))
+            {
+                AntRouteBranch newBranch = new AntRouteBranch(
+                    newBranchData.Root,
+                    routeMap.GetCellCenterWorld(newBranchData.Root),
+                    newBranchData.Direction,
+                    Instantiate(lineRenderer, transform),
+                    length: newBranchData.ExccedPositionCount);
+                newBranch.AddPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
+                routeBranches.Add(newBranch);
+
+                routeMap.SetTile(newBranchData.NextPosition, routeTile);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsGridPositionOverlapBranch(Vector3Int position)
     {
         for (int i = 0; i < routeBranches.Count; i++)
         {
@@ -98,7 +124,7 @@ public class AntNest : MonoBehaviour
         }
         return false;
     }
-    public bool IsOverlapBranch(Vector3Int position, out Branch branch)
+    public bool IsGridPositionOverlapBranch(Vector3Int position, out AntRouteBranch branch)
     {
         for (int i = 0; i < routeBranches.Count; i++)
         {
@@ -112,48 +138,23 @@ public class AntNest : MonoBehaviour
         return false;
     }
 
-    bool BranchSpread()
+
+    public void TryKillSpot(Vector3Int position, AntRouteBranch branch)
     {
-        Branch branch = routeBranches[Random.Range(0, routeBranches.Count)];
-
-        float randomValue = Random.value;
-
-        if (randomValue > 0.05f)
+        Vector3Int[] removedPositions = branch.KillSpot(position);
+        for (int i = 0; i < removedPositions.Length; i++)
         {
-            if (branch.Size < maxSpreadSize)
-            {
-                Vector3Int position = branch.FindNextSpreadPosition();
-
-                if (!IsOverlapBranch(position))
-                {
-                    branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
-                    routeMap.SetTile(position, routeTile);
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            BranchData newBranchData = branch.BranchOff();
-
-            if (newBranchData.ExccedPositionCount < maxSpreadSize && !IsOverlapBranch(newBranchData.NextPosition))
-            {
-                Branch newBranch = new Branch(
-                    newBranchData.Root,
-                    routeMap.GetCellCenterWorld(newBranchData.Root),
-                    newBranchData.Direction,
-                    Instantiate(lineRenderer, transform),
-                    length: newBranchData.ExccedPositionCount);
-
-                newBranch.AddPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
-                routeMap.SetTile(newBranchData.NextPosition, routeTile);
-
-                routeBranches.Add(newBranch);
-                return true;
-            }
+            routeMap.SetTile(removedPositions[i], null);
         }
 
-        return false;
+        if (branch.IsEmpty)
+        {
+            int index = routeBranches.IndexOf(branch);
+            if (index > 3)
+            {
+                routeBranches.RemoveAt(index);
+            }
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -162,86 +163,8 @@ public class AntNest : MonoBehaviour
         {
             for (int i = 0; i < routeBranches.Count; i++)
             {
-                Gizmos.DrawSphere(routeMap.GetCellCenterWorld(routeBranches[i].Root), 0.1f);
+                Gizmos.DrawSphere(routeMap.GetCellCenterWorld(routeBranches[i].RootGridPosition), 0.1f);
             }
         }
-    }
-
-    public class Branch
-    {
-        static Vector3Int SideWayDirection(Vector3Int direction)
-        {
-            int multiplier = Random.value > 0.5f ? 1 : -1;
-            return new Vector3Int(direction.y * multiplier, direction.x * multiplier, 0);
-        }
-
-        private List<Vector3Int> _positions;
-        private Vector3Int _direction;
-        private int originalLength;
-
-        private LineRenderer _branchLine;
-
-        public int Size => _positions.Count + originalLength;
-        public Vector3Int Root => _positions[0];
-
-        public Branch(Vector3Int root, Vector3 rootPosition, Vector3Int direciton, LineRenderer branchLine, int length=0)
-        {
-            _positions = new List<Vector3Int>();
-            _positions.Add(root);
-
-            _branchLine = branchLine;
-
-            _direction = direciton;
-            originalLength = length;
-
-            _branchLine.positionCount = 1;
-            _branchLine.SetPositions(new Vector3[] { rootPosition });
-        }
-
-        public bool IsOverlap(Vector3Int position) => _positions.Contains(position);
-
-        public Vector3Int FindNextSpreadPosition()
-        {
-            return _positions[_positions.Count - 1] + (Random.value > 0.8f ? SideWayDirection(_direction) : _direction);
-        }
-
-        public BranchData BranchOff()
-        {
-            int index = Random.Range(0, _positions.Count);
-            Vector3Int newDirection = SideWayDirection(_direction);
-            // Vector3Int newPosition = _positions[index] + newDirection;
-            // newBranch = new Branch(newPosition, newDirection, index + 1);
-            return new BranchData {
-                Root = _positions[index],
-                Direction = newDirection,
-                ExccedPositionCount = originalLength + index + 1,
-            };
-        }
-
-        public void AddPosition(Vector3Int position, Vector3 worldPosition)
-        {
-            _positions.Add(position);
-
-            Vector3[] newLinePoints = new Vector3[_branchLine.positionCount + 1];
-            _branchLine.GetPositions(newLinePoints);
-            _branchLine.positionCount = _branchLine.positionCount + 1;
-            newLinePoints[newLinePoints.Length - 1] = worldPosition;
-            _branchLine.SetPositions(newLinePoints);
-        }
-    }
-
-    public struct BranchData
-    {
-        public Vector3Int Root;
-        public Vector3Int Direction;
-        public int ExccedPositionCount;
-
-        public Vector3Int NextPosition => Root + Direction;
-    }
-
-    public enum SpreadType
-    {
-        RandomSpreadFromExistRoute,
-        BranchSpread,
     }
 }
