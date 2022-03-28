@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     public event System.Action<Facing> OnFacingChange;
     public event System.Action OnPositionChange;
+    public event System.Action OnDashPerformed;
+    public event System.Action OnDashEnded;
 
     private PlayerInput _playerInput;
     private Rigidbody2D _rigidbody;
@@ -80,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _dashing = false;
                 _runningDash.InvokeEndEvent();
+                OnDashEnded?.Invoke();
             }
             else
             {
@@ -141,6 +144,8 @@ public class PlayerMovement : MonoBehaviour
             }
             // _runningDash.DashForceWithDirection = dashInfo.Force *
         }
+
+        OnDashPerformed?.Invoke();
     }
 }
 

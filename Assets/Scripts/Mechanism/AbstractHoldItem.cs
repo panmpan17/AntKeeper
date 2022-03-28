@@ -15,4 +15,6 @@ public abstract class AbstractHoldItem : MonoBehaviour
 
     public abstract void OnInteractStart();
     public abstract void OnInteractEnd();
+
+    public abstract void OnDash();
 }

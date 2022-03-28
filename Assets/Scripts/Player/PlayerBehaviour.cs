@@ -22,22 +22,29 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector3Int SelectedGridPosition { get; private set; }
     public Vector3 SelectedGridCenterPosition { get; private set; }
 
-    private PlayerMovement _movement;
     private PlayerInput _input;
+    private PlayerMovement _movement;
 
     void Awake()
     {
-        _movement = GetComponent<PlayerMovement>();
-        _movement.OnFacingChange += ChangeHoldItemPosition;
-        _movement.OnPositionChange += ChangeSelectedGrid;
-
         _input = GetComponent<PlayerInput>();
         _input.OnInteractPerformedEvent += OnIneractPerformed;
         _input.OnInteractCanceledEvent += OnIneractCanceled;
 
+        _movement = GetComponent<PlayerMovement>();
+        _movement.OnFacingChange += ChangeHoldItemPosition;
+        // _movement.OnPositionChange += ChangeSelectedGrid;
+        _movement.OnDashPerformed += HandleDashPerformed;
+
         holdItem.Setup(this);
     }
 
+    void FixedUpdate()
+    {
+        ChangeSelectedGrid();
+    }
+
+    #region Player Input Event
     void OnIneractPerformed()
     {
         if (holdItem != null)
@@ -61,7 +68,9 @@ public class PlayerBehaviour : MonoBehaviour
             holdItem.OnInteractEnd();
         }
     }
+    #endregion
 
+    #region Player Movement Event
     public void ChangeHoldItemPosition(Facing newFacing)
     {
         switch (newFacing)
@@ -103,6 +112,15 @@ public class PlayerBehaviour : MonoBehaviour
                 break;
         }
     }
+
+    void HandleDashPerformed()
+    {
+        if (holdItem != null)
+        {
+            holdItem.OnDash();
+        }
+    }
+    #endregion
 
     void RaycasyCell(Vector3 position)
     {

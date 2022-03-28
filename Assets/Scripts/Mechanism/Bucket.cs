@@ -87,6 +87,13 @@ public class Bucket : AbstractHoldItem
         transform.rotation = Quaternion.identity;
         pourEffect.Stop();
     }
+
+    public override void OnDash()
+    {
+        _pouring = false;
+        transform.rotation = Quaternion.identity;
+        pourEffect.Stop();
+    }
 }
 
 [System.Serializable]
