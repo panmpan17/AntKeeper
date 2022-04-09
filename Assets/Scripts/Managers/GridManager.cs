@@ -17,12 +17,14 @@ public class GridManager : MonoBehaviour
 
     private List<AbstractGroundInteractive> _groundInteractives;
     private List<AntNest> _antNests;
+    private List<VirtualAnimalSpot> _animals;
 
     void Awake()
     {
         ins = this;
         _groundInteractives = new List<AbstractGroundInteractive>();
         _antNests = new List<AntNest>();
+        _animals = new List<VirtualAnimalSpot>();
     }
 
     public void RegisterGroundInteractive(AbstractGroundInteractive groundInteractive, out Vector3Int gridPosition)
@@ -34,6 +36,12 @@ public class GridManager : MonoBehaviour
     public void RegisterAntNest(AntNest antNest)
     {
         _antNests.Add(antNest);
+    }
+
+    public void ReigsterAnimal(VirtualAnimalSpot animalSpot, out Vector3Int gridPosition)
+    {
+        _animals.Add(animalSpot);
+        gridPosition = grid.WorldToCell(animalSpot.transform.position);
     }
 
     public bool TryFindGroundInteractive(Vector3Int gridPosition, out AbstractGroundInteractive groundInteractve)
@@ -64,6 +72,21 @@ public class GridManager : MonoBehaviour
 
         antNest = null;
         branch = null;
+        return false;
+    }
+
+    public bool TryFindAnimal(Vector3Int gridPosition, out VirtualAnimalSpot animalSpot)
+    {
+        for (int i = 0; i < _animals.Count; i++)
+        {
+            if (_animals[i].GridPosition == gridPosition)
+            {
+                animalSpot = _animals[i];
+                return true;
+            }
+        }
+
+        animalSpot = null;
         return false;
     }
 
