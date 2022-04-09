@@ -12,11 +12,11 @@ namespace MPack {
         public bool Running;
         public bool ReverseMode;
 
-        public Timer(float time)
+        public Timer(float time, bool running=true)
         {
             TargetTime = time;
             RunTime = 0;
-            Running = true;
+            Running = running;
             ReverseMode = false;
         }
 

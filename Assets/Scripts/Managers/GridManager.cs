@@ -15,6 +15,11 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Tilemap baseMap;
 
+    [SerializeField]
+    private Tilemap routeColliderMap;
+    [SerializeField]
+    private TilemapReference routeColliderMapReference;
+
     private List<AbstractGroundInteractive> _groundInteractives;
     private List<AntNest> _antNests;
     private List<VirtualAnimalSpot> _animals;
@@ -25,6 +30,8 @@ public class GridManager : MonoBehaviour
         _groundInteractives = new List<AbstractGroundInteractive>();
         _antNests = new List<AntNest>();
         _animals = new List<VirtualAnimalSpot>();
+
+        routeColliderMapReference.Tilemap = routeColliderMap;
     }
 
     public void RegisterGroundInteractive(AbstractGroundInteractive groundInteractive, out Vector3Int gridPosition)

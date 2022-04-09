@@ -40,8 +40,6 @@ public class AntRouteBranch
 
     private LineRenderer _lineRenderer;
 
-    public Vector3Int RandomPosition => _spots.Count == 0 ? _root : _spots[Random.Range(0, _spots.Count)].GridPosition;
-
     public int Size => _spots.Count + _parentBranchSize;
     public Vector3Int RootGridPosition => _root;
     public bool IsEmpty => _spots.Count == 0;
@@ -61,6 +59,7 @@ public class AntRouteBranch
             else if (!_notConnectedDieTimer.Running)
             {
                 _notConnectedDieTimer.Reset();
+                _notConnectedDieTimer.TargetTime = _routeDisconnectDieTimeReference.PickRandomNumber();
 
                 for (int i = 0; i < _spreadBranch.Count; i++)
                     _spreadBranch[i].IsConnectedToNest = false;
@@ -69,8 +68,11 @@ public class AntRouteBranch
     }
     private Timer _notConnectedDieTimer;
 
+    private RangeReference _routeDisconnectDieTimeReference;
+
     #region Constructor
-    public AntRouteBranch(Vector3Int rootGridPosition, Vector3 rootWorldPosition, Vector3Int direciton, LineRenderer lineRenderer, int length=0)
+    public AntRouteBranch(Vector3Int rootGridPosition, Vector3 rootWorldPosition, Vector3Int direciton,
+                          LineRenderer lineRenderer, RangeReference routeDisconnectDieTimeReference, int length=0)
     {
         _root = rootGridPosition;
         _spots = new List<BranchSpot>();
@@ -91,10 +93,12 @@ public class AntRouteBranch
         _lineRenderer.positionCount = 1;
         _lineRenderer.SetPositions(new Vector3[] { rootWorldPosition });
 
-        IsConnectedToNest = true;
+        _routeDisconnectDieTimeReference = routeDisconnectDieTimeReference;
+        // _notConnectedDieTimer = new Timer(DieAfterDisconnectedFromNest, running: false);
     }
 
-    public AntRouteBranch(Vector3Int[] gridPositions, Vector3[] worldPositions, Vector3Int direction, List<AntRouteBranch> antRouteBranches, LineRenderer lineRenderer, int length)
+    public AntRouteBranch(Vector3Int[] gridPositions, Vector3[] worldPositions, Vector3Int direction, List<AntRouteBranch> antRouteBranches,
+                          LineRenderer lineRenderer, RangeReference routeDisconnectDieTimeReference, int length)
     {
         _root = gridPositions[0];
         _spots = new List<BranchSpot>();
@@ -113,6 +117,9 @@ public class AntRouteBranch
 
         _direction = direction;
         _parentBranchSize = length;
+
+        _routeDisconnectDieTimeReference = routeDisconnectDieTimeReference;
+        // _notConnectedDieTimer = new Timer(DieAfterDisconnectedFromNest, running: false);
     }
     #endregion
 
@@ -211,7 +218,8 @@ public class AntRouteBranch
                 _direction,
                 connectedBranches,
                 GameObject.Instantiate(_lineRenderer, _lineRenderer.transform.parent),
-                originalSize);
+                _routeDisconnectDieTimeReference,
+                length: originalSize);
             newBranch.IsConnectedToNest = false;
 
             _lineRenderer.positionCount = spotIndex;
@@ -256,6 +264,11 @@ public class AntRouteBranch
             }
         }
     }
+
+    public bool UpdateNotConnectedDieTimer()
+    {
+        return _notConnectedDieTimer.UpdateEnd;
+    }
     #endregion
 
 
@@ -277,6 +290,23 @@ public class AntRouteBranch
         }
         _lineRenderer.positionCount = _spots.Count;
         _lineRenderer.SetPositions(linePositions);
+    }
+
+    public Vector3Int PickRandomPosition() => _spots.Count == 0 ? _root : _spots[Random.Range(0, _spots.Count)].GridPosition;
+
+    public Vector3Int[] AllGridPosition()
+    {
+        Vector3Int[] allGridPosition = new Vector3Int[_spots.Count];
+        for (int i = 0; i < _spots.Count; i++)
+        {
+            allGridPosition[i] = _spots[i].GridPosition;
+        }
+        return allGridPosition;
+    }
+
+    public void OnDestroy()
+    {
+        GameObject.Destroy(_lineRenderer);
     }
     #endregion
 }
