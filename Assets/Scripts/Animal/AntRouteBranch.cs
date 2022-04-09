@@ -33,6 +33,7 @@ public class AntRouteBranch
 
     private Vector3Int _root;
     private List<BranchSpot> _spots;
+    private List<AntRouteBranch> _spreadBranch;
 
     private Vector3Int _direction;
     private int _parentBranchSize;
@@ -53,20 +54,28 @@ public class AntRouteBranch
             if (value)
             {
                 _notConnectedDieTimer.Running = false;
+
+                for (int i = 0; i < _spreadBranch.Count; i++)
+                    _spreadBranch[i].IsConnectedToNest = true;
             }
             else if (!_notConnectedDieTimer.Running)
             {
                 _notConnectedDieTimer.Reset();
+
+                for (int i = 0; i < _spreadBranch.Count; i++)
+                    _spreadBranch[i].IsConnectedToNest = false;
             }
         }
     }
     private Timer _notConnectedDieTimer;
 
-
-    public AntRouteBranch(Vector3Int rootGridPosition, Vector3 rootWorldPosition, Vector3Int direciton, LineRenderer lineRenderer, int length = 0)
+    #region Constructor
+    public AntRouteBranch(Vector3Int rootGridPosition, Vector3 rootWorldPosition, Vector3Int direciton, LineRenderer lineRenderer, int length=0)
     {
         _root = rootGridPosition;
         _spots = new List<BranchSpot>();
+        _spreadBranch = new List<AntRouteBranch>();
+
         _spots.Add(new BranchSpot()
         {
             GridPosition = rootGridPosition,
@@ -84,10 +93,13 @@ public class AntRouteBranch
 
         IsConnectedToNest = true;
     }
-    public AntRouteBranch(Vector3Int[] gridPositions, Vector3[] worldPositions, Vector3Int direction, LineRenderer lineRenderer, int length)
+
+    public AntRouteBranch(Vector3Int[] gridPositions, Vector3[] worldPositions, Vector3Int direction, List<AntRouteBranch> antRouteBranches, LineRenderer lineRenderer, int length)
     {
         _root = gridPositions[0];
         _spots = new List<BranchSpot>();
+        _spreadBranch = antRouteBranches;
+
         for (int i = 0; i < gridPositions.Length; i++)
         {
             _spots.Add(new BranchSpot() {
@@ -101,18 +113,11 @@ public class AntRouteBranch
 
         _direction = direction;
         _parentBranchSize = length;
-
-        IsConnectedToNest = false;
     }
+    #endregion
 
-    public bool IsOverlap(Vector3Int position)
-    {
-        for (int i = 0; i < _spots.Count; i++)
-            if (_spots[i].GridPosition == position)
-                return true;
-        return false;
-    }
 
+    #region Ant route spreading
     public Vector3Int FindNextSpreadPosition()
     {
         if (_spots.Count == 0)
@@ -120,7 +125,25 @@ public class AntRouteBranch
         return _spots[_spots.Count - 1].GridPosition + (Random.value > 0.8f ? SideWayDirection(_direction) : _direction);
     }
 
-    public bool BranchOff(out BranchData branchData)
+    public void AddSpreadPosition(Vector3Int position, Vector3 worldPosition)
+    {
+        _spots.Add(new BranchSpot()
+        {
+            GridPosition = position,
+            WorldPosition = worldPosition,
+            Health = BranchSpot.MaxHealth,
+        });
+
+        // Resize line rendere position size
+        Vector3[] newLinePoints = new Vector3[_lineRenderer.positionCount + 1];
+        _lineRenderer.GetPositions(newLinePoints);
+        newLinePoints[newLinePoints.Length - 1] = worldPosition;
+
+        _lineRenderer.positionCount = _lineRenderer.positionCount + 1;
+        _lineRenderer.SetPositions(newLinePoints);
+    }
+
+    public bool FindPotentialBranchOff(out BranchData branchData)
     {
         if (IsEmpty)
         {
@@ -139,6 +162,14 @@ public class AntRouteBranch
         return true;
     }
 
+    public void AddBranchOff(AntRouteBranch branch)
+    {
+        _spreadBranch.Add(branch);
+    }
+    #endregion
+
+
+    #region Kill Route
     public Vector3Int[] KillSpot(Vector3Int position, float killAmount, out AntRouteBranch newBranch)
     {
         for (int i = 0; i < _spots.Count; i++)
@@ -150,7 +181,7 @@ public class AntRouteBranch
             spot.Health -= killAmount;
 
             if (spot.Health <= 0)
-                return HandleBranchSpotDead(i, out newBranch);
+                return HandleBranchSpotDead(i, position, out newBranch);
             
             _spots[i] = spot;
             break;
@@ -160,27 +191,28 @@ public class AntRouteBranch
         return null;
     }
 
-    Vector3Int[] HandleBranchSpotDead(int spotIndex, out AntRouteBranch newBranch)
+    Vector3Int[] HandleBranchSpotDead(int spotIndex, Vector3Int targetGridPosition, out AntRouteBranch newBranch)
     {
         int originalSize = Size;
 
-        Vector3Int targetGridPosition = _spots[spotIndex].GridPosition;
-
-        Vector3Int[] removedGridPositions = RemoveGridPositionFrom(spotIndex + 1);
+        SpereateBranch(spotIndex + 1, out Vector3Int[] speratedGridPositions, out List<AntRouteBranch> connectedBranches);
         _spots.RemoveAt(spotIndex);
 
-        if (removedGridPositions.Length >= 2)
+        // Only generate new branch if new branch length is at least 2
+        if (speratedGridPositions.Length >= 2)
         {
-            Vector3[] removedWorldPositions = new Vector3[removedGridPositions.Length];
+            Vector3[] removedWorldPositions = new Vector3[speratedGridPositions.Length];
             for (int e = 0; e < removedWorldPositions.Length; e++)
                 removedWorldPositions[e] = _lineRenderer.GetPosition(e + spotIndex + 1);
 
             newBranch = new AntRouteBranch(
-                removedGridPositions,
+                speratedGridPositions,
                 removedWorldPositions,
                 _direction,
+                connectedBranches,
                 GameObject.Instantiate(_lineRenderer, _lineRenderer.transform.parent),
                 originalSize);
+            newBranch.IsConnectedToNest = false;
 
             _lineRenderer.positionCount = spotIndex;
             return new Vector3Int[] { targetGridPosition };
@@ -190,41 +222,50 @@ public class AntRouteBranch
             newBranch = null;
             _lineRenderer.positionCount = spotIndex;
 
-            if (removedGridPositions.Length >= 1)
-                return new Vector3Int[] { targetGridPosition, removedGridPositions[0] };
+            // Set connected Brnach to not connect to ant nest
+            for (int i = 0; i < connectedBranches.Count; i++)
+            {
+                connectedBranches[i].IsConnectedToNest = false;
+            }
+
+            if (speratedGridPositions.Length >= 1)
+                return new Vector3Int[] { targetGridPosition, speratedGridPositions[0] };
             else
                 return new Vector3Int[] { targetGridPosition };
         }
     }
 
-    public Vector3Int[] RemoveGridPositionFrom(int index)
+    void SpereateBranch(int index, out Vector3Int[] gridPositions, out List<AntRouteBranch> connectedBranches)
     {
-        Vector3Int[] removedPositions = new Vector3Int[ _spots.Count - index];
+        gridPositions = new Vector3Int[ _spots.Count - index];
+        connectedBranches = new List<AntRouteBranch>();
 
-        for (int i = 0; i < removedPositions.Length; i++)
+        for (int i = 0; i < gridPositions.Length; i++)
         {
-            removedPositions[i] = _spots[index].GridPosition;
+            gridPositions[i] = _spots[index].GridPosition;
             _spots.RemoveAt(index);
+
+            for (int e = 0; e < _spreadBranch.Count; e++)
+            {
+                if (_spreadBranch[e].RootGridPosition == gridPositions[i])
+                {
+                    connectedBranches.Add(_spreadBranch[e]);
+                    _spreadBranch.RemoveAt(e);
+                    e--;
+                }
+            }
         }
-
-        return removedPositions;
     }
+    #endregion
 
-    public void AddPosition(Vector3Int position, Vector3 worldPosition)
+
+    #region Utilities
+    public bool IsOverlap(Vector3Int position)
     {
-        _spots.Add(new BranchSpot() {
-            GridPosition=position,
-            WorldPosition=worldPosition,
-            Health=BranchSpot.MaxHealth,
-        });
-
-        // Resize line rendere position size
-        Vector3[] newLinePoints = new Vector3[_lineRenderer.positionCount + 1];
-        _lineRenderer.GetPositions(newLinePoints);
-        newLinePoints[newLinePoints.Length - 1] = worldPosition;
-
-        _lineRenderer.positionCount = _lineRenderer.positionCount + 1;
-        _lineRenderer.SetPositions(newLinePoints);
+        for (int i = 0; i < _spots.Count; i++)
+            if (_spots[i].GridPosition == position)
+                return true;
+        return false;
     }
 
     public void RecalculateLineRenderer(Tilemap map)
@@ -237,4 +278,5 @@ public class AntRouteBranch
         _lineRenderer.positionCount = _spots.Count;
         _lineRenderer.SetPositions(linePositions);
     }
+    #endregion
 }

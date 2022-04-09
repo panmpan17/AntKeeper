@@ -94,19 +94,20 @@ public class AntNest : MonoBehaviour
                     if (!overlapBranch.IsConnectedToNest)
                     {
                         overlapBranch.IsConnectedToNest = true;
-                        branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
+                        branch.AddSpreadPosition(position, routeMap.GetCellCenterWorld(position));
+                        branch.AddBranchOff(overlapBranch);
                         return true;
                     }
                 }
                 else
                 {
-                    branch.AddPosition(position, routeMap.GetCellCenterWorld(position));
+                    branch.AddSpreadPosition(position, routeMap.GetCellCenterWorld(position));
                     routeMap.SetTile(position, routeTile);
                     return true;
                 }
             }
         }
-        else if (branch.BranchOff(out BranchData newBranchData))
+        else if (branch.FindPotentialBranchOff(out BranchData newBranchData))
         {
             if (newBranchData.ExccedPositionCount < maxSpreadSize && !IsGridPositionOverlapBranch(newBranchData.NextPosition))
             {
@@ -116,7 +117,9 @@ public class AntNest : MonoBehaviour
                     newBranchData.Direction,
                     Instantiate(lineRenderer, transform),
                     length: newBranchData.ExccedPositionCount);
-                newBranch.AddPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
+                newBranch.AddSpreadPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
+
+                branch.AddBranchOff(newBranch);
                 routeBranches.Add(newBranch);
 
                 routeMap.SetTile(newBranchData.NextPosition, routeTile);

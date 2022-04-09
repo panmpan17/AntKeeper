@@ -33,6 +33,9 @@ public class Bucket : AbstractHoldItem
     [SerializeField]
     private float pouringRotationg;
 
+    [SerializeField]
+    private float killSpeed;
+
     [Header("Reference")]
     [SerializeField]
     private Sprite emptyBucket;
@@ -62,7 +65,7 @@ public class Bucket : AbstractHoldItem
 
             if (GridManager.ins.TryFindAntNestBranch(PlayerBahviour.SelectedGridPosition, out AntNest antNest, out AntRouteBranch branch))
             {
-                antNest.TryKillSpot(PlayerBahviour.SelectedGridPosition, 3 * Time.deltaTime, branch);
+                antNest.TryKillSpot(PlayerBahviour.SelectedGridPosition, killSpeed * Time.deltaTime, branch);
             }
         }
     }
