@@ -125,14 +125,14 @@ public class AntRouteBranch
 
 
     #region Ant route spreading
-    public Vector3Int FindNextSpreadPosition()
+    public Vector3Int FindNextGrowPosition()
     {
         if (_spots.Count == 0)
             return _root;
         return _spots[_spots.Count - 1].GridPosition + (Random.value > 0.8f ? SideWayDirection(_direction) : _direction);
     }
 
-    public void AddSpreadPosition(Vector3Int position, Vector3 worldPosition)
+    public void AddGrowPosition(Vector3Int position, Vector3 worldPosition)
     {
         _spots.Add(new BranchSpot()
         {
@@ -302,6 +302,12 @@ public class AntRouteBranch
             allGridPosition[i] = _spots[i].GridPosition;
         }
         return allGridPosition;
+    }
+
+    public void ChangeRouteLineRendererColor(Color newColor)
+    {
+        _lineRenderer.startColor = newColor;
+        _lineRenderer.endColor = newColor;
     }
 
     public void OnDestroy()

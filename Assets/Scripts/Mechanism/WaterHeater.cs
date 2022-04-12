@@ -12,15 +12,16 @@ public class WaterHeater : AbstractGroundInteractive
     [SerializeField]
     private new ParticleSystem particleSystem;
 
-    private Bucket _filledBucket;
+    [SerializeField]
+    private Bucket filledBucket;
 
     void Update()
     {
-        if (_filledBucket != null && !_filledBucket.IsFull)
+        if (filledBucket != null && !filledBucket.IsFull)
         {
-            _filledBucket.FillAmount += fillSpeed * Time.deltaTime;
+            filledBucket.FillAmount += fillSpeed * Time.deltaTime;
 
-            if (_filledBucket.IsFull)
+            if (filledBucket.IsFull)
             {
                 particleSystem.Stop();
             }
@@ -29,8 +30,8 @@ public class WaterHeater : AbstractGroundInteractive
 
     public override bool OnEmptyHandInteract(PlayerBehaviour playerBehaviour)
     {
-        playerBehaviour.SetHandItem(_filledBucket);
-        _filledBucket = null;
+        playerBehaviour.SetHandItem(filledBucket);
+        filledBucket = null;
         particleSystem.Stop();
 
         return true;
@@ -40,15 +41,15 @@ public class WaterHeater : AbstractGroundInteractive
     {
         if (item.GetType() == typeof(Bucket))
         {
-            _filledBucket = (Bucket)item;
+            filledBucket = (Bucket)item;
 
-            _filledBucket.PlayerBahviour.ClearHandItem();
+            filledBucket.PlayerBehaviour.ClearHandItem();
 
-            _filledBucket.transform.SetParent(offsetPoint, true);
-            _filledBucket.transform.localPosition = Vector3.zero;
-            _filledBucket.transform.localScale = Vector3.one;
+            filledBucket.transform.SetParent(offsetPoint, true);
+            filledBucket.transform.localPosition = Vector3.zero;
+            filledBucket.transform.localScale = Vector3.one;
 
-            if (!_filledBucket.IsFull)
+            if (!filledBucket.IsFull)
                 particleSystem.Play();
         }
 

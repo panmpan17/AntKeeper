@@ -63,9 +63,9 @@ public class Bucket : AbstractHoldItem
                 pourEffect.Stop();
             }
 
-            if (GridManager.ins.TryFindAntNestBranch(PlayerBahviour.SelectedGridPosition, out AntNest antNest, out AntRouteBranch branch))
+            if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNest antNest, out AntRouteBranch branch))
             {
-                antNest.TryKillSpot(PlayerBahviour.SelectedGridPosition, killSpeed * Time.deltaTime, branch);
+                antNest.TryKillSpot(PlayerBehaviour.SelectedGridPosition, killSpeed * Time.deltaTime, branch);
             }
         }
     }
@@ -74,7 +74,7 @@ public class Bucket : AbstractHoldItem
 
     public override void OnInteractStart()
     {
-        if (GridManager.ins.TryFindGroundInteractive(PlayerBahviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
+        if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
         {
             groundInteractive.OnHoldItemInteract(this);
             return;
@@ -84,7 +84,7 @@ public class Bucket : AbstractHoldItem
         {
             _pouring = true;
             transform.rotation = Quaternion.Euler(0, 0, pouringRotationg);
-            pourEffect.transform.position = PlayerBahviour.SelectedGridCenterPosition;
+            pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
             pourEffect.Play();
         }
     }

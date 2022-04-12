@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class AbstractHoldItem : MonoBehaviour
 {
-    public PlayerBehaviour PlayerBahviour { get; protected set; }
+    public PlayerBehaviour PlayerBehaviour { get; protected set; }
 
     public void Setup(PlayerBehaviour playerBehaviour)
     {
-        PlayerBahviour = playerBehaviour;
+        PlayerBehaviour = playerBehaviour;
     }
 
     public abstract void OnInteract();

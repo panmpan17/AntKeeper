@@ -36,13 +36,15 @@ public class PlayerBehaviour : MonoBehaviour
         // _movement.OnPositionChange += ChangeSelectedGrid;
         _movement.OnDashPerformed += HandleDashPerformed;
 
-        holdItem.Setup(this);
+        if (holdItem != null)
+            holdItem.Setup(this);
     }
 
     void FixedUpdate()
     {
         ChangeSelectedGrid();
     }
+
 
     #region Player Input Event
     void OnIneractPerformed()
@@ -69,6 +71,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
     #endregion
+
 
     #region Player Movement Event
     public void ChangeHoldItemPosition(Facing newFacing)
@@ -142,6 +145,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         holdItem = item;
         holdItem.transform.SetParent(transform, false);
+        holdItem.Setup(this);
         ChangeHoldItemPosition(_movement.Facing);
     }
 

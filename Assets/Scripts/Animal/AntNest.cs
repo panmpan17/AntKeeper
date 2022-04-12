@@ -24,40 +24,70 @@ public class AntNest : MonoBehaviour
     [SerializeField]
     private RuleTile routeTile;
 
-    [Header("Spread settings")]
+    [Header("Grow route settings")]
     [SerializeField]
-    private RangeReference spreadRouteInterval;
-    private Timer _spreadTimer;
+    private RangeReference growRouteInterval;
+    private Timer _growRouteTimer;
     [SerializeField]
-    private IntRangeReference maxSpreadSizeReference;
-    private int _maxSpreadSize;
+    private IntRangeReference maxRouteSizeReference;
+    private int _maxRouteSize;
     [SerializeField]
     private float branchOffChance = 0.05f;
     [SerializeField]
     private RangeReference routeDisconnectDieTimeReference;
 
-    [Header("Other settings")]
+    [Header("Spread settings")]
+    // [SerializeField]
+    // private 
+    [SerializeField]
+    private RangeReference spreadRangeReference;
+    [SerializeField]
+    private RangeReference spreadIntervalReference;
+    private Timer _spreadIntervalTimer;
+
+    [Header("Kill Animal settings")]
     [SerializeField]
     private RangeReference killAnimalInterval;
     private Timer _killAnimalTimer;
 
+    [Header("Colors")]
     [SerializeField]
-    private Color routeColor;
+    private ColorReference hiddenColorReference;
+    [SerializeField]
+    private ColorReference trueColorReference;
+    [SerializeField]
+    private int showTrueColorAfterSize;
 
     [SerializeField]
     private IntRangeReference startedSize;
 
-    private List<AntRouteBranch> routeBranches;
+    private int size {
+        get => _size;
+        set {
+            _size = value;
+
+            if (lineRenderer.startColor == hiddenColorReference.Value)
+            {
+                if (_size >= showTrueColorAfterSize)
+                {
+                    ChangeRouteLineRendererColor(trueColorReference.Value);
+                }
+            }
+        }
+    }
+    private int _size;
+
+    private List<AntRouteBranch> _routeBranches;
 
     void Awake()
     {
-        routeBranches = new List<AntRouteBranch>();
-        
-        lineRenderer.startColor = routeColor;
-        lineRenderer.endColor = routeColor;
+        _routeBranches = new List<AntRouteBranch>();
 
-        _maxSpreadSize = maxSpreadSizeReference.PickRandomNumber();
-        _spreadTimer = new Timer(spreadRouteInterval.PickRandomNumber());
+        lineRenderer.startColor = hiddenColorReference.Value;
+        lineRenderer.endColor = hiddenColorReference.Value;
+
+        _maxRouteSize = maxRouteSizeReference.PickRandomNumber();
+        _growRouteTimer = new Timer(growRouteInterval.PickRandomNumber());
         _killAnimalTimer = new Timer(killAnimalInterval.PickRandomNumber());
     }
 
@@ -68,7 +98,7 @@ public class AntNest : MonoBehaviour
 
         for (int i = 0; i < FourDirections.Length; i++)
         {
-            routeBranches.Add(new AntRouteBranch(
+            _routeBranches.Add(new AntRouteBranch(
                 rootPosition,
                 routeMap.GetCellCenterWorld(rootPosition),
                 FourDirections[i],
@@ -85,12 +115,12 @@ public class AntNest : MonoBehaviour
 
     void Update()
     {
-        if (_spreadTimer.UpdateEnd)
+        if (_growRouteTimer.UpdateEnd)
         {
-            if (TrySpreadBranch())
+            if (TryGrowBranch())
             {
-                _spreadTimer.Reset();
-                _spreadTimer.TargetTime = spreadRouteInterval.PickRandomNumber();
+                _growRouteTimer.Reset();
+                _growRouteTimer.TargetTime = growRouteInterval.PickRandomNumber();
             }
         }
 
@@ -104,22 +134,22 @@ public class AntNest : MonoBehaviour
         }
 
         // Update branches not connected die timer
-        for (int i = 0; i < routeBranches.Count; i++)
+        for (int i = 0; i < _routeBranches.Count; i++)
         {
-            if (!routeBranches[i].IsConnectedToNest && routeBranches[i].UpdateNotConnectedDieTimer())
+            if (!_routeBranches[i].IsConnectedToNest && _routeBranches[i].UpdateNotConnectedDieTimer())
             {
-                Vector3Int[] gridPosition = routeBranches[i].AllGridPosition();
+                Vector3Int[] gridPosition = _routeBranches[i].AllGridPosition();
                 RemoveGridCollider(gridPosition);
-                routeBranches[i].OnDestroy();
+                _routeBranches[i].OnDestroy();
 
-                routeBranches.RemoveAt(i);
+                _routeBranches.RemoveAt(i);
             }
         }
     }
 
-    bool TrySpreadBranch()
+    bool TryGrowBranch()
     {
-        AntRouteBranch branch = routeBranches[Random.Range(0, routeBranches.Count)];
+        AntRouteBranch branch = _routeBranches[Random.Range(0, _routeBranches.Count)];
         if (!branch.IsConnectedToNest)
             return false;
 
@@ -127,23 +157,25 @@ public class AntNest : MonoBehaviour
 
         if (randomValue > branchOffChance)
         {
-            if (branch.Size < _maxSpreadSize)
+            if (branch.Size < _maxRouteSize)
             {
-                Vector3Int position = branch.FindNextSpreadPosition();
+                Vector3Int position = branch.FindNextGrowPosition();
 
                 if (IsGridPositionOverlapBranch(position, out AntRouteBranch overlapBranch))
                 {
                     if (!overlapBranch.IsConnectedToNest)
                     {
+                        size++;
                         overlapBranch.IsConnectedToNest = true;
-                        branch.AddSpreadPosition(position, routeMap.GetCellCenterWorld(position));
+                        branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
                         branch.AddBranchOff(overlapBranch);
                         return true;
                     }
                 }
                 else
                 {
-                    branch.AddSpreadPosition(position, routeMap.GetCellCenterWorld(position));
+                    size++;
+                    branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
                     routeMap.SetTile(position, routeTile);
                     return true;
                 }
@@ -151,7 +183,7 @@ public class AntNest : MonoBehaviour
         }
         else if (branch.FindPotentialBranchOff(out BranchData newBranchData))
         {
-            if (newBranchData.ExccedPositionCount < _maxSpreadSize && !IsGridPositionOverlapBranch(newBranchData.NextPosition))
+            if (newBranchData.ExccedPositionCount < _maxRouteSize && !IsGridPositionOverlapBranch(newBranchData.NextPosition))
             {
                 AntRouteBranch newBranch = new AntRouteBranch(
                     newBranchData.Root,
@@ -161,10 +193,11 @@ public class AntNest : MonoBehaviour
                     routeDisconnectDieTimeReference,
                     length: newBranchData.ExccedPositionCount
                     );
-                newBranch.AddSpreadPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
+                newBranch.AddGrowPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
 
+                size++;
                 branch.AddBranchOff(newBranch);
-                routeBranches.Add(newBranch);
+                _routeBranches.Add(newBranch);
 
                 routeMap.SetTile(newBranchData.NextPosition, routeTile);
                 return true;
@@ -176,7 +209,7 @@ public class AntNest : MonoBehaviour
 
     bool TryKillAnimal()
     {
-        Vector3Int position = routeBranches[Random.Range(0, routeBranches.Count)].PickRandomPosition();
+        Vector3Int position = _routeBranches[Random.Range(0, _routeBranches.Count)].PickRandomPosition();
 
         if (GridManager.ins.TryFindAnimal(position, out VirtualAnimalSpot animalSpot))
         {
@@ -196,15 +229,15 @@ public class AntNest : MonoBehaviour
         if (newBranch != null)
         {
             newBranch.RecalculateLineRenderer(routeMap);
-            routeBranches.Add(newBranch);
+            _routeBranches.Add(newBranch);
         }
 
         if (branch.IsEmpty)
         {
-            int index = routeBranches.IndexOf(branch);
+            int index = _routeBranches.IndexOf(branch);
             if (index > 3)
             {
-                routeBranches.RemoveAt(index);
+                _routeBranches.RemoveAt(index);
             }
         }
     }
@@ -221,9 +254,9 @@ public class AntNest : MonoBehaviour
 
     public bool IsGridPositionOverlapBranch(Vector3Int position)
     {
-        for (int i = 0; i < routeBranches.Count; i++)
+        for (int i = 0; i < _routeBranches.Count; i++)
         {
-            if (routeBranches[i].IsOverlap(position))
+            if (_routeBranches[i].IsOverlap(position))
                 return true;
         }
         return false;
@@ -231,11 +264,11 @@ public class AntNest : MonoBehaviour
 
     public bool IsGridPositionOverlapBranch(Vector3Int position, out AntRouteBranch branch)
     {
-        for (int i = 0; i < routeBranches.Count; i++)
+        for (int i = 0; i < _routeBranches.Count; i++)
         {
-            if (routeBranches[i].IsOverlap(position))
+            if (_routeBranches[i].IsOverlap(position))
             {
-                branch = routeBranches[i];
+                branch = _routeBranches[i];
                 return true;
             }
         }
@@ -249,11 +282,27 @@ public class AntNest : MonoBehaviour
 
         while (count < warmUpTime && count < maxLoop)
         {
-            if (TrySpreadBranch())
+            if (TryGrowBranch())
             {
                 count++;
             }
         }
+    }
+
+    void ChangeRouteLineRendererColor(Color newColor)
+    {
+        lineRenderer.startColor = newColor;
+        lineRenderer.endColor = newColor;
+
+        for (int i = 0; i < _routeBranches.Count; i++)
+        {
+            _routeBranches[i].ChangeRouteLineRendererColor(newColor);
+        }
+    }
+
+    public void ShowTrueColor()
+    {
+        ChangeRouteLineRendererColor(trueColorReference.Value);
     }
     #endregion
 
@@ -261,14 +310,28 @@ public class AntNest : MonoBehaviour
     #region Editor
     void OnDrawGizmosSelected()
     {
-        if (routeBranches != null)
+        if (_routeBranches != null)
         {
-            for (int i = 0; i < routeBranches.Count; i++)
+            for (int i = 0; i < _routeBranches.Count; i++)
             {
-                var branch = routeBranches[i];
+                var branch = _routeBranches[i];
                 Gizmos.color = branch.IsConnectedToNest ? Color.green : Color.red;
-                Gizmos.DrawSphere(routeMap.GetCellCenterWorld(routeBranches[i].RootGridPosition), 0.1f);
+                Gizmos.DrawSphere(routeMap.GetCellCenterWorld(_routeBranches[i].RootGridPosition), 0.1f);
             }
+        }
+
+        if (spreadRangeReference != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, spreadRangeReference.Min);
+            Gizmos.DrawWireSphere(transform.position, spreadRangeReference.Max);
+        }
+
+        if (maxRouteSizeReference != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, maxRouteSizeReference.Min);
+            Gizmos.DrawWireSphere(transform.position, maxRouteSizeReference.Max);
         }
     }
     #endregion
