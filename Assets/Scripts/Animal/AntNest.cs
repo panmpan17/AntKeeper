@@ -37,8 +37,6 @@ public class AntNest : MonoBehaviour
     private RangeReference routeDisconnectDieTimeReference;
 
     [Header("Spread settings")]
-    // [SerializeField]
-    // private 
     [SerializeField]
     private RangeReference spreadRangeReference;
     [SerializeField]
@@ -78,6 +76,9 @@ public class AntNest : MonoBehaviour
     private int _size;
 
     private List<AntRouteBranch> _routeBranches;
+
+    public bool IsShowTrueColor => lineRenderer.startColor == trueColorReference.Value;
+
 
     void Awake()
     {
@@ -136,13 +137,15 @@ public class AntNest : MonoBehaviour
         // Update branches not connected die timer
         for (int i = 0; i < _routeBranches.Count; i++)
         {
-            if (!_routeBranches[i].IsConnectedToNest && _routeBranches[i].UpdateNotConnectedDieTimer())
+            AntRouteBranch branch = _routeBranches[i];
+            if (!branch.IsConnectedToNest && branch.UpdateNotConnectedDieTimer())
             {
-                Vector3Int[] gridPosition = _routeBranches[i].AllGridPosition();
-                RemoveGridCollider(gridPosition);
-                _routeBranches[i].OnDestroy();
-
                 _routeBranches.RemoveAt(i);
+
+                Vector3Int[] gridPosition = branch.AllGridPosition();
+                RemoveGridCollider(gridPosition);
+                branch.OnDestroy();
+
             }
         }
     }
@@ -248,7 +251,8 @@ public class AntNest : MonoBehaviour
     {
         for (int i = 0; i < gridPositions.Length; i++)
         {
-            routeMap.SetTile(gridPositions[i], null);
+            if (!IsGridPositionOverlapBranch(gridPositions[i]))
+                routeMap.SetTile(gridPositions[i], null);
         }
     }
 
