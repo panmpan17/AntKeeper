@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Timer dashColddownTimer;
     private DashInfo _runningDash;
-    private bool _dashing;
+    // private bool _dashing;
 
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
@@ -28,10 +28,37 @@ public class PlayerMovement : MonoBehaviour
     public event System.Action OnPositionChange;
     public event System.Action OnDashPerformed;
     public event System.Action OnDashEnded;
+    public event System.Action OnWalkStarted;
+    public event System.Action OnWalkEnded;
 
     private PlayerInput _playerInput;
     private Rigidbody2D _rigidbody;
 
+    private enum MovementState
+    {
+        Idle,
+        Walk,
+        Dash,
+    }
+    private MovementState _movementState;
+
+    public bool IsDashing {
+        get => _movementState == MovementState.Dash;
+        set {
+            if (value)
+                _movementState = MovementState.Dash;
+            else
+            {
+                if (_playerInput.MovementAxis.sqrMagnitude > 0.01f)
+                    _movementState = MovementState.Walk;
+                else
+                {
+                    _movementState = MovementState.Idle;
+                    OnWalkEnded?.Invoke();
+                }
+            }
+        }
+    }
 
     void Awake()
     {
@@ -68,19 +95,33 @@ public class PlayerMovement : MonoBehaviour
                 ApplyFacing(newFacing);
 
             OnPositionChange?.Invoke();
+
+            if (_movementState == MovementState.Idle)
+            {
+                _movementState = MovementState.Walk;
+                OnWalkStarted?.Invoke();
+            }
         }
         else
+        {
             _rigidbody.velocity = Vector3.zero;
+
+            if (_movementState == MovementState.Walk)
+            {
+                _movementState = MovementState.Idle;
+                OnWalkEnded?.Invoke();
+            }
+        }
     }
 
 
     bool HandleDash()
     {
-        if (_dashing)
+        if (IsDashing)
         {
             if (_runningDash.Timer.FixedUpdateEnd)
             {
-                _dashing = false;
+                IsDashing = false;
                 _runningDash.InvokeEndEvent();
                 OnDashEnded?.Invoke();
             }
@@ -111,12 +152,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        if (_dashing) return;
+        if (IsDashing) return;
         if (dashColddownTimer.Running) return;
 
         dashColddownTimer.Reset();
 
-        _dashing = true;
+        IsDashing = true;
         _runningDash = dashInfo;
 
 
@@ -146,6 +187,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         OnDashPerformed?.Invoke();
+    }
+
+    public void Freeze()
+    {
+        throw new System.NotImplementedException();
+    }
+    public void Unfreeze()
+    {
+        throw new System.NotImplementedException();
     }
 }
 
