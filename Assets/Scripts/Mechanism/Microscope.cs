@@ -6,12 +6,20 @@ using MPack;
 public class Microscope : AbstractGroundInteractive
 {
     [SerializeField]
+    private Timer examineTimer;
+    [SerializeField]
+    [SortingLayer]
+    private int sortingLayerID;
+    [SerializeField]
+    private int sortingOrder;
+
+    [Header("Reference")]
+    [SerializeField]
     private Transform offsetPoint;
     [SerializeField]
-    private AntJar antJar;
-
+    private new ParticleSystem particleSystem;
     [SerializeField]
-    private Timer examineTimer;
+    private AntJar antJar;
     [SerializeField]
     private FillBarControl progressBar;
 
@@ -19,6 +27,15 @@ public class Microscope : AbstractGroundInteractive
     {
         examineTimer.Running = false;
         progressBar.gameObject.SetActive(false);
+
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        if (antJar != null)
+            PlaceItem(antJar);
     }
 
     void Update()
@@ -27,11 +44,7 @@ public class Microscope : AbstractGroundInteractive
         {
             if (examineTimer.UpdateEnd)
             {
-                // Show the color of the ant
-                antJar.ShowAntNestTrueColor();
-
-                examineTimer.Running = false;
-                progressBar.gameObject.SetActive(false);
+                ExamineEnd();
                 return;
             }
 
@@ -58,17 +71,36 @@ public class Microscope : AbstractGroundInteractive
 
             antJar.PlayerBehaviour.ClearHandItem();
 
-            antJar.transform.SetParent(offsetPoint, true);
-            antJar.transform.localPosition = Vector3.zero;
-            antJar.transform.localScale = Vector3.one;
+            PlaceItem(item);
 
             if (antJar.HasAnt)
-            {
-                examineTimer.Reset();
-                progressBar.gameObject.SetActive(true);
-            }
+                ExamineStart();
         }
 
         return true;
+    }
+
+    void PlaceItem(AbstractHoldItem item)
+    {
+        item.ChangeRendererSorting(sortingLayerID, sortingOrder);
+        item.transform.SetParent(offsetPoint, true);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localScale = Vector3.one;
+    }
+
+    void ExamineStart()
+    {
+        particleSystem.Play();
+        examineTimer.Reset();
+        progressBar.gameObject.SetActive(true);
+    }
+
+    void ExamineEnd()
+    {
+        antJar.ShowAntNestTrueColor();
+
+        particleSystem.Stop();
+        examineTimer.Running = false;
+        progressBar.gameObject.SetActive(false);
     }
 }

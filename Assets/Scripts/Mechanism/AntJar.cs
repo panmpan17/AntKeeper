@@ -7,6 +7,8 @@ using MPack;
 public class AntJar : AbstractHoldItem
 {
     [SerializeField]
+    private bool preventRepeat = true;
+    [SerializeField]
     private Timer collectTimer;
     [SerializeField]
     private FillBarControl collectProgressBar;
@@ -37,6 +39,8 @@ public class AntJar : AbstractHoldItem
         {
             if (collectTimer.UpdateEnd)
             {
+                PlayerBehaviour.Input.enabled = true;
+
                 collectTimer.Running = false;
                 collectProgressBar.gameObject.SetActive(false);
                 _spriteRenderer.sprite = jarHasAntSprite;
@@ -64,15 +68,27 @@ public class AntJar : AbstractHoldItem
 
         if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNest targetNest, out AntRouteBranch targetBranch))
         {
+            if (HasAnt)
+                return;
+            if (preventRepeat && targetNest.IsShowTrueColor)
+                return;
+
             _targetAntNest = targetNest;
+            PlayerBehaviour.Input.enabled = false;
+
             collectTimer.Reset();
             collectProgressBar.gameObject.SetActive(true);
-            // PlayerBehaviour.
         }
     }
 
     public override void OnInteractEnd()
     {
+    }
+
+    public override void ChangeRendererSorting(int layerID, int order)
+    {
+        _spriteRenderer.sortingLayerID = layerID;
+        _spriteRenderer.sortingOrder = order;
     }
 
     public void ShowAntNestTrueColor()

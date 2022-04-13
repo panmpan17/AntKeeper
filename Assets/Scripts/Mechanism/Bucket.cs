@@ -81,6 +81,13 @@ public class Bucket : AbstractHoldItem
         }
 
         if (FillAmount > 0)
+
+    public override void ChangeRendererSorting(int layerID, int order)
+    {
+        _spriteRenderer.sortingLayerID = layerID;
+        _spriteRenderer.sortingOrder = order;
+    }
+
         {
             _pouring = true;
             transform.rotation = Quaternion.Euler(0, 0, pouringRotationg);

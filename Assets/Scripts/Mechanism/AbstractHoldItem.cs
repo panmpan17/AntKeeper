@@ -17,4 +17,6 @@ public abstract class AbstractHoldItem : MonoBehaviour
     public abstract void OnInteractEnd();
 
     public abstract void OnDash();
+
+    public abstract void ChangeRendererSorting(int layerID, int order);
 }

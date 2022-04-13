@@ -22,8 +22,17 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector3Int SelectedGridPosition { get; private set; }
     public Vector3 SelectedGridCenterPosition { get; private set; }
 
+    [SerializeField]
+    [SortingLayer]
+    private int sortingLayerID;
+    [SerializeField]
+    private int sortingOrder;
+
     private PlayerInput _input;
     private PlayerMovement _movement;
+
+    public PlayerInput Input => _input;
+    public PlayerMovement Movement => _movement;
 
     void Awake()
     {
@@ -143,6 +152,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetHandItem(AbstractHoldItem item)
     {
+        item.ChangeRendererSorting(sortingLayerID, sortingOrder);
+
         holdItem = item;
         holdItem.transform.SetParent(transform, false);
         holdItem.Setup(this);

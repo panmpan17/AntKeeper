@@ -6,14 +6,27 @@ public class WaterHeater : AbstractGroundInteractive
 {
     [SerializeField]
     private float fillSpeed;
+    [SerializeField]
+    [SortingLayer]
+    private int sortingLayerID;
+    [SerializeField]
+    private int sortingOrder;
 
+    [Header("Reference")]
     [SerializeField]
     private Transform offsetPoint;
     [SerializeField]
     private new ParticleSystem particleSystem;
-
     [SerializeField]
     private Bucket filledBucket;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        if (filledBucket != null)
+            PlaceItem(filledBucket);
+    }
 
     void Update()
     {
@@ -30,9 +43,12 @@ public class WaterHeater : AbstractGroundInteractive
 
     public override bool OnEmptyHandInteract(PlayerBehaviour playerBehaviour)
     {
-        playerBehaviour.SetHandItem(filledBucket);
-        filledBucket = null;
-        particleSystem.Stop();
+        if (filledBucket != null)
+        {
+            playerBehaviour.SetHandItem(filledBucket);
+            filledBucket = null;
+            particleSystem.Stop();
+        }
 
         return true;
     }
@@ -45,14 +61,20 @@ public class WaterHeater : AbstractGroundInteractive
 
             filledBucket.PlayerBehaviour.ClearHandItem();
 
-            filledBucket.transform.SetParent(offsetPoint, true);
-            filledBucket.transform.localPosition = Vector3.zero;
-            filledBucket.transform.localScale = Vector3.one;
+            PlaceItem(item);
 
             if (!filledBucket.IsFull)
                 particleSystem.Play();
         }
 
         return true;
+    }
+
+    void PlaceItem(AbstractHoldItem item)
+    {
+        item.ChangeRendererSorting(sortingLayerID, sortingOrder);
+        item.transform.SetParent(offsetPoint, true);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localScale = Vector3.one;
     }
 }

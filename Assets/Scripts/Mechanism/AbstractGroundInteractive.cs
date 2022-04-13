@@ -6,7 +6,7 @@ public abstract class AbstractGroundInteractive : MonoBehaviour
 {
     public Vector3Int GridPosition { get; private set; }
 
-    void Start()
+    protected virtual void Start()
     {
         GridManager.ins.RegisterGroundInteractive(this, out Vector3Int gridPosition);
         GridPosition = gridPosition;
