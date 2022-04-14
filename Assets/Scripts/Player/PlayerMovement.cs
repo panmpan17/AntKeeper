@@ -15,8 +15,12 @@ public class PlayerMovement : MonoBehaviour
     private float walkSpeed;
 
     [SerializeField]
+    [Layer]
+    private int dashIgnoreLayer;
+    [SerializeField]
     private DashInfo dashInfo;
     [SerializeField]
+    [ShortTimer]
     private Timer dashColddownTimer;
     private DashInfo _runningDash;
     // private bool _dashing;
@@ -123,6 +127,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 IsDashing = false;
                 _runningDash.InvokeEndEvent();
+                Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, false);
+
                 OnDashEnded?.Invoke();
             }
             else
@@ -183,8 +189,10 @@ public class PlayerMovement : MonoBehaviour
                     _runningDash.DashForceWithDirection = new Vector2(-dashInfo.Force, 0);
                     break;
             }
-            // _runningDash.DashForceWithDirection = dashInfo.Force *
         }
+
+        // 
+        Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, true);
 
         OnDashPerformed?.Invoke();
     }
