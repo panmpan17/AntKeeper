@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace MapGenerate
 {
     [System.Serializable]
-    public class RandomPlaceProcessor : IMapProcessor
+    public class PerlinNoiseProccessor : IMapProcessor
     {
         [SerializeField]
         [Range(0, 1)]
-        private float coverage;
+        private float step;
+        [SerializeField]
+        private float x;
+        [SerializeField]
+        private float y;
+        [SerializeField]
+        [Range(0, 100)]
+        private float scale;
 
         public void Process(ref int[,] map)
         {
@@ -20,7 +28,11 @@ namespace MapGenerate
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (Random.value <= coverage)
+                    float value = Mathf.PerlinNoise(
+                        this.x + (((float)x) / width * scale),
+                        this.y + (((float)y) / height * scale));
+
+                    if (value >= step)
                         map[x, y] = 1;
                     else
                         map[x, y] = 0;

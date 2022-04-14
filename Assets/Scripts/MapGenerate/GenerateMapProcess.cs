@@ -10,6 +10,7 @@ namespace MapGenerate
         RandomPlace,
         Smooth,
         PlaceCircle,
+        PerlinNoise,
     }
 
     [CreateAssetMenu]
@@ -25,6 +26,7 @@ namespace MapGenerate
             public RandomPlaceProcessor randomPlaceProcessor;
             public SmoothProcessor smoothProcessor;
             public PlaceCircleProcessor placeCircleProcessor;
+            public PerlinNoiseProccessor perlinNoiseProccessor;
         }
     }
 }

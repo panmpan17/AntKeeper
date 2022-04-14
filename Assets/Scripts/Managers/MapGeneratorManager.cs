@@ -99,6 +99,9 @@ namespace MapGenerate
                     case ProcessorType.PlaceCircle:
                         generateMapProcess.processorList[i].placeCircleProcessor.Process(ref map);
                         break;
+                    case ProcessorType.PerlinNoise:
+                        generateMapProcess.processorList[i].perlinNoiseProccessor.Process(ref map);
+                        break;
                 }
             }
 
