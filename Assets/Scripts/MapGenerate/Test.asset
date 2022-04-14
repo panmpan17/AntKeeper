@@ -15,19 +15,33 @@ MonoBehaviour:
   processorList:
   - processorType: 0
     randomPlaceProcessor:
-      randomSeed: 1
-      seed: 893820
-      coverage: 0.491
+      placeItem: 1
+      coverage: 0.186
     smoothProcessor:
       smoothCount: 0
       keepAliveNeighborNeedCount: 0
       becomeAliveNeighborNeedCount: 0
+    placeCircleProcessor:
+      circleMinSize: 0
+      circleMaxSize: 0
+    perlinNoiseProccessor:
+      step: 0
+      x: 0
+      y: 0
+      scale: 0
   - processorType: 1
     randomPlaceProcessor:
-      randomSeed: 0
-      seed: 0
+      placeItem: 0
       coverage: 0
     smoothProcessor:
-      smoothCount: 3
+      smoothCount: 1
       keepAliveNeighborNeedCount: 3
       becomeAliveNeighborNeedCount: 4
+    placeCircleProcessor:
+      circleMinSize: 0
+      circleMaxSize: 0
+    perlinNoiseProccessor:
+      step: 0
+      x: 0
+      y: 0
+      scale: 0

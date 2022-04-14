@@ -8,6 +8,8 @@ namespace MapGenerate
     public class PlaceCircleProcessor : IMapProcessor
     {
         [SerializeField]
+        private PlaceItem placeItem;
+        [SerializeField]
         [Range(1, 100)]
         private int circleMinSize;
         [SerializeField]
@@ -32,7 +34,9 @@ namespace MapGenerate
                     Vector2 position = new Vector2(x, y);
 
                     if ((center - position).sqrMagnitude < size * size)
-                        map[x, y] = 1;
+                    {
+                        map[x, y] = (int) ((PlaceItem)map[x, y] | placeItem);
+                    }
                 }
             }
         }

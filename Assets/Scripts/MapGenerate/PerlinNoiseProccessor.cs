@@ -9,6 +9,8 @@ namespace MapGenerate
     public class PerlinNoiseProccessor : IMapProcessor
     {
         [SerializeField]
+        private PlaceItem placeItem;
+        [SerializeField]
         [Range(0, 1)]
         private float step;
         [SerializeField]
@@ -33,9 +35,9 @@ namespace MapGenerate
                         this.y + (((float)y) / height * scale));
 
                     if (value >= step)
-                        map[x, y] = 1;
-                    else
-                        map[x, y] = 0;
+                    {
+                        map[x, y] = (int)((PlaceItem)map[x, y] | placeItem);
+                    }
                 }
             }
         }

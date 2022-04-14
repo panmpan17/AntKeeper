@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fe8c0b7f42f466ab1e50241e8329ad, type: 3}
-  m_Name: TestPerlinNoise
+  m_Name: PlaceAnimal
   m_EditorClassIdentifier: 
   processorList:
   - processorType: 3
     randomPlaceProcessor:
-      coverage: 0.546
+      placeItem: 2
+      coverage: 0.044
     smoothProcessor:
-      smoothCount: 0
-      keepAliveNeighborNeedCount: 0
-      becomeAliveNeighborNeedCount: 0
+      smoothCount: 3
+      keepAliveNeighborNeedCount: 4
+      becomeAliveNeighborNeedCount: 5
     placeCircleProcessor:
-      circleMinSize: 0
-      circleMaxSize: 0
+      placeItem: 0
+      circleMinSize: 15
+      circleMaxSize: 43
     perlinNoiseProccessor:
-      step: 0.411
+      placeItem: 2
+      step: 0.736
       x: 0
       y: 0
-      scale: 7.3
+      scale: 24.9

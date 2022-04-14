@@ -23,18 +23,23 @@ namespace MapGenerate
         private int height;
 
         [SerializeField]
-        private GenerateMapProcess generateMapProcess;
+        private GenerateMapProcess[] generateMapProcess;
 
-        [Header("Place map setting")]
+        [Header("Tilemap")]
         [SerializeField]
         private Tilemap baseMap;
         [SerializeField]
-        private Tile[] baseMapTileSet;
-
-        [SerializeField]
         private Tilemap wallMap;
         [SerializeField]
+        private Transform animalCollection;
+
+        [Header("Place Item")]
+        [SerializeField]
+        private Tile grassTile;
+        [SerializeField]
         private Tile wallTile;
+        [SerializeField]
+        private GameObject animalPrefab;
 
         void Start()
         {
@@ -46,6 +51,18 @@ namespace MapGenerate
         {
             baseMap.ClearAllTiles();
             wallMap.ClearAllTiles();
+
+            while (animalCollection.childCount > 0)
+            {
+#if UNITY_EDITOR
+                if (!EditorApplication.isPlaying)
+                    DestroyImmediate(animalCollection.GetChild(0).gameObject);
+                else
+                    Destroy(animalCollection.GetChild(0).gameObject);
+#else
+                    Destroy(animalCollection.GetChild(0).gameObject);
+#endif
+            }
         }
 
         public void Generate()
@@ -61,20 +78,53 @@ namespace MapGenerate
             {
                 for (int y = 0; y < height; y++)
                 {
+                    Vector3Int gridPosition = new Vector3Int(x - xOffset, y - yOffset, 0);
+
                     int cell = map[x, y];
                     int neighborCount = SmoothProcessor.CountFourNeighbor(map, x, y);
                     if (cell == 0 && neighborCount > 0 && neighborCount < 4)
                     {
-                        edgeTiles.Add(new Vector3Int(x - xOffset, y - yOffset, 0));
+                        edgeTiles.Add(gridPosition);
                     }
 
-                    baseMap.SetTile(new Vector3Int(x - xOffset, y - yOffset, 0), baseMapTileSet[cell]);
+                    PlaceTile(gridPosition, cell);
                 }
             }
 
             for (int i = 0; i < edgeTiles.Count; i++)
             {
                 wallMap.SetTile(edgeTiles[i], wallTile);
+            }
+        }
+
+        void PlaceTile(Vector3Int position, int cell)
+        {
+            var item = (PlaceItem) cell;
+
+            var hasGrass = (item & PlaceItem.Grass) == PlaceItem.Grass;
+            var hasAnimal = (item & PlaceItem.Animal) == PlaceItem.Animal;
+
+            if (hasGrass)
+            {
+                baseMap.SetTile(position, grassTile);
+
+                if (hasAnimal)
+                {
+                    GameObject newAnimal;
+#if UNITY_EDITOR
+                    if (!EditorApplication.isPlaying)
+                    {
+                        newAnimal = (GameObject)PrefabUtility.InstantiatePrefab(animalPrefab, animalCollection);
+                    }
+                    else
+                        newAnimal = Instantiate(animalPrefab, animalCollection);
+#else
+                    newAnimal = Instantiate(animalPrefab, animalCollection);
+#endif
+
+                    // GameObject newAnimal = Instantiate(animalPrefab, animalCollection);
+                    newAnimal.transform.position = baseMap.GetCellCenterWorld(position);
+                }
             }
         }
 
@@ -86,22 +136,26 @@ namespace MapGenerate
                 seed = Random.Range(0, 1000000);
             Random.InitState(seed);
 
-            for (int i = 0; i < generateMapProcess.processorList.Length; i++)
+            for (int i = 0; i < generateMapProcess.Length; i++)
             {
-                switch (generateMapProcess.processorList[i].processorType)
+                for (int e = 0; e < generateMapProcess[i].processorList.Length; e++)
                 {
-                    case ProcessorType.RandomPlace:
-                        generateMapProcess.processorList[i].randomPlaceProcessor.Process(ref map);
-                        break;
-                    case ProcessorType.Smooth:
-                        generateMapProcess.processorList[i].smoothProcessor.Process(ref map);
-                        break;
-                    case ProcessorType.PlaceCircle:
-                        generateMapProcess.processorList[i].placeCircleProcessor.Process(ref map);
-                        break;
-                    case ProcessorType.PerlinNoise:
-                        generateMapProcess.processorList[i].perlinNoiseProccessor.Process(ref map);
-                        break;
+                    GenerateMapProcess.ProcessorRule process = generateMapProcess[i].processorList[e];
+                    switch (process.processorType)
+                    {
+                        case ProcessorType.RandomPlace:
+                            process.randomPlaceProcessor.Process(ref map);
+                            break;
+                        case ProcessorType.Smooth:
+                            process.smoothProcessor.Process(ref map);
+                            break;
+                        case ProcessorType.PlaceCircle:
+                            process.placeCircleProcessor.Process(ref map);
+                            break;
+                        case ProcessorType.PerlinNoise:
+                            process.perlinNoiseProccessor.Process(ref map);
+                            break;
+                    }
                 }
             }
 

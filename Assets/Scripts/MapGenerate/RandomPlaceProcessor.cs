@@ -4,9 +4,19 @@ using UnityEngine;
 
 namespace MapGenerate
 {
+    [System.Flags]
+    public enum PlaceItem
+    {
+        None = 0,
+        Grass = 1,
+        Animal = 2,
+    }
+
     [System.Serializable]
     public class RandomPlaceProcessor : IMapProcessor
     {
+        [SerializeField]
+        private PlaceItem placeItem;
         [SerializeField]
         [Range(0, 1)]
         private float coverage;
@@ -21,9 +31,9 @@ namespace MapGenerate
                 for (int y = 0; y < height; y++)
                 {
                     if (Random.value <= coverage)
-                        map[x, y] = 1;
-                    else
-                        map[x, y] = 0;
+                    {
+                        map[x, y] = (int) ((PlaceItem)map[x, y] | placeItem);
+                    }
                 }
             }
         }
