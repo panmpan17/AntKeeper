@@ -6,6 +6,7 @@ using MPack;
 public class Microscope : AbstractGroundInteractive
 {
     [SerializeField]
+    [ShortTimer]
     private Timer examineTimer;
     [SerializeField]
     [SortingLayer]

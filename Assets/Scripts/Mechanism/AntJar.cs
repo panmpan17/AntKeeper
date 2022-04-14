@@ -9,6 +9,7 @@ public class AntJar : AbstractHoldItem
     [SerializeField]
     private bool preventRepeat = true;
     [SerializeField]
+    [ShortTimer]
     private Timer collectTimer;
     [SerializeField]
     private FillBarControl collectProgressBar;

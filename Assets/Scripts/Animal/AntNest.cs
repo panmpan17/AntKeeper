@@ -59,21 +59,21 @@ public class AntNest : MonoBehaviour
     [SerializeField]
     private IntRangeReference startedSize;
 
-    private int size {
-        get => _size;
+    private int routeSize {
+        get => _routeSize;
         set {
-            _size = value;
+            _routeSize = value;
 
             if (lineRenderer.startColor == hiddenColorReference.Value)
             {
-                if (_size >= showTrueColorAfterSize)
+                if (_routeSize >= showTrueColorAfterSize)
                 {
                     ChangeRouteLineRendererColor(trueColorReference.Value);
                 }
             }
         }
     }
-    private int _size;
+    private int _routeSize;
 
     private List<AntRouteBranch> _routeBranches;
 
@@ -168,7 +168,7 @@ public class AntNest : MonoBehaviour
                 {
                     if (!overlapBranch.IsConnectedToNest)
                     {
-                        size++;
+                        routeSize++;
                         overlapBranch.IsConnectedToNest = true;
                         branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
                         branch.AddBranchOff(overlapBranch);
@@ -177,7 +177,7 @@ public class AntNest : MonoBehaviour
                 }
                 else
                 {
-                    size++;
+                    routeSize++;
                     branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
                     routeMap.SetTile(position, routeTile);
                     return true;
@@ -198,7 +198,7 @@ public class AntNest : MonoBehaviour
                     );
                 newBranch.AddGrowPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
 
-                size++;
+                routeSize++;
                 branch.AddBranchOff(newBranch);
                 _routeBranches.Add(newBranch);
 
@@ -237,6 +237,7 @@ public class AntNest : MonoBehaviour
 
         if (branch.IsEmpty)
         {
+            // Prevent root branch
             int index = _routeBranches.IndexOf(branch);
             if (index > 3)
             {
