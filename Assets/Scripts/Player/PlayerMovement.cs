@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private float walkSpeed;
 
     [SerializeField]
+    private bool dashUseIgnoreLayer;
+    [SerializeField]
     [Layer]
     private int dashIgnoreLayer;
     [SerializeField]
@@ -127,7 +129,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 IsDashing = false;
                 _runningDash.InvokeEndEvent();
-                Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, false);
+
+                if (dashUseIgnoreLayer)
+                    Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, false);
 
                 OnDashEnded?.Invoke();
             }
@@ -191,8 +195,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // 
-        Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, true);
+        if (dashUseIgnoreLayer)
+            Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, true);
 
         OnDashPerformed?.Invoke();
     }

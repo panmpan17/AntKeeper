@@ -312,7 +312,7 @@ public class AntRouteBranch
 
     public void OnDestroy()
     {
-        GameObject.Destroy(_lineRenderer);
+        GameObject.Destroy(_lineRenderer.gameObject);
     }
     #endregion
 }

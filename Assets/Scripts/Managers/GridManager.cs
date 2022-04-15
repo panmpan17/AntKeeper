@@ -44,6 +44,10 @@ public class GridManager : MonoBehaviour
     {
         _antNests.Add(antNest);
     }
+    public void UnregisterAntNest(AntNest antNest)
+    {
+        _antNests.Remove(antNest);
+    }
 
     public void ReigsterAnimal(VirtualAnimalSpot animalSpot, out Vector3Int gridPosition)
     {
@@ -95,6 +99,17 @@ public class GridManager : MonoBehaviour
 
         animalSpot = null;
         return false;
+    }
+
+    public int CountAliveAnimal()
+    {
+        int count = 0;
+        for (int i = 0; i < _animals.Count; i++)
+        {
+            if (_animals[i].IsAlive)
+                count++;
+        }
+        return count;
     }
 
     public bool RaycastCell(Vector3 position, out Vector3Int cellPosition, out Vector3 centerPosition)

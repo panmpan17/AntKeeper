@@ -7,6 +7,8 @@ using MPack;
 
 public class HUDManager : MonoBehaviour
 {
+    public static HUDManager ins;
+
     [SerializeField]
     private TextMeshProUGUI timeText;
 
@@ -32,9 +34,20 @@ public class HUDManager : MonoBehaviour
     private bool _startDanger;
     private int _rotateCount;
 
+    [SerializeField]
+    [Space(10)]
+    [Header("Animal")]
+    private TextMeshProUGUI animalCountText;
+
+    void Awake()
+    {
+        ins = this;
+    }
+
     void Start()
     {
         GameManager.ins.GameTimeChanged += OnGameTimeChange;
+        UpdateAnimalCount();
     }
 
     void Update()
@@ -83,5 +96,10 @@ public class HUDManager : MonoBehaviour
         var minute = gameTime / 60;
         var second = gameTime % 60;
         timeText.text = string.Format("Time {0}:{1}", minute, second.ToString("D2"));
+    }
+
+    public void UpdateAnimalCount()
+    {
+        animalCountText.text = string.Format("Animal Count {0}", GridManager.ins.CountAliveAnimal());
     }
 }

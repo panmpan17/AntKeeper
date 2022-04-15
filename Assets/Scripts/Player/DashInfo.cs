@@ -8,6 +8,7 @@ using MPack;
 public struct DashInfo
 {
     public float Force;
+    [ShortTimer]
     public Timer Timer;
     public AnimationCurve Curve;
 

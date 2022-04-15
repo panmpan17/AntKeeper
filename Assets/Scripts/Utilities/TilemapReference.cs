@@ -8,4 +8,5 @@ using UnityEngine.Tilemaps;
 public class TilemapReference : ScriptableObject
 {
     public Tilemap Tilemap;
+    public RuleTile ColliderTile;
 }

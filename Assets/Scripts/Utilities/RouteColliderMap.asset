@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RouteColliderMap
   m_EditorClassIdentifier: 
   Tilemap: {fileID: 0}
+  ColliderTile: {fileID: 11400000, guid: 48dcb517f34804f0b81aff4346a421bb, type: 2}

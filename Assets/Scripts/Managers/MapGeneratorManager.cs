@@ -72,7 +72,7 @@ namespace MapGenerate
             int xOffset = width / 2;
             int yOffset = height / 2;
 
-            List<Vector3Int> edgeTiles = new List<Vector3Int>();
+            // List<Vector3Int> edgeTiles = new List<Vector3Int>();
 
             for (int x = 0; x < width; x++)
             {
@@ -81,20 +81,14 @@ namespace MapGenerate
                     Vector3Int gridPosition = new Vector3Int(x - xOffset, y - yOffset, 0);
 
                     int cell = map[x, y];
-                    int neighborCount = SmoothProcessor.CountFourNeighbor(map, x, y);
-                    if (cell == 0 && neighborCount > 0 && neighborCount < 4)
-                    {
-                        edgeTiles.Add(gridPosition);
-                    }
-
-                    PlaceTile(gridPosition, cell);
+                    PlaceTile(gridPosition, map[x, y]);
                 }
             }
 
-            for (int i = 0; i < edgeTiles.Count; i++)
-            {
-                wallMap.SetTile(edgeTiles[i], wallTile);
-            }
+            // for (int i = 0; i < edgeTiles.Count; i++)
+            // {
+            //     wallMap.SetTile(edgeTiles[i], wallTile);
+            // }
         }
 
         void PlaceTile(Vector3Int position, int cell)
@@ -125,6 +119,10 @@ namespace MapGenerate
                     // GameObject newAnimal = Instantiate(animalPrefab, animalCollection);
                     newAnimal.transform.position = baseMap.GetCellCenterWorld(position);
                 }
+            }
+            else
+            {
+                wallMap.SetTile(position, wallTile);
             }
         }
 

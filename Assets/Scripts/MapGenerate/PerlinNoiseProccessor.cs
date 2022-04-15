@@ -14,15 +14,18 @@ namespace MapGenerate
         [Range(0, 1)]
         private float step;
         [SerializeField]
-        private float x;
+        private bool randomOffset;
         [SerializeField]
-        private float y;
+        private Vector2 offset;
         [SerializeField]
         [Range(0, 100)]
         private float scale;
 
         public void Process(ref int[,] map)
         {
+            if (randomOffset)
+                offset = new Vector2(Random.Range(-100, 100f), Random.Range(-100, 100f));
+
             int width = map.GetLength(0);
             int height = map.GetLength(1);
 
@@ -31,8 +34,8 @@ namespace MapGenerate
                 for (int y = 0; y < height; y++)
                 {
                     float value = Mathf.PerlinNoise(
-                        this.x + (((float)x) / width * scale),
-                        this.y + (((float)y) / height * scale));
+                        offset.x + (((float)x) / width * scale),
+                        offset.y + (((float)y) / height * scale));
 
                     if (value >= step)
                     {

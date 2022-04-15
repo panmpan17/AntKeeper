@@ -137,6 +137,8 @@ public class Bucket : AbstractHoldItem
         fillBar.transform.localScale = _fillBarLocalScale;
     }
 
+
+    #region Animation sprite
     void ApplyPourAnimation()
     {
         switch (PlayerBehaviour.Movement.Facing)
@@ -255,6 +257,7 @@ public class Bucket : AbstractHoldItem
 
         public enum TransitionType { Rotation, Sprite }
     }
+    #endregion
 }
 
 [System.Serializable]

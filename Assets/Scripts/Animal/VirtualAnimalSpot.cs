@@ -9,12 +9,15 @@ public class VirtualAnimalSpot : MonoBehaviour
     [SerializeField]
     protected float health;
 
+    public bool IsAlive { get; protected set; }
+
     protected SpriteRenderer _spriteRenderer;
     public Vector3Int GridPosition { get; protected set; }
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        IsAlive = true;
     }
 
     void Start()
@@ -26,5 +29,8 @@ public class VirtualAnimalSpot : MonoBehaviour
     public void Kill()
     {
         _spriteRenderer.sprite = emptySprite;
+        IsAlive = false;
+
+        HUDManager.ins.UpdateAnimalCount();
     }
 }
