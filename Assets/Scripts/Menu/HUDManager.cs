@@ -36,18 +36,45 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField]
     [Space(10)]
-    [Header("Animal")]
+    [Header("Count")]
     private TextMeshProUGUI animalCountText;
+    [SerializeField]
+    private TextMeshProUGUI fireAntCountText;
+
+    [SerializeField]
+    private TextMeshProUGUI startCountDownText;
+
+    private Canvas _canvas;
 
     void Awake()
     {
         ins = this;
+
+        timeText.gameObject.SetActive(false);
+        animalCountText.gameObject.SetActive(false);
+        fireAntCountText.gameObject.SetActive(false);
+        startCountDownText.gameObject.SetActive(true);
+        startCountDownText.text = "";
+
+        _canvas = GetComponent<Canvas>();
     }
 
-    void Start()
+    IEnumerator Start()
     {
         GameManager.ins.GameTimeChanged += OnGameTimeChange;
+
+        yield return new WaitForEndOfFrame();
+
         UpdateAnimalCount();
+    }
+
+    void OnEnable()
+    {
+        _canvas.enabled = true;
+    }
+    void OnDisable()
+    {
+        _canvas.enabled = false;
     }
 
     void Update()
@@ -100,6 +127,23 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateAnimalCount()
     {
-        animalCountText.text = string.Format("Animal Count {0}", GridManager.ins.CountAliveAnimal());
+        animalCountText.text = string.Format("Animal {0}", GridManager.ins.CountAliveAnimal());
+    }
+
+    public void UpdateFireAntCount()
+    {
+        fireAntCountText.text = string.Format("FireAnt {0}", GridManager.ins.CountFireAnt());
+    }
+
+    public void ChangeCountDownText(string text)
+    {
+        startCountDownText.text = text;
+    }
+    public void HideCountDownText()
+    {
+        startCountDownText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(true);
+        animalCountText.gameObject.SetActive(true);
+        fireAntCountText.gameObject.SetActive(true);
     }
 }
