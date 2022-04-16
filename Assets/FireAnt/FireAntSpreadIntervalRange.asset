@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708a91b573e2436eb66f0fee5488718, type: 3}
   m_Name: FireAntSpreadIntervalRange
   m_EditorClassIdentifier: 
-  Min: 0
-  Max: 0
+  Min: 15
+  Max: 20

@@ -172,7 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799bd89de0684628ba4559878b43b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routeMapReference: {fileID: 11400000, guid: 353a5d13fefa74d3f9a53bb1b72ab8da, type: 2}
+  isFireAnt: 1
+  tilemapReference: {fileID: 11400000, guid: 353a5d13fefa74d3f9a53bb1b72ab8da, type: 2}
   spriteRenderer: {fileID: 5978141897822157060}
   lineRenderer: {fileID: 7980305351446180888}
   growRouteInterval: {fileID: 11400000, guid: 05b7161d7ad1f4d54b99cee9af748fae, type: 2}
@@ -184,7 +185,7 @@ MonoBehaviour:
   spriteGrowByRouteRange: {fileID: 11400000, guid: 024bb3e5db08643b0bc00f59f17d46a2, type: 2}
   spriteKillResistent: 90
   spreadRangeReference: {fileID: 11400000, guid: e8700a8d1a84a4665993a38078ee7617, type: 2}
-  spreadIntervalReference: {fileID: 0}
+  spreadIntervalReference: {fileID: 11400000, guid: 9716499bc94d24b33b563e446be245b8, type: 2}
   killAnimalInterval: {fileID: 11400000, guid: 2e03cc288a3794a2a857f4dfee2f5806, type: 2}
   hiddenColorReference: {fileID: 11400000, guid: 13bedb9d8c7d04311bfb395925ea9d30, type: 2}
   trueColorReference: {fileID: 11400000, guid: c26e7a789e25146cca5852aae843c41b, type: 2}
