@@ -57,10 +57,19 @@ public class WaterHeater : AbstractGroundInteractive
     {
         if (item.GetType() == typeof(Bucket))
         {
-            filledBucket = (Bucket)item;
+            var newBucket = (Bucket)item;
 
-            filledBucket.PlayerBehaviour.ClearHandItem();
+            if (filledBucket != null)
+            {
+                item.PlayerBehaviour.SetHandItem(filledBucket);
+                particleSystem.Stop();
+            }
+            else
+            {
+                newBucket.PlayerBehaviour.ClearHandItem();
+            }
 
+            filledBucket = newBucket;
             PlaceItem(item);
 
             if (!filledBucket.IsFull)

@@ -41,6 +41,11 @@ public class PlayerAnimation : MonoBehaviour
         footStepParticleMain = footStepParticle.main;
     }
 
+
+    public void ChangeFacingAnimation()
+    {
+        ChangeFacingAnimation(_movement.Facing);
+    }
     public void ChangeFacingAnimation(Facing newFacing)
     {
         switch (newFacing)

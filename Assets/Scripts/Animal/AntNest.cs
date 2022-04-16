@@ -14,10 +14,15 @@ public class AntNest : MonoBehaviour
         new Vector3Int(0, 1, 0),
     };
 
+
+    [SerializeField]
+    private bool isFireAnt;
+    public bool IsFireAnt => isFireAnt;
+
     [Header("Reference")]
     [SerializeField]
-    private TilemapReference routeMapReference;
-    private Tilemap routeMap => routeMapReference.Tilemap;
+    private TilemapReference tilemapReference;
+    private Tilemap routeMap => tilemapReference.Tilemap;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
@@ -56,6 +61,8 @@ public class AntNest : MonoBehaviour
     private RangeReference spreadIntervalReference;
     private Timer _spreadIntervalTimer;
 
+    public bool CanSpreadNewNest => _spriteSize >= spriteSizeRange.Max;
+
     [Header("Kill Animal settings")]
     [SerializeField]
     private RangeReference killAnimalInterval;
@@ -89,6 +96,7 @@ public class AntNest : MonoBehaviour
         _maxRouteSize = maxRouteSizeReference.PickRandomNumber();
         _growRouteTimer = new Timer(growRouteInterval.PickRandomNumber());
         _killAnimalTimer = new Timer(killAnimalInterval.PickRandomNumber());
+        _spreadIntervalTimer = new Timer(spreadIntervalReference.PickRandomNumber());
 
         _spriteSize = spriteSizeRange.Min;
         spriteRenderer.transform.localScale = new Vector3(_spriteSize, _spriteSize, _spriteSize);
@@ -98,7 +106,7 @@ public class AntNest : MonoBehaviour
     void Start()
     {
         rootPosition = routeMap.WorldToCell(transform.position);
-        routeMap.SetTile(rootPosition, routeMapReference.ColliderTile);
+        routeMap.SetTile(rootPosition, tilemapReference.ColliderTile);
 
         for (int i = 0; i < FourDirections.Length; i++)
         {
@@ -137,6 +145,15 @@ public class AntNest : MonoBehaviour
             }
         }
 
+        if (CanSpreadNewNest && _spreadIntervalTimer.UpdateEnd)
+        {
+            if (TrySpreadNewNest())
+            {
+                _spreadIntervalTimer.Reset();
+                _spreadIntervalTimer.TargetTime = spreadIntervalReference.PickRandomNumber();
+            }
+        }
+
         // Update branches not connected die timer
         for (int i = 0; i < _routeBranches.Count; i++)
         {
@@ -153,38 +170,28 @@ public class AntNest : MonoBehaviour
     }
 
 
-    #region Branch expand
+    #region Expand
     bool TryExpandBranch()
     {
-        int index = Random.Range(0, _routeBranches.Count);
-        AntRouteBranch branch = _routeBranches[index];
+        AntRouteBranch branch = _routeBranches[Random.Range(0, _routeBranches.Count)];
         if (!branch.IsConnectedToNest)
             return false;
 
-        float randomValue = Random.value;
-
-        if (randomValue > branchOffChance)
+        if (Random.value > branchOffChance)
         {
-            if (branch.Size < _maxRouteSize)
-            {
-                if (TryGrowBranch(branch))
-                    return true;
-            }
+            return TryGrowBranch(branch);
         }
-        else if (branch.FindPotentialBranchOff(out BranchData newBranchData))
+        else
         {
-            if (newBranchData.ExccedPositionCount < _maxRouteSize && !IsGridPositionOverlapBranch(newBranchData.NextPosition))
-            {
-                BranchOffFromBranch(branch, newBranchData);
-                return true;
-            }
+            return TryBranchOffFromBranch(branch);
         }
-
-        return false;
     }
 
     bool TryGrowBranch(AntRouteBranch branch)
     {
+        if (branch.Size >= _maxRouteSize)
+            return false;
+
         Vector3Int position = branch.FindNextGrowPosition();
 
         if (position == rootPosition)
@@ -199,6 +206,8 @@ public class AntNest : MonoBehaviour
 
     bool GrowBranchInGridPosition(AntRouteBranch branch, Vector3Int position)
     {
+        if (!GridManager.ins.CheckGroundAvalibleForAnt(position))
+            return false;
         if (IsGridPositionOverlapBranch(position, out AntRouteBranch overlapBranch))
         {
             if (!overlapBranch.IsConnectedToNest)
@@ -214,12 +223,21 @@ public class AntNest : MonoBehaviour
 
         RouteSizeIncrease();
         branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
-        routeMap.SetTile(position, routeMapReference.ColliderTile);
+        routeMap.SetTile(position, tilemapReference.ColliderTile);
         return true;
     }
 
-    void BranchOffFromBranch(AntRouteBranch branch, BranchData newBranchData)
+    bool TryBranchOffFromBranch(AntRouteBranch branch)
     {
+        if (!branch.FindPotentialBranchOff(out BranchData newBranchData))
+            return false;
+        if (newBranchData.ExccedPositionCount >= _maxRouteSize)
+            return false;
+        if (!GridManager.ins.CheckGroundAvalibleForAnt(newBranchData.NextPosition))
+            return false;
+        if (IsGridPositionOverlapBranch(newBranchData.NextPosition))
+            return false;
+
         AntRouteBranch newBranch = new AntRouteBranch(
             newBranchData.Root,
             routeMap.GetCellCenterWorld(newBranchData.Root),
@@ -234,7 +252,8 @@ public class AntNest : MonoBehaviour
         branch.AddBranchOff(newBranch);
         _routeBranches.Add(newBranch);
 
-        routeMap.SetTile(newBranchData.NextPosition, routeMapReference.ColliderTile);
+        routeMap.SetTile(newBranchData.NextPosition, tilemapReference.ColliderTile);
+        return true;
     }
 
     void RouteSizeIncrease()
@@ -260,9 +279,20 @@ public class AntNest : MonoBehaviour
         }
     }
 
+
+    bool TrySpreadNewNest()
+    {
+        Vector2 relativeVector = Random.insideUnitCircle;
+        relativeVector.Normalize();
+        relativeVector *= spreadRangeReference.PickRandomNumber();
+
+        Vector3Int gridPosition = routeMap.WorldToCell(transform.position + (Vector3)relativeVector);
+        return GridManager.ins.InstantiateAntNestOnGrid(gridPosition, IsFireAnt);
+    }
     #endregion
 
 
+    #region Kill and destroy
     bool TryKillAnimal()
     {
         Vector3Int position = _routeBranches[Random.Range(0, _routeBranches.Count)].PickRandomPosition();
@@ -330,6 +360,7 @@ public class AntNest : MonoBehaviour
         routeMap.SetTile(rootPosition, null);
         Destroy(gameObject);
     }
+    #endregion
 
 
     #region Utilties
