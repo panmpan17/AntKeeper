@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
 
-    public event System.Action<Facing> OnFacingChange;
+    public event System.Action OnFacingChange;
     public event System.Action OnPositionChange;
     public event System.Action OnDashPerformed;
     public event System.Action OnDashEnded;
@@ -156,8 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyFacing(Facing newFacing)
     {
-        OnFacingChange?.Invoke(newFacing);
         _facing = newFacing;
+        OnFacingChange?.Invoke();
     }
 
     void Dash()

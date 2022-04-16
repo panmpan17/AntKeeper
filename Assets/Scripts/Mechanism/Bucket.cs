@@ -64,9 +64,13 @@ public class Bucket : AbstractHoldItem
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        FillAmount = maxFillAmount;
         _fillBarLocalPosition = fillBar.transform.localPosition;
         _fillBarLocalScale = fillBar.transform.localScale;
+    }
+
+    void Start()
+    {
+        FillAmount = maxFillAmount;
     }
 
     void Update()
@@ -104,6 +108,13 @@ public class Bucket : AbstractHoldItem
             PourEnd();
     }
 
+    public override void OnFacingChanged()
+    {
+        if (_pouring)
+        {
+            ApplyPourAnimation();
+        }
+    }
     public override void OnDash()
     {
         if (_pouring)
@@ -164,8 +175,10 @@ public class Bucket : AbstractHoldItem
         {
             case PourAnimation.TransitionType.Rotation:
                 transform.rotation = Quaternion.Euler(0, 0, pourAnimation.Rotation);
+                _spriteRenderer.sprite = UseFullBucketSprite ? fullBucket : emptyBucket;
                 break;
             case PourAnimation.TransitionType.Sprite:
+                transform.rotation = Quaternion.identity;
                 _spriteRenderer.sprite = UseFullBucketSprite ? pourAnimation.FullSprite : pourAnimation.EmptySprite;
                 break;
         }
@@ -174,6 +187,11 @@ public class Bucket : AbstractHoldItem
         {
             fillBar.transform.localPosition = pourAnimation.LocalPosition;
             fillBar.transform.localScale = pourAnimation.LocalScale;
+        }
+        else
+        {
+            fillBar.transform.localPosition = _fillBarLocalPosition;
+            fillBar.transform.localScale = _fillBarLocalScale;
         }
     }
 

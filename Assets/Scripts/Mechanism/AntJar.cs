@@ -82,9 +82,8 @@ public class AntJar : AbstractHoldItem
         }
     }
 
-    public override void OnInteractEnd()
-    {
-    }
+    public override void OnInteractEnd() {}
+    public override void OnFacingChanged() {}
 
     public override void ChangeRendererSorting(int layerID, int order)
     {

@@ -83,27 +83,34 @@ public class PlayerBehaviour : MonoBehaviour
 
 
     #region Player Movement Event
+    public void ChangeHoldItemPosition()
+    {
+        ChangeHoldItemPosition(_movement.Facing);
+    }
     public void ChangeHoldItemPosition(Facing newFacing)
     {
         switch (newFacing)
         {
             case Facing.Up:
-                if (holdItem != null)
+                if (holdItem)
                     holdItem.transform.localPosition = faceUpSetting.HoldItemPosition;
                 break;
             case Facing.Down:
-                if (holdItem != null)
+                if (holdItem)
                     holdItem.transform.localPosition = faceDownSetting.HoldItemPosition;
                 break;
             case Facing.Right:
-                if (holdItem != null)
+                if (holdItem)
                     holdItem.transform.localPosition = faceRightSetting.HoldItemPosition;
                 break;
             case Facing.Left:
-                if (holdItem != null)
+                if (holdItem)
                     holdItem.transform.localPosition = faceLeftSetting.HoldItemPosition;
                 break;
         }
+
+        if (holdItem)
+            holdItem.OnFacingChanged();
     }
 
     void ChangeSelectedGrid()
