@@ -44,6 +44,12 @@ TagManager:
   - name: Background
     uniqueID: 2523993819
     locked: 0
+  - name: AntRoute
+    uniqueID: 501663925
+    locked: 0
+  - name: Decorate
+    uniqueID: 1234333105
+    locked: 0
   - name: Ant
     uniqueID: 1446004333
     locked: 0

@@ -248,11 +248,11 @@ public class AntNest : MonoBehaviour
             );
         newBranch.AddGrowPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
 
-        RouteSizeIncrease();
         branch.AddBranchOff(newBranch);
         _routeBranches.Add(newBranch);
-
         routeMap.SetTile(newBranchData.NextPosition, tilemapReference.ColliderTile);
+
+        RouteSizeIncrease();
         return true;
     }
 

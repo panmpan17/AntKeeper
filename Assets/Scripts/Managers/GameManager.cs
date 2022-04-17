@@ -13,8 +13,13 @@ public class GameManager : MonoBehaviour
     public event System.Action<int> GameTimeChanged;
     private Timer _oneSecondTimer = new Timer(1);
 
+    public event System.Action OnGameReady;
+    public event System.Action OnGameStart;
+
     #if UNITY_EDITOR
     [Header("Editor Only")]
+    [SerializeField]
+    private bool skipStartCountDown;
     [SerializeField]
     private ValueWithEnable<int> overrideGameTime;
     [SerializeField]
@@ -29,14 +34,32 @@ public class GameManager : MonoBehaviour
             gameTime = overrideGameTime.Value;
     }
 
-    IEnumerator Start()
+    public void StartGame()
     {
-        Time.timeScale = 0;
+        enabled = true;
+        GameTimeChanged?.Invoke(gameTime);
 
-        yield return new WaitForEndOfFrame();
-        GameTimeChanged.Invoke(gameTime);
+        HUDManager.ins.enabled = true;
 
-        var waitOneSec = new WaitForSecondsRealtime(1.5f);
+        OnGameReady?.Invoke();
+
+        if (skipStartCountDown)
+        {
+            CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
+            HUDManager.ins.UpdateAnimalCount();
+            HUDManager.ins.HideCountDownText();
+            Time.timeScale = 1;
+            OnGameStart?.Invoke();
+        }
+        else
+        {
+            StartCoroutine(StartCountDown());
+        }
+    }
+
+    IEnumerator StartCountDown()
+    {
+        var waitOneSec = new WaitForSecondsRealtime(1.2f);
 
         yield return new WaitForSecondsRealtime(0.5f);
         HUDManager.ins.ChangeCountDownText("Ready?");
@@ -54,8 +77,10 @@ public class GameManager : MonoBehaviour
         HUDManager.ins.ChangeCountDownText("Start!");
 
         yield return waitOneSec;
+        HUDManager.ins.UpdateAnimalCount();
         HUDManager.ins.HideCountDownText();
         Time.timeScale = 1;
+        OnGameStart?.Invoke();
     }
 
     void Update()

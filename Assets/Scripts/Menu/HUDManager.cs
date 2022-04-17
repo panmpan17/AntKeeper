@@ -57,15 +57,12 @@ public class HUDManager : MonoBehaviour
         startCountDownText.text = "";
 
         _canvas = GetComponent<Canvas>();
+        enabled = false;
     }
 
-    IEnumerator Start()
+    void Start()
     {
         GameManager.ins.GameTimeChanged += OnGameTimeChange;
-
-        yield return new WaitForEndOfFrame();
-
-        UpdateAnimalCount();
     }
 
     void OnEnable()

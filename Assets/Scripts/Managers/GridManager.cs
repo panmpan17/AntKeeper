@@ -41,6 +41,11 @@ public class GridManager : MonoBehaviour
         routeColliderMapReference.Tilemap = routeColliderMap;
     }
 
+    void Start()
+    {
+        GameManager.ins.OnGameReady += delegate { antNestCollection.gameObject.SetActive(true); };
+    }
+
     #region Register and unregister
     public void RegisterGroundInteractive(AbstractGroundInteractive groundInteractive, out Vector3Int gridPosition)
     {
