@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FireAntSpreadIntervalRange
   m_EditorClassIdentifier: 
   Min: 15
-  Max: 20
+  Max: 18

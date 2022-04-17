@@ -23,6 +23,8 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Transform antNestCollection;
     [SerializeField]
+    private int antNestCountCap = 20;
+    [SerializeField]
     private GameObject fireAntPrefab;
     [SerializeField]
     private GameObject navtiveAntPrefab;
@@ -73,6 +75,15 @@ public class GridManager : MonoBehaviour
 
 
     #region Find element on ground
+    public bool TryFindGroundInteractive(Vector3Int gridPosition)
+    {
+        for (int i = 0; i < _groundInteractives.Count; i++)
+        {
+            if (gridPosition == _groundInteractives[i].GridPosition)
+                return true;
+        }
+        return false;
+    }
     public bool TryFindGroundInteractive(Vector3Int gridPosition, out AbstractGroundInteractive groundInteractve)
     {
         for (int i = 0; i < _groundInteractives.Count; i++)
@@ -168,14 +179,21 @@ public class GridManager : MonoBehaviour
 
     public bool CheckGroundAvalibleForAnt(Vector3Int position)
     {
+        if (TryFindGroundInteractive(position))
+            return false;
+
         return baseMap.HasTile(position);
     }
 
     public bool InstantiateAntNestOnGrid(Vector3Int position, bool useFireAnt)
     {
+        if (TryFindGroundInteractive(position))
+            return false;
         if (!baseMap.HasTile(position))
             return false;
         if (TryFindAntNestBranch(position))
+            return false;
+        if (_antNests.Count >= antNestCountCap)
             return false;
 
         GameObject newAntNest = Instantiate(useFireAnt ? fireAntPrefab : navtiveAntPrefab, antNestCollection);

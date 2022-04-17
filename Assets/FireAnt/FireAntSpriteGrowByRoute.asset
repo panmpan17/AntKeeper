@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FireAntSpriteGrowByRoute
   m_EditorClassIdentifier: 
   Min: 3
-  Max: 5
+  Max: 4

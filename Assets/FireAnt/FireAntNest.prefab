@@ -180,6 +180,10 @@ MonoBehaviour:
   maxRouteSizeReference: {fileID: 11400000, guid: 3f3c67b35ff25483c921aa5aed7f0854, type: 2}
   branchOffChance: 0.1
   routeDisconnectDieTimeReference: {fileID: 11400000, guid: 6cf0d797904c04102ab1d40ae9d2b056, type: 2}
+  unableToGrowDieTimer:
+    TargetTime: 15
+    Running: 0
+    ReverseMode: 0
   spriteSizeRange: {fileID: 11400000, guid: 23c837ee456f54f7199ebdbba0b0d215, type: 2}
   spriteGrowStep: 0.1
   spriteGrowByRouteRange: {fileID: 11400000, guid: 024bb3e5db08643b0bc00f59f17d46a2, type: 2}

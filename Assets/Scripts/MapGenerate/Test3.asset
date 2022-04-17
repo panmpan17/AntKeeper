@@ -23,24 +23,6 @@ MonoBehaviour:
       becomeAliveNeighborNeedCount: 0
     placeCircleProcessor:
       placeItem: 1
-      circleMinSize: 9
-      circleMaxSize: 20
-    perlinNoiseProccessor:
-      placeItem: 0
-      step: 0
-      randomOffset: 0
-      offset: {x: 0, y: 0}
-      scale: 0
-  - processorType: 2
-    randomPlaceProcessor:
-      placeItem: 0
-      coverage: 0.319
-    smoothProcessor:
-      smoothCount: 0
-      keepAliveNeighborNeedCount: 0
-      becomeAliveNeighborNeedCount: 0
-    placeCircleProcessor:
-      placeItem: 1
       circleMinSize: 4
       circleMaxSize: 12
     perlinNoiseProccessor:
