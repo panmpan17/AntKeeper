@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    public const string Tag = "Player";
+
     [Header("Face settings")]
     [SerializeField]
     private FacingSetting faceUpSetting;
@@ -42,7 +44,6 @@ public class PlayerBehaviour : MonoBehaviour
 
         _movement = GetComponent<PlayerMovement>();
         _movement.OnFacingChange += ChangeHoldItemPosition;
-        // _movement.OnPositionChange += ChangeSelectedGrid;
         _movement.OnDashPerformed += HandleDashPerformed;
 
         if (holdItem != null)

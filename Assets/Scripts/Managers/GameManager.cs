@@ -107,6 +107,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         CameraManager.ins.SwitchCamera(CameraManager.CameraState.FullMap);
         HUDManager.ins.enabled = false;
-        yield return new WaitForSeconds(3);
+        
+        var player = GameObject.FindWithTag(PlayerBehaviour.Tag).GetComponent<PlayerBehaviour>();
+        player.Input.enabled = false;
+
+        // Debug.Log(114);
+        yield return new WaitForSecondsRealtime(3);
+        // Debug.Log(116);
+        FindObjectOfType<EndMenu>(true).Open();
     }
 }
