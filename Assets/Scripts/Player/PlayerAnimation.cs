@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MPack;
+
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -14,6 +16,12 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField]
     private ParticleSystem footStepParticle;
     private ParticleSystem.MainModule footStepParticleMain;
+
+    [Header("Dash")]
+    [SerializeField]
+    private FloatLerpTimer spritePositionTimer;
+    [SerializeField]
+    private AnimationCurve positionCurve;
     [SerializeField]
     private TrailRenderer dashTrail;
 
@@ -41,6 +49,17 @@ public class PlayerAnimation : MonoBehaviour
         footStepParticleMain = footStepParticle.main;
     }
 
+    void Update()
+    {
+        if (spritePositionTimer.Timer.Running)
+        {
+            if (spritePositionTimer.Timer.UpdateEnd)
+            {
+                spritePositionTimer.Timer.Running = false;
+            }
+            spriteRenderer.transform.localPosition = new Vector3(0, spritePositionTimer.CurvedValue(positionCurve), 0);
+        }
+    }
 
     public void ChangeFacingAnimation()
     {
@@ -82,6 +101,7 @@ public class PlayerAnimation : MonoBehaviour
     void OnDashStarted()
     {
         dashTrail.emitting = true;
+        spritePositionTimer.Timer.Reset();
     }
 
     void OnDashEnded()

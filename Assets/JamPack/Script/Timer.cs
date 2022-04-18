@@ -86,30 +86,15 @@ namespace MPack {
             }
         }
 
-        public bool Update()
+        public void Update()
         {
-            // get {
-                if (ReverseMode) 
-                {
-                    if (RunTime <= 0)
-                        return false;
-                    else
-                    {
-                        RunTime -= Time.deltaTime;
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (RunTime >= TargetTime)
-                        return false;
-                    else
-                    {
-                        RunTime += Time.deltaTime;
-                        return true;
-                    }
-                }
-            // }
+            if (ReverseMode) 
+            {
+                if (RunTime > 0)
+                    RunTime -= Time.deltaTime;
+            }
+            else if (RunTime < TargetTime)
+                RunTime += Time.deltaTime;
         }
 
         /// <summary>
@@ -149,6 +134,17 @@ namespace MPack {
                     return RunTime >= TargetTime;
                 }
             }
+        }
+
+        public void UnscaleUpdate()
+        {
+            if (ReverseMode)
+            {
+                if (RunTime > 0)
+                    RunTime -= Time.unscaledDeltaTime;
+            }
+            else if (RunTime < TargetTime)
+                RunTime += Time.unscaledDeltaTime;
         }
     }
 

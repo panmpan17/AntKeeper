@@ -32,12 +32,14 @@ public class StartMenu : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
+#if UNITY_EDITOR
         if (skipMenu)
         {
             // StartButtonPressed();
             GameManager.ins.StartGame();
             _canvasGroup.blocksRaycasts = _canvas.enabled = enabled = false;
         }
+#endif
     }
 
     void Update()

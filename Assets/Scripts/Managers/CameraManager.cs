@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 public class CameraManager : MonoBehaviour
 {
@@ -17,6 +21,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private CameraState cameraState;
 
+    [SerializeField]
+    private ValueWithEnable<CameraState> overrideCameraState;
+
     public enum CameraState
     {
         FollowPlayer,
@@ -26,6 +33,11 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         ins = this;
+
+#if UNITY_EDITOR
+        if (overrideCameraState.Enable)
+            cameraState = overrideCameraState.Value;
+#endif
 
         followPlayerVCamera.enabled = cameraState == CameraState.FollowPlayer;
         fullMapVCamera.enabled = cameraState == CameraState.FullMap;
@@ -38,3 +50,9 @@ public class CameraManager : MonoBehaviour
         fullMapVCamera.enabled = cameraState == CameraState.FullMap;
     }
 }
+
+
+#if UNITY_EDITOR
+[CustomPropertyDrawer(typeof(ValueWithEnable<CameraManager.CameraState>))]
+public class ValueWithEnableCameraState : OverrideBaseDrawer { }
+#endif

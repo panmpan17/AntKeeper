@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int gameTime;
 
+    [SerializeField]
+    private PlayerBehaviour playerBehaviour;
+
     public event System.Action<int> GameTimeChanged;
     private Timer _oneSecondTimer = new Timer(1);
 
@@ -30,8 +33,10 @@ public class GameManager : MonoBehaviour
     {
         ins = this;
 
+#if UNITY_EDITOR
         if (overrideGameTime.Enable)
             gameTime = overrideGameTime.Value;
+#endif
     }
 
     public void StartGame()
@@ -43,25 +48,29 @@ public class GameManager : MonoBehaviour
 
         OnGameReady?.Invoke();
 
+#if UNITY_EDITOR
         if (skipStartCountDown)
         {
             CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
             HUDManager.ins.UpdateAnimalCount();
             HUDManager.ins.HideCountDownText();
-            Time.timeScale = 1;
+            playerBehaviour.Input.enabled = true;
             OnGameStart?.Invoke();
         }
         else
         {
             StartCoroutine(StartCountDown());
         }
+#else
+        StartCoroutine(StartCountDown());
+#endif
     }
 
     IEnumerator StartCountDown()
     {
-        var waitOneSec = new WaitForSecondsRealtime(1.2f);
+        var waitOneSec = new WaitForSeconds(1.2f);
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSeconds(0.5f);
         HUDManager.ins.ChangeCountDownText("Ready?");
         yield return waitOneSec;
         CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
@@ -77,9 +86,9 @@ public class GameManager : MonoBehaviour
         HUDManager.ins.ChangeCountDownText("Start!");
 
         yield return waitOneSec;
+        playerBehaviour.Input.enabled = true;
         HUDManager.ins.UpdateAnimalCount();
         HUDManager.ins.HideCountDownText();
-        Time.timeScale = 1;
         OnGameStart?.Invoke();
     }
 
@@ -107,13 +116,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         CameraManager.ins.SwitchCamera(CameraManager.CameraState.FullMap);
         HUDManager.ins.enabled = false;
-        
-        var player = GameObject.FindWithTag(PlayerBehaviour.Tag).GetComponent<PlayerBehaviour>();
-        player.Input.enabled = false;
 
-        // Debug.Log(114);
+        playerBehaviour.Input.enabled = false;
+
         yield return new WaitForSecondsRealtime(3);
-        // Debug.Log(116);
         FindObjectOfType<EndMenu>(true).Open();
     }
 }

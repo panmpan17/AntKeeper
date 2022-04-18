@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MPack;
 using TMPro;
+using UnityEngine.UI;
 
 public class EndMenu : MonoBehaviour
 {
@@ -11,12 +12,22 @@ public class EndMenu : MonoBehaviour
     private Timer fadeTimer;
 
     [SerializeField]
-    private GameObject[] firstStars;
-    [SerializeField]
     private TextMeshProUGUI animalCounText;
     [SerializeField]
     private TextMeshProUGUI fireAntCounText;
 
+    [SerializeField]
+    private GameObject[] stars;
+    [SerializeField]
+    private float starAnimationTime;
+    [SerializeField]
+    private Vector3 starStartScale;
+    [SerializeField]
+    private AnimationCurve starFadeCurve;
+    [SerializeField]
+    private AnimationCurve starScaleCurve;
+
+    private StarApearAnimaion _animatingStar;
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
 
@@ -26,9 +37,9 @@ public class EndMenu : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
         _canvasGroup.alpha = 0;
 
-        for (int i = 0; i < firstStars.Length; i++)
+        for (int i = 0; i < stars.Length; i++)
         {
-            firstStars[i].gameObject.SetActive(false);
+            stars[i].gameObject.SetActive(false);
         }
 
         _canvas.enabled = _canvasGroup.enabled = enabled = false;
@@ -47,6 +58,22 @@ public class EndMenu : MonoBehaviour
 
             _canvasGroup.alpha = fadeTimer.Progress;
         }
+
+        if (_animatingStar != null)
+        {
+            _animatingStar.Timer.UnscaleUpdate();
+
+            _animatingStar.RectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Evaluate(_animatingStar.Timer.Progress));
+
+            Color color = _animatingStar.Image.color;
+            color.a = starFadeCurve.Evaluate(_animatingStar.Timer.Progress);
+            _animatingStar.Image.color = color;
+
+            if (_animatingStar.Timer.Ended)
+            {
+                _animatingStar = null;
+            }
+        }
     }
 
     public void Open()
@@ -63,7 +90,7 @@ public class EndMenu : MonoBehaviour
         for (int i = 0; i <= animalCount; i++)
         {
             yield return null;
-            animalCounText.text = i.ToString();
+            animalCounText.text = string.Format("{0} / {1}", i, GridManager.ins.OriginAnimalCount);
         }
         yield return new WaitForSecondsRealtime(1);
 
@@ -74,11 +101,49 @@ public class EndMenu : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(1);
 
+        float animalSuvivePercentage = (float)animalCount / (float)GridManager.ins.OriginAnimalCount;
 
-        for (int i = 0; i < firstStars.Length; i++)
+        if (animalSuvivePercentage > 0.5f)
         {
-            firstStars[i].gameObject.SetActive(false);
-            yield return new WaitForSecondsRealtime(1);
+            AddShowStarAnimation(0);
+            while (_animatingStar != null) yield return null;
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            if (animalSuvivePercentage > 0.7f)
+            {
+                AddShowStarAnimation(1);
+                while (_animatingStar != null) yield return null;
+                yield return new WaitForSecondsRealtime(0.5f);
+
+                if (animalSuvivePercentage > 0.9f)
+                    AddShowStarAnimation(2);
+            }
         }
+    }
+
+    void AddShowStarAnimation(int index)
+    {
+        GameObject starGameObject = stars[index];
+
+        _animatingStar = new StarApearAnimaion {
+            RectTransform = starGameObject.GetComponent<RectTransform>(),
+            Image = starGameObject.GetComponent<Image>(),
+            Timer = new Timer(starAnimationTime),
+        };
+
+        _animatingStar.RectTransform.localScale = starStartScale;
+
+        Color color = _animatingStar.Image.color;
+        color.a = 0;
+        _animatingStar.Image.color = color;
+
+        starGameObject.SetActive(true);
+    }
+
+    private class StarApearAnimaion
+    {
+        public RectTransform RectTransform;
+        public Image Image;
+        public Timer Timer;
     }
 }

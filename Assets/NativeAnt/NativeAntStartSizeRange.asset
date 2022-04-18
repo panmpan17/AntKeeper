@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9470caac8a5be47fa950e04b63abce6d, type: 3}
   m_Name: NativeAntStartSizeRange
   m_EditorClassIdentifier: 
-  Min: 14
-  Max: 20
+  Min: 13
+  Max: 16

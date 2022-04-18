@@ -33,6 +33,9 @@ public class GridManager : MonoBehaviour
     private List<AntNest> _antNests;
     private List<VirtualAnimalSpot> _animals;
 
+    private int _originAnimalCount;
+    public int OriginAnimalCount => _originAnimalCount;
+
     void Awake()
     {
         ins = this;
@@ -40,12 +43,20 @@ public class GridManager : MonoBehaviour
         _antNests = new List<AntNest>();
         _animals = new List<VirtualAnimalSpot>();
 
+        antNestCollection.gameObject.SetActive(false);
+
         routeColliderMapReference.Tilemap = routeColliderMap;
     }
 
     void Start()
     {
-        GameManager.ins.OnGameReady += delegate { antNestCollection.gameObject.SetActive(true); };
+        GameManager.ins.OnGameReady += OnGameReady;
+    }
+
+    void OnGameReady()
+    {
+        _originAnimalCount = _animals.Count;
+        antNestCollection.gameObject.SetActive(true);
     }
 
     #region Register and unregister

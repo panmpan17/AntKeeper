@@ -8,8 +8,9 @@ namespace MapGenerate
     public enum PlaceItem
     {
         None = 0,
-        Grass = 1,
+        Ground = 1,
         Animal = 2,
+        Grass = 4,
     }
 
     [System.Serializable]

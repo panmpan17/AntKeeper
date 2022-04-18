@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fe8c0b7f42f466ab1e50241e8329ad, type: 3}
-  m_Name: PlaceAnimal
+  m_Name: PlaceGrass
   m_EditorClassIdentifier: 
   processorList:
   - processorType: 3
@@ -26,8 +26,8 @@ MonoBehaviour:
       circleMinSize: 15
       circleMaxSize: 43
     perlinNoiseProccessor:
-      placeItem: 2
-      step: 0.698
+      placeItem: 4
+      step: 0.534
       randomOffset: 1
-      offset: {x: -61.507275, y: 64.81047}
-      scale: 24.9
+      offset: {x: 16.168678, y: 66.44588}
+      scale: 13

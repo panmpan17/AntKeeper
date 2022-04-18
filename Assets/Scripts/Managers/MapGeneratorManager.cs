@@ -31,13 +31,17 @@ namespace MapGenerate
         [SerializeField]
         private Tilemap wallMap;
         [SerializeField]
+        private Tilemap grassMap;
+        [SerializeField]
         private Transform animalCollection;
 
         [Header("Place Item")]
         [SerializeField]
-        private Tile grassTile;
+        private Tile groundTile;
         [SerializeField]
         private Tile wallTile;
+        [SerializeField]
+        private Tile grassTite;
         [SerializeField]
         private GameObject animalPrefab;
 
@@ -95,12 +99,13 @@ namespace MapGenerate
         {
             var item = (PlaceItem) cell;
 
-            var hasGrass = (item & PlaceItem.Grass) == PlaceItem.Grass;
+            var hasGround = (item & PlaceItem.Ground) == PlaceItem.Ground;
             var hasAnimal = (item & PlaceItem.Animal) == PlaceItem.Animal;
+            var hasGrass = (item & PlaceItem.Grass) == PlaceItem.Grass;
 
-            if (hasGrass)
+            if (hasGround)
             {
-                baseMap.SetTile(position, grassTile);
+                baseMap.SetTile(position, groundTile);
 
                 if (hasAnimal)
                 {
@@ -116,13 +121,15 @@ namespace MapGenerate
                     newAnimal = Instantiate(animalPrefab, animalCollection);
 #endif
 
-                    // GameObject newAnimal = Instantiate(animalPrefab, animalCollection);
                     newAnimal.transform.position = baseMap.GetCellCenterWorld(position);
                 }
+
+                grassMap.SetTile(position, hasGrass ? grassTite : null);
             }
             else
             {
                 wallMap.SetTile(position, wallTile);
+                grassMap.SetTile(position, null);
             }
         }
 

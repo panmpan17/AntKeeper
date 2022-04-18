@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9470caac8a5be47fa950e04b63abce6d, type: 3}
   m_Name: FireAntStartSizeRange
   m_EditorClassIdentifier: 
-  Min: 20
-  Max: 25
+  Min: 15
+  Max: 22

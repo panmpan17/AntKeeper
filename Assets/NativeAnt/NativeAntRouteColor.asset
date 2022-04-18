@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827d83481a3a54da8888bc0faa9f7bf5, type: 3}
   m_Name: NativeAntRouteColor
   m_EditorClassIdentifier: 
-  Value: {r: 0.12549019, g: 0.38878798, b: 0.50980395, a: 0.8509804}
+  Value: {r: 0.12549019, g: 0.50980395, b: 0.14257324, a: 0.8509804}

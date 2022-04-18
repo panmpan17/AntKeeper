@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708a91b573e2436eb66f0fee5488718, type: 3}
   m_Name: NativeAntSpreadIntervalRange
   m_EditorClassIdentifier: 
-  Min: 18
-  Max: 25
+  Min: 30
+  Max: 35
