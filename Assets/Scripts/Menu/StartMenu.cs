@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using MPack;
 
 
@@ -9,6 +10,15 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     [ShortTimer]
     private Timer fadeTimer;
+
+    [SerializeField]
+    private EventSystem eventSystem;
+    [SerializeField]
+    private GameObject helpButton;
+    [SerializeField]
+    private GameObject helpMenu;
+    [SerializeField]
+    private GameObject helpMenuClose;
 
 #if UNITY_EDITOR
     [Header("Editor Only")]
@@ -24,6 +34,8 @@ public class StartMenu : MonoBehaviour
         _canvas = GetComponent<Canvas>();
         _canvasGroup = GetComponent<CanvasGroup>();
         _canvas.enabled = true;
+
+        helpMenu.SetActive(false);
 
         fadeTimer.Running = false;
     }
@@ -62,5 +74,14 @@ public class StartMenu : MonoBehaviour
     }
 
     public void HelpButtonPressed()
-    {}
+    {
+        helpMenu.SetActive(true);
+        eventSystem.SetSelectedGameObject(helpMenuClose);
+    }
+
+    public void CloseHelpMenu()
+    {
+        helpMenu.SetActive(false);
+        eventSystem.SetSelectedGameObject(helpButton);
+    }
 }

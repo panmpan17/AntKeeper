@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using MPack;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndMenu : MonoBehaviour
 {
     [SerializeField]
     [ShortTimer]
     private Timer fadeTimer;
+
+    [SerializeField]
+    private EventSystem eventSystem;
 
     [SerializeField]
     private TextMeshProUGUI animalCounText;
@@ -27,6 +32,9 @@ public class EndMenu : MonoBehaviour
     [SerializeField]
     private AnimationCurve starScaleCurve;
 
+    [SerializeField]
+    private GameObject replayButton;
+
     private StarApearAnimaion _animatingStar;
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
@@ -43,6 +51,7 @@ public class EndMenu : MonoBehaviour
         }
 
         _canvas.enabled = _canvasGroup.enabled = enabled = false;
+        replayButton.SetActive(false);
     }
 
     void Update()
@@ -116,7 +125,16 @@ public class EndMenu : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.5f);
 
                 if (animalSuvivePercentage > 0.9f)
+                {
                     AddShowStarAnimation(2);
+                    yield return new WaitForSecondsRealtime(0.5f);
+                }
+
+
+                yield return new WaitForSecondsRealtime(0.5f);
+                
+                replayButton.SetActive(true);
+                eventSystem.SetSelectedGameObject(replayButton);
             }
         }
     }
@@ -138,6 +156,12 @@ public class EndMenu : MonoBehaviour
         _animatingStar.Image.color = color;
 
         starGameObject.SetActive(true);
+    }
+
+    public void OnReplayPressed()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 
     private class StarApearAnimaion

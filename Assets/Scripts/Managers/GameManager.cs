@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerBehaviour playerBehaviour;
 
+    [SerializeField]
+    private AudioClip beepAudio;
+    [SerializeField]
+    private AudioClip startAudio;
+
+    [SerializeField]
+    private AudioSource audioSource;
+
     public event System.Action<int> GameTimeChanged;
     private Timer _oneSecondTimer = new Timer(1);
 
@@ -74,16 +82,20 @@ public class GameManager : MonoBehaviour
         HUDManager.ins.ChangeCountDownText("Ready?");
         yield return waitOneSec;
         CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
+        audioSource.PlayOneShot(beepAudio);
         HUDManager.ins.ChangeCountDownText("3");
 
         yield return waitOneSec;
+        audioSource.PlayOneShot(beepAudio);
         HUDManager.ins.ChangeCountDownText("2");
 
         yield return waitOneSec;
+        audioSource.PlayOneShot(beepAudio);
         HUDManager.ins.ChangeCountDownText("1");
 
         yield return waitOneSec;
         HUDManager.ins.ChangeCountDownText("Start!");
+        audioSource.PlayOneShot(startAudio);
 
         yield return waitOneSec;
         playerBehaviour.Input.enabled = true;
