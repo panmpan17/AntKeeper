@@ -11,11 +11,10 @@ public abstract class AbstractHoldItem : MonoBehaviour
         PlayerBehaviour = playerBehaviour;
     }
 
-    public abstract void OnInteract();
-
-    public abstract void OnInteractStart();
+    public abstract bool OnInteractStart();
     public abstract void OnInteractEnd();
 
+    public abstract void OnSelectedGridChanged();
     public abstract void OnFacingChanged();
     public abstract void OnDash();
 

@@ -57,22 +57,19 @@ public class AntJar : AbstractHoldItem
         // throw new System.NotImplementedException();
     }
 
-    public override void OnInteract() => throw new System.NotImplementedException();
-
-    public override void OnInteractStart()
+    public override bool OnInteractStart()
     {
         if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
         {
-            groundInteractive.OnHoldItemInteract(this);
-            return;
+            return groundInteractive.OnHoldItemInteract(this);
         }
 
         if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNest targetNest, out AntRouteBranch targetBranch))
         {
             if (HasAnt)
-                return;
+                return false;
             if (preventRepeat && targetNest.IsShowTrueColor)
-                return;
+                return false;
 
             _targetAntNest = targetNest;
             PlayerBehaviour.Input.enabled = false;
@@ -80,9 +77,13 @@ public class AntJar : AbstractHoldItem
             collectTimer.Reset();
             collectProgressBar.gameObject.SetActive(true);
         }
+
+        return false;
     }
 
     public override void OnInteractEnd() {}
+
+    public override void OnSelectedGridChanged() {}
     public override void OnFacingChanged() {}
 
     public override void ChangeRendererSorting(int layerID, int order)

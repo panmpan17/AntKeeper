@@ -56,7 +56,7 @@ public class Microscope : AbstractGroundInteractive
     public override bool OnEmptyHandInteract(PlayerBehaviour playerBehaviour)
     {
         if (examineTimer.Running)
-            return true;
+            return false;
 
         playerBehaviour.SetHandItem(antJar);
         antJar = null;
@@ -76,9 +76,11 @@ public class Microscope : AbstractGroundInteractive
 
             if (antJar.HasAnt)
                 ExamineStart();
+            
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     void PlaceItem(AbstractHoldItem item)

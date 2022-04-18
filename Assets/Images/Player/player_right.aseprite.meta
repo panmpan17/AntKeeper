@@ -1,0 +1,47 @@
+fileFormatVersion: 2
+guid: fb8717337c13e40948abbe0a5a67686a
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 25a63327f814cd04cbdbd7e8ae6dfcf9, type: 3}
+  textureSettings:
+    textureType: 8
+    pixelsPerUnit: 16
+    mirror: 0
+    transparentMask: 0
+    transparentColor: {r: 1, g: 0, b: 1, a: 1}
+    meshType: 1
+    extrudeEdges: 1
+    spritePivot: {x: 0.5, y: 0.5}
+    generatePhysics: 1
+    wrapMode: 1
+    filterMode: 0
+    tileSize: {x: 32, y: 32}
+    tilePadding: {x: 0, y: 0}
+    tileOffset: {x: 0, y: 0}
+  animationSettings:
+  - animationName: idle
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 2"
+  - animationName: walk
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 9"
+  - animationName: dash
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 10; To: 10"
+  - animationName: h_idle
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 11; To: 13"
+  - animationName: h_walk
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 14; To: 20"
+  - animationName: h_dash
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 21; To: 21"
+  atlas: {instanceID: 0}
+  importType: 0
+  bindType: 0

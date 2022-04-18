@@ -88,24 +88,30 @@ public class Bucket : AbstractHoldItem
         }
     }
 
-    public override void OnInteract() => throw new System.NotImplementedException();
-
-    public override void OnInteractStart()
+    public override bool OnInteractStart()
     {
         if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
         {
-            groundInteractive.OnHoldItemInteract(this);
-            return;
+            return groundInteractive.OnHoldItemInteract(this);
         }
 
         if (FillAmount > 0)
             PourStart();
+
+        return false;
     }
 
     public override void OnInteractEnd()
     {
         if (_pouring)
             PourEnd();
+    }
+
+
+    #region Player movement event
+    public override void OnSelectedGridChanged()
+    {
+        pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
     }
 
     public override void OnFacingChanged()
@@ -120,6 +126,8 @@ public class Bucket : AbstractHoldItem
         if (_pouring)
             PourEnd();
     }
+    #endregion
+
 
     public override void ChangeRendererSorting(int layerID, int order)
     {

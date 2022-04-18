@@ -36,6 +36,10 @@ public class PlayerBehaviour : MonoBehaviour
     public PlayerInput Input => _input;
     public PlayerMovement Movement => _movement;
 
+    public bool IsHolding => holdItem != null;
+
+    public event System.Action OnHoldItemChanged;
+
     void Awake()
     {
         _input = GetComponent<PlayerInput>();
@@ -61,13 +65,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (holdItem != null)
         {
-            holdItem.OnInteractStart();
+            if (holdItem.OnInteractStart())
+                OnHoldItemChanged?.Invoke();
         }
         else
         {
             if (GridManager.ins.TryFindGroundInteractive(SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
             {
-                groundInteractive.OnEmptyHandInteract(this);
+                if (groundInteractive.OnEmptyHandInteract(this))
+                    OnHoldItemChanged?.Invoke();
                 return;
             }
         }
@@ -146,11 +152,17 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (GridManager.ins.RaycastCell(position, out Vector3Int cellPosition, out Vector3 centerPosition))
         {
-            SelectedGridPosition = cellPosition;
-            SelectedGridCenterPosition = centerPosition;
-            selectedGridIndicator.transform.position = centerPosition;
+            if (cellPosition != SelectedGridPosition)
+            {
+                SelectedGridPosition = cellPosition;
+                SelectedGridCenterPosition = centerPosition;
+                selectedGridIndicator.transform.position = centerPosition;
 
-            selectedGridIndicator.gameObject.SetActive(true);
+                selectedGridIndicator.gameObject.SetActive(true);
+
+                if (holdItem)
+                    holdItem.OnSelectedGridChanged();
+            }
         }
         else
         {

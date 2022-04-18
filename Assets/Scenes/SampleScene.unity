@@ -748,7 +748,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152526724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -0.5, z: -0.1}
+  m_LocalPosition: {x: 0.8, y: -0.7, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1954872768}
@@ -1832,7 +1832,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -6539,7 +6539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367617160}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8, y: -0.5, z: -0.1}
+  m_LocalPosition: {x: -0.8, y: -0.7, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1954872768}
@@ -7418,7 +7418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5509996, y: -4.52, z: -10}
+  m_LocalPosition: {x: 3.5509994, y: -4.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7441,7 +7441,7 @@ MonoBehaviour:
   beepAudio: {fileID: 8300000, guid: 764fa2d6eab604a30b78de65c7cbc1cb, type: 3}
   startAudio: {fileID: 8300000, guid: 4b2252ff553244f59b2e8d51b8f75f86, type: 3}
   audioSource: {fileID: 519420036}
-  skipStartCountDown: 0
+  skipStartCountDown: 1
   overrideGameTime:
     Enable: 0
     Value: 3
@@ -7943,6 +7943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644372823}
   - component: {fileID: 644372824}
+  - component: {fileID: 644372825}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -8010,12 +8011,31 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &644372825
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644372822}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06406ce9e03e24006899f992a351ce9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &648873753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8827,7 +8847,7 @@ MonoBehaviour:
   helpButton: {fileID: 1827597997}
   helpMenu: {fileID: 966594360}
   helpMenuClose: {fileID: 1893177543}
-  skipMenu: 0
+  skipMenu: 1
 --- !u!225 &816590256
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -10378,7 +10398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160292561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0.1}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1954872768}
@@ -44476,7 +44496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108248080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5509996, y: -4.52, z: -10}
+  m_LocalPosition: {x: 3.5509994, y: -4.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2074388143}

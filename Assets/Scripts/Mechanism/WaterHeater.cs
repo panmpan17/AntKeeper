@@ -48,9 +48,11 @@ public class WaterHeater : AbstractGroundInteractive
             playerBehaviour.SetHandItem(filledBucket);
             filledBucket = null;
             particleSystem.Stop();
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public override bool OnHoldItemInteract(AbstractHoldItem item)
@@ -74,9 +76,11 @@ public class WaterHeater : AbstractGroundInteractive
 
             if (!filledBucket.IsFull)
                 particleSystem.Play();
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     void PlaceItem(AbstractHoldItem item)
