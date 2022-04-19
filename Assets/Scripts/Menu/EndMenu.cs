@@ -131,12 +131,13 @@ public class EndMenu : MonoBehaviour
                 }
 
 
-                yield return new WaitForSecondsRealtime(0.5f);
-                
-                replayButton.SetActive(true);
-                eventSystem.SetSelectedGameObject(replayButton);
             }
         }
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        replayButton.SetActive(true);
+        eventSystem.SetSelectedGameObject(replayButton);
     }
 
     void AddShowStarAnimation(int index)
