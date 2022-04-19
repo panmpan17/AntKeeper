@@ -7447,7 +7447,7 @@ MonoBehaviour:
     Value: 3
   overrideTimeScale:
     Enable: 0
-    Value: 10
+    Value: 4
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38036,6 +38036,7 @@ MonoBehaviour:
     HoldItemPosition: {x: -0.2, y: -0.46, z: -0.1}
     SelectGridPoint: {fileID: 367617161}
   holdItem: {fileID: 0}
+  holdItemParent: {fileID: 644372823}
   selectedGridIndicator: {fileID: 1494752676}
   sortingLayerID: 1026775461
   sortingOrder: 0

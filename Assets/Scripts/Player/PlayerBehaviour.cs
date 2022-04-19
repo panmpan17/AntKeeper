@@ -20,6 +20,8 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     private AbstractHoldItem holdItem;
     [SerializeField]
+    private Transform holdItemParent;
+    [SerializeField]
     private Transform selectedGridIndicator;
     public Vector3Int SelectedGridPosition { get; private set; }
     public Vector3 SelectedGridCenterPosition { get; private set; }
@@ -49,9 +51,6 @@ public class PlayerBehaviour : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _movement.OnFacingChange += ChangeHoldItemPosition;
         _movement.OnDashPerformed += HandleDashPerformed;
-
-        if (holdItem != null)
-            holdItem.Setup(this);
     }
 
     void FixedUpdate()
@@ -81,10 +80,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnIneractCanceled()
     {
-        if (holdItem != null)
-        {
-            holdItem.OnInteractEnd();
-        }
+        holdItem?.OnInteractEnd();
     }
     #endregion
 
@@ -116,8 +112,7 @@ public class PlayerBehaviour : MonoBehaviour
                 break;
         }
 
-        if (holdItem)
-            holdItem.OnFacingChanged();
+        holdItem?.OnFacingChanged();
     }
 
     void ChangeSelectedGrid()
@@ -141,10 +136,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void HandleDashPerformed()
     {
-        if (holdItem != null)
-        {
-            holdItem.OnDash();
-        }
+        holdItem?.OnDash();
     }
     #endregion
 
@@ -160,8 +152,7 @@ public class PlayerBehaviour : MonoBehaviour
 
                 selectedGridIndicator.gameObject.SetActive(true);
 
-                if (holdItem)
-                    holdItem.OnSelectedGridChanged();
+                holdItem?.OnSelectedGridChanged();
             }
         }
         else
@@ -175,7 +166,7 @@ public class PlayerBehaviour : MonoBehaviour
         item.ChangeRendererSorting(sortingLayerID, sortingOrder);
 
         holdItem = item;
-        holdItem.transform.SetParent(transform, false);
+        holdItem.transform.SetParent(holdItemParent, false);
         holdItem.Setup(this);
         ChangeHoldItemPosition(_movement.Facing);
     }
