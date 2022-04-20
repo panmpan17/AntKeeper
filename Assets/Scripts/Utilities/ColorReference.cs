@@ -44,6 +44,8 @@ public class ColorReferenceDrawer : PropertyDrawer
             position.width = originWidth * 0.6f;
             SerializedProperty min = serializedObject.FindProperty("Value");
             min.colorValue = EditorGUI.ColorField(position, min.colorValue);
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
