@@ -34,12 +34,12 @@ public class AntNest : MonoBehaviour
     private RangeReference growRouteInterval;
     private Timer _growRouteTimer;
     [SerializeField]
-    private IntRangeReference maxRouteSizeReference;
+    private IntRangeReference maxRouteSize;
     private int _maxRouteSize;
     [SerializeField]
     private float branchOffChance = 0.05f;
     [SerializeField]
-    private RangeReference routeDisconnectDieTimeReference;
+    private RangeReference routeDisconnectDieTime;
     [SerializeField]
     [ShortTimer]
     private Timer unableToGrowDieTimer;
@@ -59,28 +59,28 @@ public class AntNest : MonoBehaviour
 
     [Header("Spread settings")]
     [SerializeField]
-    private RangeReference spreadRangeReference;
+    private RangeReference spreadRange;
     [SerializeField]
-    private RangeReference spreadIntervalReference;
+    private RangeReference spreadInterval;
     private Timer _spreadIntervalTimer;
 
     public bool CanSpreadNewNest => _spriteSize >= spriteSizeRange.Max * 0.8f;
 
     [Header("Kill Animal settings")]
     [SerializeField]
-    private RangeReference killAnimalInterval;
+    private RangeVariable killAnimalInterval;
     private Timer _killAnimalTimer;
 
     [Header("Colors")]
     [SerializeField]
-    private ColorReference hiddenColorReference;
+    private ColorReference hiddenColor;
     [SerializeField]
-    private ColorReference trueColorReference;
+    private ColorReference trueColor;
     [SerializeField]
     private int showTrueColorAfterSize;
 
     [SerializeField]
-    private IntRangeReference startedSize;
+    private IntRangeVariable startedSize;
     private int _routeSize;
     private Vector3Int rootPosition;
 
@@ -93,11 +93,11 @@ public class AntNest : MonoBehaviour
     {
         _routeBranches = new List<AntRouteBranch>();
 
-        ChangeRouteLineRendererColor(hiddenColorReference.Value);
+        ChangeRouteLineRendererColor(hiddenColor.Value);
 
-        _maxRouteSize = maxRouteSizeReference.PickRandomNumber();
+        _maxRouteSize = maxRouteSize.PickRandomNumber();
         _growRouteTimer = new Timer(growRouteInterval.PickRandomNumber());
-        _spreadIntervalTimer = new Timer(spreadIntervalReference.PickRandomNumber());
+        _spreadIntervalTimer = new Timer(spreadInterval.PickRandomNumber());
 
         if (killAnimalInterval != null)
             _killAnimalTimer = new Timer(killAnimalInterval.PickRandomNumber());
@@ -119,7 +119,7 @@ public class AntNest : MonoBehaviour
                 routeMap.GetCellCenterWorld(rootPosition),
                 FourDirections[i],
                 Instantiate(lineRenderer, transform),
-                routeDisconnectDieTimeReference
+                routeDisconnectDieTime
                 ));
         }
 
@@ -162,7 +162,7 @@ public class AntNest : MonoBehaviour
             if (TrySpreadNewNest())
             {
                 _spreadIntervalTimer.Reset();
-                _spreadIntervalTimer.TargetTime = spreadIntervalReference.PickRandomNumber();
+                _spreadIntervalTimer.TargetTime = spreadInterval.PickRandomNumber();
             }
         }
 
@@ -269,7 +269,7 @@ public class AntNest : MonoBehaviour
             routeMap.GetCellCenterWorld(newBranchData.Root),
             newBranchData.Direction,
             Instantiate(lineRenderer, transform),
-            routeDisconnectDieTimeReference,
+            routeDisconnectDieTime,
             length: newBranchData.ExccedPositionCount
             );
         newBranch.AddGrowPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
@@ -310,7 +310,7 @@ public class AntNest : MonoBehaviour
     {
         Vector2 relativeVector = Random.insideUnitCircle;
         relativeVector.Normalize();
-        relativeVector *= spreadRangeReference.PickRandomNumber();
+        relativeVector *= spreadRange.PickRandomNumber();
 
         Vector3Int gridPosition = routeMap.WorldToCell(transform.position + (Vector3)relativeVector);
         return GridManager.ins.InstantiateAntNestOnGrid(gridPosition, IsFireAnt);
@@ -524,7 +524,7 @@ public class AntNest : MonoBehaviour
     public void ShowTrueColor()
     {
         IsShowTrueColor = true;
-        ChangeRouteLineRendererColor(trueColorReference.Value);
+        ChangeRouteLineRendererColor(trueColor.Value);
     }
     #endregion
 
@@ -542,19 +542,13 @@ public class AntNest : MonoBehaviour
             }
         }
 
-        if (spreadRangeReference != null)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, spreadRangeReference.Min);
-            Gizmos.DrawWireSphere(transform.position, spreadRangeReference.Max);
-        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, spreadRange.Min);
+        Gizmos.DrawWireSphere(transform.position, spreadRange.Max);
 
-        if (maxRouteSizeReference != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, maxRouteSizeReference.Min);
-            Gizmos.DrawWireSphere(transform.position, maxRouteSizeReference.Max);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, maxRouteSize.Min);
+        Gizmos.DrawWireSphere(transform.position, maxRouteSize.Max);
     }
     #endregion
 }

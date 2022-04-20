@@ -233,7 +233,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6949008915040132162}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.5, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -258,22 +258,56 @@ MonoBehaviour:
   tilemapReference: {fileID: 11400000, guid: 353a5d13fefa74d3f9a53bb1b72ab8da, type: 2}
   spriteRenderer: {fileID: 7789774153720503248}
   lineRenderer: {fileID: 6949008914926961947}
-  growRouteInterval: {fileID: 11400000, guid: cfeebef82efc946988fae445f79331fc, type: 2}
-  maxRouteSizeReference: {fileID: 11400000, guid: a977807ec1d97427686485c6c2eed5f9, type: 2}
+  growRouteInterval:
+    ConstantMin: 2.2
+    ConstantMax: 3
+    Variable: {fileID: 0}
+    UseVariable: 0
+  maxRouteSize:
+    ConstantMin: 6
+    ConstantMax: 8
+    Variable: {fileID: 0}
+    UseVariable: 0
   branchOffChance: 0.1
-  routeDisconnectDieTimeReference: {fileID: 11400000, guid: dce2e3be9d385492cacd83a4c96be319, type: 2}
+  routeDisconnectDieTime:
+    ConstantMin: 6
+    ConstantMax: 8
+    Variable: {fileID: 0}
+    UseVariable: 0
   unableToGrowDieTimer:
     TargetTime: 13
     Running: 0
     ReverseMode: 0
-  spriteSizeRange: {fileID: 11400000, guid: d07a51979a5644e93be2a3e43c722e7a, type: 2}
+  spriteSizeRange:
+    ConstantMin: 0.3
+    ConstantMax: 0.8
+    Variable: {fileID: 0}
+    UseVariable: 0
   spriteGrowStep: 0.1
-  spriteGrowByRouteRange: {fileID: 11400000, guid: 1f55e599e6114440896e743827cbc84a, type: 2}
+  spriteGrowByRouteRange:
+    ConstantMin: 4
+    ConstantMax: 5
+    Variable: {fileID: 0}
+    UseVariable: 0
   spriteKillResistent: 60
-  spreadRangeReference: {fileID: 11400000, guid: 43085e5e39c204620b0d703e226e6bf5, type: 2}
-  spreadIntervalReference: {fileID: 11400000, guid: 064f8ea63eb34421e99ef5c0c3514493, type: 2}
+  spreadRange:
+    ConstantMin: 12
+    ConstantMax: 16
+    Variable: {fileID: 0}
+    UseVariable: 0
+  spreadInterval:
+    ConstantMin: 30
+    ConstantMax: 35
+    Variable: {fileID: 0}
+    UseVariable: 0
   killAnimalInterval: {fileID: 0}
-  hiddenColorReference: {fileID: 11400000, guid: 13bedb9d8c7d04311bfb395925ea9d30, type: 2}
-  trueColorReference: {fileID: 11400000, guid: d01700348f8fd4ad6939ecb2a7bc92e5, type: 2}
+  hiddenColor:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 9da7b358a70f541ce8ead6fe19a40ac2, type: 2}
+    UseVariable: 1
+  trueColor:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 84ada74f089b14426bd26a9a43ebf362, type: 2}
+    UseVariable: 1
   showTrueColorAfterSize: 15
   startedSize: {fileID: 0}
