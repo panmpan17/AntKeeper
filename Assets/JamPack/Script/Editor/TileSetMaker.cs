@@ -1,4 +1,4 @@
-﻿// #define HAS_2D_TILEMAP_EXTRA
+﻿#define HAS_2D_TILEMAP_EXTRA
 
 using System.Collections;
 using System.Collections.Generic;
@@ -69,8 +69,13 @@ public class TileSetMaker : MonoBehaviour
             }
         }
 
-        AssetDatabase.CreateAsset(ruleTile, "Assets/NewBlobTile.asset");
-        AssetDatabase.SaveAssets();
+        string newFilePath = EditorUtility.SaveFilePanelInProject("New Blob RuleTile", "New Blob RuleTile.asset", "asset", "Test");
+
+        if (newFilePath != "")
+        {
+            AssetDatabase.CreateAsset(ruleTile, newFilePath);
+            AssetDatabase.SaveAssets();
+        }
     }
 
     static private RuleTile.TilingRule FindBlobTileRule(int index) {
@@ -595,8 +600,13 @@ public class TileSetMaker : MonoBehaviour
         ruleTile.m_TilingRules.RemoveAt(0);
         ruleTile.m_TilingRules.Add(first);
 
-        AssetDatabase.CreateAsset(ruleTile, "Assets/NewWangTile.asset");
-        AssetDatabase.SaveAssets();
+        string newFilePath = EditorUtility.SaveFilePanelInProject("New Wang RuleTile", "New Wang RuleTile.asset", "asset", "Test");
+
+        if (newFilePath != "")
+        {
+            AssetDatabase.CreateAsset(ruleTile, newFilePath);
+            AssetDatabase.SaveAssets();
+        }
     }
 
     static private RuleTile.TilingRule FindWangTileRule(int index) {

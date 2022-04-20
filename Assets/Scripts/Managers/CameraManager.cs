@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using MPack;
 
 
 public class CameraManager : MonoBehaviour
@@ -54,9 +51,3 @@ public class CameraManager : MonoBehaviour
         fullMapVCamera.enabled = cameraState == CameraState.FullMap;
     }
 }
-
-
-#if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(ValueWithEnable<CameraManager.CameraState>))]
-public class ValueWithEnableCameraState : OverrideBaseDrawer { }
-#endif
