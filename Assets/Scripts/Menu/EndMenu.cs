@@ -28,9 +28,9 @@ public class EndMenu : MonoBehaviour
     [SerializeField]
     private Vector3 starStartScale;
     [SerializeField]
-    private AnimationCurve starFadeCurve;
+    private AnimationCurveReference starFadeCurve;
     [SerializeField]
-    private AnimationCurve starScaleCurve;
+    private AnimationCurveReference starScaleCurve;
 
     [SerializeField]
     private GameObject replayButton;
@@ -72,10 +72,10 @@ public class EndMenu : MonoBehaviour
         {
             _animatingStar.Timer.UnscaleUpdate();
 
-            _animatingStar.RectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Evaluate(_animatingStar.Timer.Progress));
+            _animatingStar.RectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Value.Evaluate(_animatingStar.Timer.Progress));
 
             Color color = _animatingStar.Image.color;
-            color.a = starFadeCurve.Evaluate(_animatingStar.Timer.Progress);
+            color.a = starFadeCurve.Value.Evaluate(_animatingStar.Timer.Progress);
             _animatingStar.Image.color = color;
 
             if (_animatingStar.Timer.Ended)

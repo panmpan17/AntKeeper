@@ -214,8 +214,8 @@ MonoBehaviour:
     Variable: {fileID: 0}
     UseVariable: 0
   spreadInterval:
-    ConstantMin: 1.8
-    ConstantMax: 2.1
+    ConstantMin: 20
+    ConstantMax: 25
     Variable: {fileID: 0}
     UseVariable: 0
   killAnimalInterval: {fileID: 11400000, guid: 55a748000b83643d6984976e1e314faa, type: 2}

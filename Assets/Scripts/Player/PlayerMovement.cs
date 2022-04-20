@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                _rigidbody.velocity = _runningDash.DashForceWithDirection * _runningDash.Curve.Evaluate(_runningDash.Timer.Progress);
+                _rigidbody.velocity = _runningDash.DashForceWithDirection * _runningDash.Curve.Value.Evaluate(_runningDash.Timer.Progress);
             }
 
             OnPositionChange?.Invoke();

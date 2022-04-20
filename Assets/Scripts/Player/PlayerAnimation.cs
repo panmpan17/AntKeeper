@@ -26,7 +26,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField]
     private FloatLerpTimer spritePositionTimer;
     [SerializeField]
-    private AnimationCurve positionCurve;
+    private AnimationCurveVariable positionCurve;
     [SerializeField]
     private TrailRenderer dashTrail;
 
@@ -81,7 +81,7 @@ public class PlayerAnimation : MonoBehaviour
             {
                 spritePositionTimer.Timer.Running = false;
             }
-            spriteRenderer.transform.localPosition = new Vector3(0, spritePositionTimer.CurvedValue(positionCurve), 0);
+            spriteRenderer.transform.localPosition = new Vector3(0, spritePositionTimer.CurvedValue(positionCurve.Value), 0);
         }
     }
 

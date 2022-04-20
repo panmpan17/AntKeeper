@@ -10,7 +10,7 @@ public struct DashInfo
     public float Force;
     [ShortTimer]
     public Timer Timer;
-    public AnimationCurve Curve;
+    public AnimationCurveVariable Curve;
 
     public event System.Action EndEvent;
 
