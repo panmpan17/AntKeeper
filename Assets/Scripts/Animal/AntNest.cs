@@ -86,15 +86,14 @@ public class AntNest : MonoBehaviour
 
     private List<AntRouteBranch> _routeBranches;
 
-    public bool IsShowTrueColor => lineRenderer.startColor == trueColorReference.Value;
+    public bool IsShowTrueColor { get; protected set; }
 
 
     void Awake()
     {
         _routeBranches = new List<AntRouteBranch>();
 
-        lineRenderer.startColor = hiddenColorReference.Value;
-        lineRenderer.endColor = hiddenColorReference.Value;
+        ChangeRouteLineRendererColor(hiddenColorReference.Value);
 
         _maxRouteSize = maxRouteSizeReference.PickRandomNumber();
         _growRouteTimer = new Timer(growRouteInterval.PickRandomNumber());
@@ -287,11 +286,11 @@ public class AntNest : MonoBehaviour
     {
         _routeSize++;
 
-        if (lineRenderer.startColor == hiddenColorReference.Value)
+        if (!IsShowTrueColor)
         {
             if (_routeSize >= showTrueColorAfterSize)
             {
-                ChangeRouteLineRendererColor(trueColorReference.Value);
+                ShowTrueColor();
             }
         }
 
@@ -524,6 +523,7 @@ public class AntNest : MonoBehaviour
 
     public void ShowTrueColor()
     {
+        IsShowTrueColor = true;
         ChangeRouteLineRendererColor(trueColorReference.Value);
     }
     #endregion

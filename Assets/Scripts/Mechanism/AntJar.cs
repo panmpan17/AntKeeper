@@ -68,6 +68,7 @@ public class AntJar : AbstractHoldItem
         {
             if (HasAnt)
                 return false;
+
             if (preventRepeat && targetNest.IsShowTrueColor)
                 return false;
 

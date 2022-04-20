@@ -21,8 +21,12 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private CameraState cameraState;
 
+
+#if UNITY_EDITOR
+    [Header("Editor Only")]
     [SerializeField]
     private ValueWithEnable<CameraState> overrideCameraState;
+#endif
 
     public enum CameraState
     {
