@@ -53,6 +53,9 @@ public class PlayerBehaviour : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _movement.OnFacingChange += ChangeHoldItemPosition;
         _movement.OnDashPerformed += HandleDashPerformed;
+
+        if (IsHolding)
+            SetHandItem(holdItem);
     }
 
     void FixedUpdate()

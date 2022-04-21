@@ -110,6 +110,20 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public bool TryFindAntNest(Vector3Int gridPosition, out AntNest antNest)
+    {
+        for (int i = 0; i < _antNests.Count; i++)
+        {
+            if (_antNests[i].RootPosition == gridPosition)
+            {
+                antNest = _antNests[i];
+                return true;
+            }
+        }
+        antNest = null;
+        return false;
+    }
+
     public bool TryFindAntNestBranch(Vector3Int gridPosition)
     {
         for (int i = 0; i < _antNests.Count; i++)
@@ -212,6 +226,12 @@ public class GridManager : MonoBehaviour
         newAntNest.transform.position = grid.GetCellCenterWorld(position);
 
         return true;
+    }
+
+    public void InstantiateAntNestOnGridWithoutChecking(Vector3Int position, bool useFireAnt)
+    {
+        GameObject newAntNest = Instantiate(useFireAnt ? fireAntPrefab : navtiveAntPrefab, antNestCollection);
+        newAntNest.transform.position = grid.GetCellCenterWorld(position);
     }
     #endregion
 }

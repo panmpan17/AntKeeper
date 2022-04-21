@@ -83,6 +83,7 @@ public class AntNest : MonoBehaviour
     private IntRangeVariable startedSize;
     private int _routeSize;
     private Vector3Int rootPosition;
+    public Vector3Int RootPosition => rootPosition;
 
     private List<AntRouteBranch> _routeBranches;
 
