@@ -261,19 +261,19 @@ MonoBehaviour:
   growRouteInterval:
     ConstantMin: 2.2
     ConstantMax: 3
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: 4d18fb05b9473439f8bddb7e39d8875a, type: 2}
+    UseVariable: 1
   maxRouteSize:
     ConstantMin: 6
     ConstantMax: 8
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: 1edb2c382c9f94ccf80aba0af0c6f281, type: 2}
+    UseVariable: 1
   branchOffChance: 0.1
   routeDisconnectDieTime:
     ConstantMin: 6
     ConstantMax: 8
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: 61fff86d4cf574d498f5ec18006afd14, type: 2}
+    UseVariable: 1
   unableToGrowDieTimer:
     TargetTime: 13
     Running: 0
@@ -281,25 +281,25 @@ MonoBehaviour:
   spriteSizeRange:
     ConstantMin: 0.3
     ConstantMax: 0.8
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: f409ca5b06ba54869904a662c5a7afe5, type: 2}
+    UseVariable: 1
   spriteGrowStep: 0.1
   spriteGrowByRouteRange:
     ConstantMin: 4
     ConstantMax: 5
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: f72418191947248f4af9aa83491f567b, type: 2}
+    UseVariable: 1
   spriteKillResistent: 60
   spreadRange:
     ConstantMin: 12
     ConstantMax: 16
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: 4798a7bd3ed8b4249b52c1c8dc1cd745, type: 2}
+    UseVariable: 1
   spreadInterval:
     ConstantMin: 30
     ConstantMax: 35
-    Variable: {fileID: 0}
-    UseVariable: 0
+    Variable: {fileID: 11400000, guid: 9d5570485bd144f79b76f1fbceb0de51, type: 2}
+    UseVariable: 1
   killAnimalInterval: {fileID: 0}
   hiddenColor:
     Constant: {r: 0, g: 0, b: 0, a: 0}

@@ -94,22 +94,18 @@ public class PlayerAnimation : MonoBehaviour
         switch (newFacing)
         {
             case Facing.Up:
-                spriteRenderer.sprite = faceUpSprite;
                 footStepParticleMain.startRotation = UpRotation;
                 SwitchToAnimationWithFacingPrefix(UpPrefix);
                 break;
             case Facing.Down:
-                spriteRenderer.sprite = faceDownSprite;
                 footStepParticleMain.startRotation = DownRotation;
                 SwitchToAnimationWithFacingPrefix(DownPrefix);
                 break;
             case Facing.Right:
-                spriteRenderer.sprite = faceRightSprite;
                 footStepParticleMain.startRotation = RightRotation;
                 SwitchToAnimationWithFacingPrefix(RightPrefix);
                 break;
             case Facing.Left:
-                spriteRenderer.sprite = faceLeftSprite;
                 footStepParticleMain.startRotation = LeftRotation;
                 SwitchToAnimationWithFacingPrefix(LeftPrefix);
                 break;
@@ -173,6 +169,9 @@ public class PlayerAnimation : MonoBehaviour
 
     void SwitchToAnimationWithFacingPrefix(string prefix)
     {
+        if (_behaviour == null)
+            return;
+
         var builder = new StringBuilder(prefix);
 
         if (_behaviour.IsHolding)
