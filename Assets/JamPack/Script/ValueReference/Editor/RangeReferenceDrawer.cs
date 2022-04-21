@@ -64,7 +64,7 @@ namespace MPack
 
         protected override void CreateAsset()
         {
-            string path = EditorUtility.SaveFilePanelInProject("New Range Varible", "New Range.asset", "asset", "Test");
+            string path = EditorUtility.SaveFilePanelInProject("New Range Varible", string.Format("New {0}.asset", propertyName), "asset", "Test");
 
             if (path != "")
             {

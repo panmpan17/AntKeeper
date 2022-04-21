@@ -8,6 +8,7 @@ namespace MPack
     {
         protected GUIContent settingIcon;
 
+        protected string propertyName;
         protected SerializedObject serializedObject;
         protected SerializedProperty useVariableProperty;
         protected SerializedProperty variableProperty;
@@ -26,6 +27,7 @@ namespace MPack
             serializedObject = property.serializedObject;
             useVariableProperty = property.FindPropertyRelative("UseVariable");
             variableProperty = property.FindPropertyRelative("Variable");
+            propertyName = property.name;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

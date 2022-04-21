@@ -54,7 +54,7 @@ namespace MPack
 
         protected override void CreateAsset()
         {
-            string path = EditorUtility.SaveFilePanelInProject("New Color Varible", "New Color.asset", "asset", "Test");
+            string path = EditorUtility.SaveFilePanelInProject("New Color Varible", string.Format("New {0}.asset", propertyName), "asset", "Test");
 
             if (path != "")
             {

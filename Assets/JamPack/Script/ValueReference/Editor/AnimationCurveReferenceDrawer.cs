@@ -54,7 +54,7 @@ namespace MPack
 
         protected override void CreateAsset()
         {
-            string path = EditorUtility.SaveFilePanelInProject("New Animation Curve Varible", "New Animation Curve.asset", "asset", "Test");
+            string path = EditorUtility.SaveFilePanelInProject("New Animation Curve Varible", string.Format("New {0}.asset", propertyName), "asset", "Test");
 
             if (path != "")
             {

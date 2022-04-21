@@ -54,7 +54,7 @@ namespace MPack
 
         protected override void CreateAsset()
         {
-            string path = EditorUtility.SaveFilePanelInProject("New Float Varible", "New Float.asset", "asset", "Test");
+            string path = EditorUtility.SaveFilePanelInProject("New Float Varible", string.Format("New {0}.asset", propertyName), "asset", "Test");
 
             if (path != "")
             {
