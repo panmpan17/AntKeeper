@@ -177,10 +177,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5978141897822157060}
   lineRenderer: {fileID: 7980305351446180888}
   growRouteInterval:
-    ConstantMin: 1.8
-    ConstantMax: 2.1
+    ConstantMin: 2.5
+    ConstantMax: 2.9
     Variable: {fileID: 11400000, guid: f6c1801e20d9544a4a81de099aec2fcd, type: 2}
-    UseVariable: 1
+    UseVariable: 0
   maxRouteSize:
     ConstantMin: 8
     ConstantMax: 10
@@ -207,17 +207,17 @@ MonoBehaviour:
     ConstantMax: 4
     Variable: {fileID: 11400000, guid: 127d1299ed4e74b9ca8a3e33e875ac52, type: 2}
     UseVariable: 1
-  spriteKillResistent: 90
+  spriteKillResistent: 100
   spreadRange:
     ConstantMin: 15
     ConstantMax: 18
     Variable: {fileID: 11400000, guid: 1e7f295bf8d9b4d2aa1e00a2dedaf2fb, type: 2}
     UseVariable: 1
   spreadInterval:
-    ConstantMin: 20
-    ConstantMax: 25
+    ConstantMin: 35
+    ConstantMax: 40
     Variable: {fileID: 11400000, guid: f5ee39eb378024a7690dd055f9545f11, type: 2}
-    UseVariable: 1
+    UseVariable: 0
   killAnimalInterval: {fileID: 11400000, guid: 55a748000b83643d6984976e1e314faa, type: 2}
   hiddenColor:
     Constant: {r: 0, g: 0, b: 0, a: 0}
