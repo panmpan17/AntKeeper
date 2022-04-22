@@ -234,7 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ca17ecf8dd8499e872b08610d09ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 4
+  walkSpeed: 4.5
+  stuckWalkSpeedMultiplier:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: b3a723c043b794de0947b5f9acdb2ba6, type: 2}
+    UseVariable: 1
   dashUseIgnoreLayer: 1
   dashIgnoreLayer: 9
   dashInfo:
@@ -262,6 +266,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 2229355669199412765}
   footStepParticle: {fileID: 2229355668777246082}
+  animatorPlaySpeedWhenStuck:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: b3a723c043b794de0947b5f9acdb2ba6, type: 2}
+    UseVariable: 1
   spritePositionTimer:
     From: 0
     To: 0.5

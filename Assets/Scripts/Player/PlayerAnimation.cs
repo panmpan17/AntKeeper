@@ -21,6 +21,11 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField]
     private ParticleSystem footStepParticle;
     private ParticleSystem.MainModule footStepParticleMain;
+    private ParticleSystem.EmissionModule footStepParticleEmission;
+    private float originEmissionSpeed;
+
+    [SerializeField]
+    private FloatReference animatorPlaySpeedWhenStuck;
 
     [Header("Dash")]
     [SerializeField]
@@ -62,10 +67,14 @@ public class PlayerAnimation : MonoBehaviour
         _movement.OnWalkEnded += OnWalkEnded;
         _movement.OnDashPerformed += OnDashStarted;
         _movement.OnDashEnded += OnDashEnded;
+        _movement.OnStuckAntRoute += OnStuckAntRoute;
+        _movement.OnExitAntRoute += OnExitAntRoute;
 
         _animator = GetComponentInChildren<Animator>();
 
         footStepParticleMain = footStepParticle.main;
+        footStepParticleEmission = footStepParticle.emission;
+        originEmissionSpeed = footStepParticleEmission.rateOverTime.constant;
     }
 
     void Start()
@@ -110,10 +119,10 @@ public class PlayerAnimation : MonoBehaviour
                 SwitchToAnimationWithFacingPrefix(LeftPrefix);
                 break;
         }
-
-        // SwitchToAnimation();
     }
 
+
+    #region Player Movement event
     void OnWalkStarted()
     {
         footStepParticle.Play();
@@ -136,6 +145,23 @@ public class PlayerAnimation : MonoBehaviour
     {
         dashTrail.emitting = false;
     }
+
+    void OnStuckAntRoute()
+    {
+        ParticleSystem.MinMaxCurve rate = footStepParticleEmission.rateOverTime;
+        rate.constant = originEmissionSpeed * animatorPlaySpeedWhenStuck.Value;
+        footStepParticleEmission.rateOverTime = rate;
+        _animator.speed = animatorPlaySpeedWhenStuck.Value;
+    }
+
+    void OnExitAntRoute()
+    {
+        ParticleSystem.MinMaxCurve rate = footStepParticleEmission.rateOverTime;
+        rate.constant = originEmissionSpeed;
+        footStepParticleEmission.rateOverTime = rate;
+        _animator.speed = 1;
+    }
+    #endregion
 
     void OnHoldItemChange()
     {

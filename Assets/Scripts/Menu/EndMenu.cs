@@ -116,25 +116,24 @@ public class EndMenu : MonoBehaviour
         {
             AddShowStarAnimation(0);
             while (_animatingStar != null) yield return null;
-            yield return new WaitForSecondsRealtime(0.5f);
 
             if (animalSuvivePercentage > 0.7f)
             {
+                yield return new WaitForSecondsRealtime(0.6f);
                 AddShowStarAnimation(1);
                 while (_animatingStar != null) yield return null;
-                yield return new WaitForSecondsRealtime(0.5f);
 
                 if (animalSuvivePercentage > 0.9f)
                 {
+                    yield return new WaitForSecondsRealtime(0.6f);
                     AddShowStarAnimation(2);
-                    yield return new WaitForSecondsRealtime(0.5f);
                 }
 
 
             }
         }
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.6f);
 
         replayButton.SetActive(true);
         eventSystem.SetSelectedGameObject(replayButton);

@@ -519,6 +519,17 @@ public class @InputScheme : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0f4bbec5-d32b-4f1f-8433-684449c24b15"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/hat"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1b8ae3a5-59d8-4141-9ed4-bcf545a66f6b"",
                     ""path"": ""*/{Submit}"",
                     ""interactions"": """",
@@ -563,8 +574,41 @@ public class @InputScheme : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ab7b7212-e7dd-4fd6-806f-cd51cef6e267"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d2a10605-9fd0-47dc-b289-891f15cded9b"",
                     ""path"": ""*/{Cancel}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1c3cb09-353d-4fdf-83ce-53631235fdd0"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ed1cf86-7309-4ae0-9ecd-3dac6e1ce521"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

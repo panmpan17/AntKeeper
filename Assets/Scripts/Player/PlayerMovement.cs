@@ -13,7 +13,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float walkSpeed;
+    [SerializeField]
+    private FloatReference stuckWalkSpeedMultiplier;
 
+    [Header("Dash")]
     [SerializeField]
     private bool dashUseIgnoreLayer;
     [SerializeField]
@@ -25,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
     [ShortTimer]
     private Timer dashColddownTimer;
     private DashInfo _runningDash;
-    // private bool _dashing;
 
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
@@ -36,9 +38,13 @@ public class PlayerMovement : MonoBehaviour
     public event System.Action OnDashEnded;
     public event System.Action OnWalkStarted;
     public event System.Action OnWalkEnded;
+    public event System.Action OnStuckAntRoute;
+    public event System.Action OnExitAntRoute;
 
     private PlayerInput _playerInput;
     private Rigidbody2D _rigidbody;
+
+    private bool _stuckInAntRoute;
 
     private enum MovementState
     {
@@ -88,7 +94,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (axis.sqrMagnitude > 0.01f)
         {
-            _rigidbody.velocity = axis * walkSpeed;
+            Vector2 velocity = axis * walkSpeed;
+            if (_stuckInAntRoute)
+                velocity *= stuckWalkSpeedMultiplier.Value;
+
+            _rigidbody.velocity = velocity;
 
 
             Facing newFacing;
@@ -208,6 +218,25 @@ public class PlayerMovement : MonoBehaviour
     public void Unfreeze()
     {
         throw new System.NotImplementedException();
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("AntRoute"))
+        {
+            _rigidbody.velocity = Vector3.zero;
+            _stuckInAntRoute = true;
+            OnStuckAntRoute?.Invoke();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("AntRoute"))
+        {
+            _stuckInAntRoute = false;
+            OnExitAntRoute?.Invoke();
+        }
     }
 }
 

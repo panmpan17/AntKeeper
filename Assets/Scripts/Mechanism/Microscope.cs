@@ -28,7 +28,6 @@ public class Microscope : AbstractGroundInteractive
     {
         examineTimer.Running = false;
         progressBar.gameObject.SetActive(false);
-
     }
 
     protected override void Start()
