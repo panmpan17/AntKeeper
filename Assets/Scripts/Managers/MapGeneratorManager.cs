@@ -41,7 +41,7 @@ namespace MapGenerate
         [SerializeField]
         private Tile wallTile;
         [SerializeField]
-        private Tile grassTite;
+        private TileBase grassTite;
         [SerializeField]
         private GameObject animalPrefab;
 
