@@ -40,6 +40,7 @@ public class AntRouteBranch
 
     private LineRenderer _lineRenderer;
 
+    public Vector3Int Direction => _direction;
     public int Size => _spots.Count + _parentBranchSize;
     public Vector3Int RootGridPosition => _root;
     public bool IsEmpty => _spots.Count == 0;
