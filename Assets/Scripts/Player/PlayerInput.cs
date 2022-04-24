@@ -27,6 +27,8 @@ public class PlayerInput : MonoBehaviour
         _inputScheme.Game.Dash.performed += HandleDashPerformed;
     }
 
+
+    #region Input Action handle
     void HandleMovementPerformed(CallbackContext callbackContext)
     {
         MovementAxis = callbackContext.ReadValue<Vector2>();
@@ -47,6 +49,36 @@ public class PlayerInput : MonoBehaviour
     {
         OnDashPerformedEvent?.Invoke();
     }
+    #endregion
+
+
+    #region Mobile UI button handle
+    public void OnMobileMovementPerformed(Vector2 axis)
+    {
+        if (!enabled) return;
+        MovementAxis = axis;
+        OnMovementPerformedEvent?.Invoke();
+    }
+
+    public void OnMobileDashButtonPerformed()
+    {
+        if (!enabled) return;
+        OnDashPerformedEvent?.Invoke();
+    }
+
+    public void OnMobileInteractPerforemed()
+    {
+        if (!enabled) return;
+        OnInteractPerformedEvent?.Invoke();
+    }
+
+    public void OnMobileInteractCanceled()
+    {
+        if (!enabled) return;
+        OnInteractCanceledEvent?.Invoke();
+    }
+    #endregion
+
 
     void OnEnable()
     {

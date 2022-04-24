@@ -1,6 +1,11 @@
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#define TURN_ON_MOBILE_CONTROL_AT_START
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using MPack;
 
@@ -20,6 +25,9 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     private GameObject helpMenuClose;
 
+    [SerializeField]
+    private ToggleSwitch mobileControlSwitch;
+
 #if UNITY_EDITOR
     [Header("Editor Only")]
     [SerializeField]
@@ -36,12 +44,17 @@ public class StartMenu : MonoBehaviour
         _canvas.enabled = true;
 
         helpMenu.SetActive(false);
-
         fadeTimer.Running = false;
     }
 
     IEnumerator Start()
     {
+#if TURN_ON_MOBILE_CONTROL_AT_START
+        mobileControlSwitch.ChangeState(true);
+#else
+        mobileControlSwitch.ChangeState(false);
+#endif
+
         yield return new WaitForEndOfFrame();
 
 #if UNITY_EDITOR
