@@ -20,10 +20,14 @@ public class QueenAntJarPlacer : AbstractGroundInteractive
 
     public override bool OnEmptyHandInteract(PlayerBehaviour playerBehaviour)
     {
-        playerBehaviour.SetHandItem(antJar);
-        antJar = null;
+        if (antJar != null)
+        {
+            playerBehaviour.SetHandItem(antJar);
+            antJar = null;
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     public override bool OnHoldItemInteract(AbstractHoldItem item)

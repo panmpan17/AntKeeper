@@ -41,7 +41,6 @@ public class AntNest : MonoBehaviour
     [SerializeField]
     private RangeReference routeDisconnectDieTime;
     [SerializeField]
-    // [ShortTimer]
     private Timer unableToGrowDieTimer;
 
     [Header("Grow sprite size")]
