@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MobileControlsManager : MonoBehaviour
 {
@@ -28,17 +29,17 @@ public class MobileControlsManager : MonoBehaviour
         playerInput.OnMobileMovementPerformed(axis);
     }
 
-    void OnDashClicked()
+    void OnDashClicked(PointerEventData eventData)
     {
         playerInput.OnMobileDashButtonPerformed();
     }
 
-    void OnInteractStarted()
+    void OnInteractStarted(PointerEventData eventData)
     {
         playerInput.OnMobileInteractPerforemed();
     }
 
-    void OnInteractEnded()
+    void OnInteractEnded(PointerEventData eventData)
     {
         playerInput.OnMobileInteractCanceled();
     }
