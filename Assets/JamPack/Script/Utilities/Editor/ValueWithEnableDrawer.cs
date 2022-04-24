@@ -35,4 +35,7 @@ namespace MPack
 
     [CustomPropertyDrawer(typeof(ValueWithEnable<float>))]
     public class ValueWithEnableFloat : ValueWithEnableDrawer { }
+
+    [CustomPropertyDrawer(typeof(ValueWithEnable<bool>))]
+    public class ValueWithEnableBool : ValueWithEnableDrawer { }
 }
