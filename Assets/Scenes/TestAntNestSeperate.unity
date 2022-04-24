@@ -34098,6 +34098,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62814b9510c44283a7240c37321fbc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killAnimalInterval:
+    ConstantMin: 0
+    ConstantMax: 0
+    Variable: {fileID: 11400000, guid: 55a748000b83643d6984976e1e314faa, type: 2}
+    UseVariable: 1
 --- !u!114 &997531032674070848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34164,6 +34169,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f3ce3ec096a43d8b476e7f4e215593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTransform: {fileID: 3079010346745990990}
+  spriteSizeRange:
+    ConstantMin: 0
+    ConstantMax: 0
+    Variable: {fileID: 11400000, guid: 285cb8b207d884be1b6654dfc1c3b4fa, type: 2}
+    UseVariable: 1
+  spriteGrowStep: 0.1
+  spriteGrowByRouteRange:
+    ConstantMin: 0
+    ConstantMax: 0
+    Variable: {fileID: 11400000, guid: 127d1299ed4e74b9ca8a3e33e875ac52, type: 2}
+    UseVariable: 1
+  rootResistent: 100
 --- !u!1 &997531033030404194
 GameObject:
   m_ObjectHideFlags: 0

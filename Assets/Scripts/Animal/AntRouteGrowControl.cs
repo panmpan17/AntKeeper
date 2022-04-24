@@ -47,6 +47,7 @@ public class AntRouteGrowControl : MonoBehaviour
     private Timer unableToGrowDieTimer;
 
     private int _size;
+    public int Size => _size;
 
     public event System.Action OnSizeIncrease;
 
@@ -56,6 +57,8 @@ public class AntRouteGrowControl : MonoBehaviour
     private bool initialSizeStepByStepDebug;
     #endif
 
+
+    #region Start
     void Awake()
     {
         _hub = GetComponent<AntNestHub>();
@@ -113,8 +116,38 @@ public class AntRouteGrowControl : MonoBehaviour
             }
         }
     }
+    #endregion
 
 
+    void Update()
+    {
+        if (_growIntervalTimer.UpdateEnd)
+        {
+            if (TryExpandBranch())
+            {
+                unableToGrowDieTimer.Reset();
+                _growIntervalTimer.Reset();
+                _growIntervalTimer.TargetTime = growInterval.PickRandomNumber();
+            }
+            // else if ()
+        }
+
+        for (int i = 0; i < _hub.routeBranches.Count; i++)
+        {
+            AntRouteBranch branch = _hub.routeBranches[i];
+            if (!branch.IsConnectedToNest && branch.UpdateNotConnectedDieTimer())
+            {
+                _hub.routeBranches.RemoveAt(i);
+
+                Vector3Int[] gridPosition = branch.AllGridPosition();
+                _hub.RemoveGridCollider(gridPosition);
+                branch.OnDestroy();
+            }
+        }
+    }
+
+
+    #region Expand
     bool TryExpandBranch()
     {
         AntRouteBranch branch = _hub.routeBranches[Random.Range(0, _hub.routeBranches.Count)];
@@ -155,8 +188,6 @@ public class AntRouteGrowControl : MonoBehaviour
 
         if (GridManager.ins.TryFindAntNestBranch(position, out AntNestHub overlapNest, out AntRouteBranch overlapBranch))
         {
-            Debug.Log(overlapNest);
-            Debug.Break();
             if (overlapNest == _hub)
             {
                 if (overlapBranch.IsConnectedToNest)
@@ -251,45 +282,40 @@ public class AntRouteGrowControl : MonoBehaviour
         //     spriteRenderer.transform.localScale = new Vector3(_spriteSize, _spriteSize, _spriteSize);
         // }
     }
+    #endregion
 
 
     #region Compete with others
     bool CompeteOtherNest(Vector3Int position, AntNestHub overlapNest, AntRouteBranch overlapBranch)
     {
-        throw new System.NotImplementedException();
-        // if (!CanCompeteWithOtherAntNest(overlapNest, overlapBranch))
-        //     return false;
+        // throw new System.NotImplementedException();
+        if (!CanCompeteWithOtherAntNest(overlapNest, overlapBranch))
+            return false;
 
-        // if (position == overlapNest.rootPosition)
-        // {
-        //     if (!CanKillOtherAntNest(overlapNest))
-        //         return false;
-        //     overlapNest.DestroyNest();
-        // }
-        // else
-        // {
-        //     overlapNest.TryKillSpot(position, BranchSpot.MaxHealth, overlapBranch);
-        //     overlapNest.SpriteSizeTakeDamage(1 / overlapNest._routeSize);
-        // }
-        // return true;
+        if (position == overlapNest.RootGridPosition)
+        {
+            if (!CanKillOtherAntNest(overlapNest))
+                return false;
+            overlapNest.DestroyNest();
+        }
+        else
+        {
+            overlapNest.TryKillSpot(overlapBranch, position, BranchSpot.MaxHealth);
+            overlapNest.TakeDamageFromOtherNest(1 / overlapNest.RouteSize);
+        }
+        return true;
     }
 
     bool CanCompeteWithOtherAntNest(AntNestHub overlapNest, AntRouteBranch overlapBranch)
     {
-        throw new System.NotImplementedException();
-        // if (overlapNest._spriteSize > _spriteSize)
-        // {
-        //     if (overlapBranch.IsConnectedToNest)
-        //         return false;
-        // }
-        // return true;
+        if (_hub.IsBiggerThan(overlapNest))
+            return true;
+        return overlapBranch.IsConnectedToNest;
     }
 
     bool CanKillOtherAntNest(AntNestHub overlapNest)
     {
-        throw new System.NotImplementedException();
-        // return overlapNest._spriteSize > _spriteSize;
-        // return true;
+        return _hub.IsBiggerThan(overlapNest);
     }
     #endregion
 }

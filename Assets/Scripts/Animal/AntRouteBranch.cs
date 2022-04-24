@@ -39,11 +39,13 @@ public class AntRouteBranch
     private int _parentBranchSize;
 
     private LineRenderer _lineRenderer;
+    public LineRenderer line => _lineRenderer;
 
     public Vector3Int Direction => _direction;
     public int Size => _spots.Count + _parentBranchSize;
     public Vector3Int RootGridPosition => _root;
-    public bool IsEmpty => _spots.Count == 0;
+    // public bool IsEmpty => _spots.Count == 0;
+    public bool IsEmpty => _lineRenderer.positionCount == 0;
 
     public bool IsConnectedToNest {
         get {
