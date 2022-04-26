@@ -10,7 +10,7 @@ public class AntNestSizeControl : MonoBehaviour
     [SerializeField]
     private Transform targetTransform;
     [SerializeField]
-    private RangeReference spriteSizeRange;
+    private RangeReference sizeRange;
     [SerializeField]
     private float spriteGrowStep;
     [SerializeField]
@@ -22,6 +22,7 @@ public class AntNestSizeControl : MonoBehaviour
 
     private float _size;
     public float Size => _size;
+    public float MaxSize => sizeRange.Max;
 
     private AntNestHub _hub;
     private AntRouteGrowControl _growControl;
@@ -31,11 +32,12 @@ public class AntNestSizeControl : MonoBehaviour
         _hub = GetComponent<AntNestHub>();
         _hub.OnRootGridTakeDamage += RootPositionTakeDamage;
         _hub.OnOtherNestAttack += TakeDamageFromOtherNest;
+        _hub.OnNestDestroy += OnNestDestroy;
 
         _growControl = GetComponent<AntRouteGrowControl>();
         _growControl.OnSizeIncrease += OnRouteSizeIncrease;
 
-        _size = spriteSizeRange.Min;
+        _size = sizeRange.Min;
         targetTransform.localScale = new Vector3(_size, _size, _size);
 
         _routeCountDown = spriteGrowByRouteRange.PickRandomNumber();
@@ -47,8 +49,8 @@ public class AntNestSizeControl : MonoBehaviour
         {
             _routeCountDown = spriteGrowByRouteRange.PickRandomNumber();
             _size += spriteGrowStep;
-            if (_size > spriteSizeRange.Max)
-                _size = spriteSizeRange.Max;
+            if (_size > sizeRange.Max)
+                _size = sizeRange.Max;
 
             targetTransform.localScale = new Vector3(_size, _size, _size);
         }
@@ -59,9 +61,9 @@ public class AntNestSizeControl : MonoBehaviour
         _size -= damageAmount / rootResistent;
         targetTransform.localScale = new Vector3(_size, _size, _size);
 
-        if (_size < spriteSizeRange.Min)
+        if (_size < sizeRange.Min)
         {
-            _hub.DestroyNest();
+            _hub.MainNestHubDestroy();
         }
     }
 
@@ -70,9 +72,15 @@ public class AntNestSizeControl : MonoBehaviour
         _size -= damageAmount;
         targetTransform.localScale = new Vector3(_size, _size, _size);
 
-        if (_size < spriteSizeRange.Min)
+        if (_size < sizeRange.Min)
         {
-            _hub.DestroyNest();
+            _hub.MainNestHubDestroy();
         }
+    }
+
+    void OnNestDestroy()
+    {
+        targetTransform.gameObject.SetActive(false);
+        enabled = false;
     }
 }

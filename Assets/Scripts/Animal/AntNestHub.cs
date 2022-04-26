@@ -13,10 +13,6 @@ public class AntNestHub : MonoBehaviour
     [Header("Reference")]
     [SerializeField]
     private TilemapReference tilemapReference;
-    // private Tilemap routeMap => tilemapReference.Tilemap;
-
-    // [SerializeField]
-    // private SpriteRenderer spriteRenderer;
     [SerializeField]
     private LineRenderer routeLine;
 
@@ -29,14 +25,18 @@ public class AntNestHub : MonoBehaviour
     [System.NonSerialized]
     public List<AntRouteBranch> routeBranches = new List<AntRouteBranch>();
 
+    [System.NonSerialized]
     public Vector3Int RootGridPosition;
     private AntRouteGrowControl antRouteGrowControl;
     private AntNestSizeControl antNestSizeControl;
 
     public event System.Action OnStart;
+    public event System.Action OnNestDestroy;
+    public event System.Action OnAntRouteBranchEmpty;
     public event System.Action<float> OnOtherNestAttack;
     public event System.Action<float> OnRootGridTakeDamage;
 
+    public float Size => antNestSizeControl.Size;
     public int RouteSize => antRouteGrowControl.Size;
     public bool IsShowTrueColor { get; protected set; }
 
@@ -94,7 +94,7 @@ public class AntNestHub : MonoBehaviour
             int index = routeBranches.IndexOf(targetBranch);
             if (index > 3)
             {
-                routeBranches.RemoveAt(index);
+                RemoveBranch(index);
             }
         }
 
@@ -149,12 +149,7 @@ public class AntNestHub : MonoBehaviour
 
     public bool IsBiggerThan(AntNestHub otherHub)
     {
-        return true;
-    }
-
-    public void DestroyNest()
-    {
-        throw new System.NotImplementedException();
+        return antNestSizeControl.Size > otherHub.antNestSizeControl.Size;
     }
 
     public void RemoveGridCollider(Vector3Int[] gridPositions)
@@ -194,6 +189,41 @@ public class AntNestHub : MonoBehaviour
     public void TakeDamageFromOtherNest(float damageAmount)
     {
         OnOtherNestAttack?.Invoke(damageAmount);
+    }
+
+
+
+    public void RemoveBranch(int index)
+    {
+        routeBranches.RemoveAt(index);
+
+        if (routeBranches.Count == 0)
+            NestCompletelyDestroy();
+    }
+
+    public void MainNestHubDestroy()
+    {
+        tilemapReference.Tilemap.SetTile(RootGridPosition, null);
+
+        for (int i = 0; i < routeBranches.Count; i++)
+        {
+            if (routeBranches[i].IsEmpty)
+            {
+                routeBranches[i].OnDestroy();
+                RemoveBranch(i);
+                i--;
+            }
+        }
+
+        OnNestDestroy?.Invoke();
+        // throw new System.NotImplementedException();
+    }
+
+    void NestCompletelyDestroy()
+    {
+        GridManager.ins.UnregisterAntNest(this);
+        OnAntRouteBranchEmpty?.Invoke();
+        Destroy(gameObject);
     }
 
     #region Editor

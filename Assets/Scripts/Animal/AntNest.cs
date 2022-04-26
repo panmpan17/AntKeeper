@@ -173,7 +173,7 @@ public class AntNest : MonoBehaviour
             AntRouteBranch branch = _routeBranches[i];
             if (!branch.IsConnectedToNest && branch.UpdateNotConnectedDieTimer())
             {
-                _routeBranches.RemoveAt(i);
+                // _hub.RemoveBranch(i);
 
                 Vector3Int[] gridPosition = branch.AllGridPosition();
                 RemoveGridCollider(gridPosition);
@@ -353,7 +353,7 @@ public class AntNest : MonoBehaviour
             int index = _routeBranches.IndexOf(branch);
             if (index > 3)
             {
-                _routeBranches.RemoveAt(index);
+                // _hub.RemoveBranch(index);
             }
         }
 

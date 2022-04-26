@@ -83,9 +83,11 @@ public class AntRouteGrowControl : MonoBehaviour
 
         if (initialSizeOnStart)
         {
+#if UNITY_EDITOR
             if (initialSizeStepByStepDebug)
                 StartCoroutine(C_GrowSizeByCount(initialSize.PickRandomNumber()));
             else
+#endif
                 GrowSizeByCount(initialSize.PickRandomNumber());
         }
     }
@@ -137,7 +139,7 @@ public class AntRouteGrowControl : MonoBehaviour
             AntRouteBranch branch = _hub.routeBranches[i];
             if (!branch.IsConnectedToNest && branch.UpdateNotConnectedDieTimer())
             {
-                _hub.routeBranches.RemoveAt(i);
+                _hub.RemoveBranch(i);
 
                 Vector3Int[] gridPosition = branch.AllGridPosition();
                 _hub.RemoveGridCollider(gridPosition);
@@ -226,9 +228,9 @@ public class AntRouteGrowControl : MonoBehaviour
         {
             AntRouteBranch _branch = _hub.routeBranches[i];
             if (_branch.RootGridPosition == newBranchData.Root && _branch.Direction == newBranchData.Direction)
-            {
                 return false;
-            }
+            if (_branch.RootGridPosition == newBranchData.NextPosition)
+                return false;
         }
 
         if (GridManager.ins.TryFindAntNestBranch(newBranchData.NextPosition, out AntNestHub overlapNest, out AntRouteBranch overlapBranch))
@@ -271,16 +273,6 @@ public class AntRouteGrowControl : MonoBehaviour
         }
 
         OnSizeIncrease?.Invoke();
-
-        // if (--_spriteGrowByRouteCount <= 0)
-        // {
-        //     _spriteGrowByRouteCount = spriteGrowByRouteRange.PickRandomNumber();
-        //     _spriteSize += spriteGrowStep;
-        //     if (_spriteSize > spriteSizeRange.Max)
-        //         _spriteSize = spriteSizeRange.Max;
-
-        //     spriteRenderer.transform.localScale = new Vector3(_spriteSize, _spriteSize, _spriteSize);
-        // }
     }
     #endregion
 
@@ -288,7 +280,6 @@ public class AntRouteGrowControl : MonoBehaviour
     #region Compete with others
     bool CompeteOtherNest(Vector3Int position, AntNestHub overlapNest, AntRouteBranch overlapBranch)
     {
-        // throw new System.NotImplementedException();
         if (!CanCompeteWithOtherAntNest(overlapNest, overlapBranch))
             return false;
 
@@ -296,7 +287,7 @@ public class AntRouteGrowControl : MonoBehaviour
         {
             if (!CanKillOtherAntNest(overlapNest))
                 return false;
-            overlapNest.DestroyNest();
+            overlapNest.MainNestHubDestroy();
         }
         else
         {

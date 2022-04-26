@@ -75,16 +75,6 @@ public class GridManager : MonoBehaviour
         _antNestHubs.Remove(antNestHub);
         HUDManager.ins.UpdateFireAntCount();
     }
-    // public void RegisterAntNest(AntNest antNest)
-    // {
-    //     _antNests.Add(antNest);
-    //     HUDManager.ins.UpdateFireAntCount();
-    // }
-    // public void UnregisterAntNest(AntNest antNest)
-    // {
-    //     _antNests.Remove(antNest);
-    //     HUDManager.ins.UpdateFireAntCount();
-    // }
 
     public void ReigsterAnimal(VirtualAnimalSpot animalSpot, out Vector3Int gridPosition)
     {
@@ -194,6 +184,7 @@ public class GridManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < _antNestHubs.Count; i++)
         {
+            Debug.Log(_antNestHubs[i].IsFireAnt);
             if (_antNestHubs[i].IsFireAnt)
                 count++;
         }
@@ -219,6 +210,10 @@ public class GridManager : MonoBehaviour
         return baseMap.HasTile(position);
     }
 
+    public bool InstantiateAntNestOnGrid(Vector3 position, bool useFireAnt)
+    {
+        return InstantiateAntNestOnGrid(grid.WorldToCell(position), useFireAnt);
+    }
     public bool InstantiateAntNestOnGrid(Vector3Int position, bool useFireAnt)
     {
         if (TryFindGroundInteractive(position))
