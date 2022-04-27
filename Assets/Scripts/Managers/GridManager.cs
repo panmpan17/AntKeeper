@@ -27,7 +27,11 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private GameObject fireAntPrefab;
     [SerializeField]
+    private Transform[] startFireAntNests;
+    [SerializeField]
     private GameObject navtiveAntPrefab;
+    [SerializeField]
+    private Transform[] startNativeAntNests;
 
     private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
     // private List<AntNest> _antNests = new List<AntNest>();
@@ -44,6 +48,20 @@ public class GridManager : MonoBehaviour
         antNestCollection.gameObject.SetActive(false);
 
         routeColliderMapReference.Tilemap = routeColliderMap;
+
+        for (int i = 0; i < startFireAntNests.Length; i++)
+        {
+            var growControl = Instantiate(fireAntPrefab, antNestCollection).GetComponent<AntRouteGrowControl>();
+            growControl.InitialSizeOnStart = true;
+            growControl.transform.position = startFireAntNests[i].position;
+        }
+
+        for (int i = 0; i < startNativeAntNests.Length; i++)
+        {
+            var growControl = Instantiate(navtiveAntPrefab, antNestCollection).GetComponent<AntRouteGrowControl>();
+            growControl.InitialSizeOnStart = true;
+            growControl.transform.position = startNativeAntNests[i].position;
+        }
     }
 
     void Start()

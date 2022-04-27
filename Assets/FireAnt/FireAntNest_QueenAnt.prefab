@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8562711151390871081}
   - component: {fileID: 8562711151390871126}
   m_Layer: 0
-  m_Name: NewFireAntNest
+  m_Name: FireAntNest_QueenAnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

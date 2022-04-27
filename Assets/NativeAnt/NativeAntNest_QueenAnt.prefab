@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 8756300886345247994}
   - component: {fileID: 8756300886345247995}
   m_Layer: 0
-  m_Name: NewNativeAntNest
+  m_Name: NativeAntNest_QueenAnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

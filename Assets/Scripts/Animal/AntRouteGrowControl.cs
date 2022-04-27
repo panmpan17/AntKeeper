@@ -24,6 +24,9 @@ public class AntRouteGrowControl : MonoBehaviour
 
     [SerializeField]
     private bool initialSizeOnStart;
+    public bool InitialSizeOnStart {
+        set => initialSizeOnStart = value;
+    }
     [SerializeField]
     private IntRangeReference initialSize;
 
