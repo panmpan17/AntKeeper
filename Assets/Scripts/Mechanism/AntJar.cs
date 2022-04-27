@@ -20,7 +20,7 @@ public class AntJar : AbstractHoldItem
     private Sprite emptyJarSprite;
 
     private SpriteRenderer _spriteRenderer;
-    private AntNest _targetAntNest;
+    private AntNestHub _targetAntNest;
 
     public bool HasAnt => _targetAntNest != null;
 
@@ -64,7 +64,7 @@ public class AntJar : AbstractHoldItem
             return groundInteractive.OnHoldItemInteract(this);
         }
 
-        if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNest targetNest, out AntRouteBranch targetBranch))
+        if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest, out AntRouteBranch targetBranch))
         {
             if (HasAnt)
                 return false;

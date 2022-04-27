@@ -29,9 +29,10 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private GameObject navtiveAntPrefab;
 
-    private List<AbstractGroundInteractive> _groundInteractives;
-    private List<AntNest> _antNests;
-    private List<VirtualAnimalSpot> _animals;
+    private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
+    // private List<AntNest> _antNests = new List<AntNest>();
+    private List<AntNestHub> _antNestHubs = new List<AntNestHub>();
+    private List<VirtualAnimalSpot> _animals = new List<VirtualAnimalSpot>();
 
     private int _originAnimalCount;
     public int OriginAnimalCount => _originAnimalCount;
@@ -39,9 +40,6 @@ public class GridManager : MonoBehaviour
     void Awake()
     {
         ins = this;
-        _groundInteractives = new List<AbstractGroundInteractive>();
-        _antNests = new List<AntNest>();
-        _animals = new List<VirtualAnimalSpot>();
 
         antNestCollection.gameObject.SetActive(false);
 
@@ -66,14 +64,15 @@ public class GridManager : MonoBehaviour
         gridPosition = grid.WorldToCell(groundInteractive.transform.position);
     }
 
-    public void RegisterAntNest(AntNest antNest)
+
+    public void RegisterAntNest(AntNestHub antNestHub)
     {
-        _antNests.Add(antNest);
+        _antNestHubs.Add(antNestHub);
         HUDManager.ins.UpdateFireAntCount();
     }
-    public void UnregisterAntNest(AntNest antNest)
+    public void UnregisterAntNest(AntNestHub antNestHub)
     {
-        _antNests.Remove(antNest);
+        _antNestHubs.Remove(antNestHub);
         HUDManager.ins.UpdateFireAntCount();
     }
 
@@ -110,38 +109,38 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
-    public bool TryFindAntNest(Vector3Int gridPosition, out AntNest antNest)
+    public bool TryFindAntNest(Vector3Int gridPosition, out AntNestHub antNesthub)
     {
-        for (int i = 0; i < _antNests.Count; i++)
+        for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNests[i].RootPosition == gridPosition)
+            if (_antNestHubs[i].RootGridPosition == gridPosition)
             {
-                antNest = _antNests[i];
+                antNesthub = _antNestHubs[i];
                 return true;
             }
         }
-        antNest = null;
+        antNesthub = null;
         return false;
     }
 
     public bool TryFindAntNestBranch(Vector3Int gridPosition)
     {
-        for (int i = 0; i < _antNests.Count; i++)
+        for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNests[i].IsGridPositionOverlapBranch(gridPosition))
+            if (_antNestHubs[i].IsGridPositionOverlapBranch(gridPosition))
             {
                 return true;
             }
         }
         return false;
     }
-    public bool TryFindAntNestBranch(Vector3Int gridPosition, out AntNest antNest, out AntRouteBranch branch)
+    public bool TryFindAntNestBranch(Vector3Int gridPosition, out AntNestHub antNest, out AntRouteBranch branch)
     {
-        for (int i = 0; i < _antNests.Count; i++)
+        for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNests[i].IsGridPositionOverlapBranch(gridPosition, out branch))
+            if (_antNestHubs[i].IsGridPositionOverlapBranch(gridPosition, out branch))
             {
-                antNest = _antNests[i];
+                antNest = _antNestHubs[i];
                 return true;
             }
         }
@@ -183,9 +182,10 @@ public class GridManager : MonoBehaviour
     public int CountFireAnt()
     {
         int count = 0;
-        for (int i = 0; i < _antNests.Count; i++)
+        for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNests[i].IsFireAnt)
+            Debug.Log(_antNestHubs[i].IsFireAnt);
+            if (_antNestHubs[i].IsFireAnt)
                 count++;
         }
         return count;
@@ -210,6 +210,10 @@ public class GridManager : MonoBehaviour
         return baseMap.HasTile(position);
     }
 
+    public bool InstantiateAntNestOnGrid(Vector3 position, bool useFireAnt)
+    {
+        return InstantiateAntNestOnGrid(grid.WorldToCell(position), useFireAnt);
+    }
     public bool InstantiateAntNestOnGrid(Vector3Int position, bool useFireAnt)
     {
         if (TryFindGroundInteractive(position))
@@ -218,7 +222,7 @@ public class GridManager : MonoBehaviour
             return false;
         if (TryFindAntNestBranch(position))
             return false;
-        if (_antNests.Count >= antNestCountCap)
+        if (_antNestHubs.Count >= antNestCountCap)
             return false;
 
         GameObject newAntNest = Instantiate(useFireAnt ? fireAntPrefab : navtiveAntPrefab, antNestCollection);
