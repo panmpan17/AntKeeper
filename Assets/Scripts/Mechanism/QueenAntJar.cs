@@ -57,7 +57,7 @@ public class QueenAntJar : AbstractHoldItem
     {
         if (collectTimer.Running)
         {
-            if (_targetAntNest == null)
+            if (_targetAntNest == null || !_targetAntNest.enabled)
             {
                 collectTimer.Running = false;
                 PlayerBehaviour.Input.enabled = true;
@@ -147,9 +147,12 @@ public class QueenAntJar : AbstractHoldItem
 
     void EmptyJarCheck()
     {
-        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest))
+        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub overlapNest))
         {
-            _targetAntNest = targetNest;
+            if (!overlapNest.enabled)
+                return;
+
+            _targetAntNest = overlapNest;
             PlayerBehaviour.Input.enabled = false;
 
             collectTimer.Reset();
@@ -159,12 +162,14 @@ public class QueenAntJar : AbstractHoldItem
 
     void OneAntJarCheck()
     {
-        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest))
+        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub overlapNest))
         {
-            if (targetNest == _firstAntNest)
+            if (overlapNest == _firstAntNest)
+                return;
+            if (!overlapNest.enabled)
                 return;
 
-            _targetAntNest = targetNest;
+            _targetAntNest = overlapNest;
             PlayerBehaviour.Input.enabled = false;
 
             collectTimer.Reset();

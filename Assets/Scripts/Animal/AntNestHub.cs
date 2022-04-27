@@ -203,23 +203,26 @@ public class AntNestHub : MonoBehaviour
 
     public void MainNestHubDestroy()
     {
+        if (!enabled) return;
+        enabled = false;
+
         tilemapReference.Tilemap.SetTile(RootGridPosition, null);
 
-        for (int i = 3; i >= 0; i--)
-        // for (int i = routeBranches.Count - 1; i >= 0; i--)
+        for (int i = routeBranches.Count - 1; i >= 0; i--)
         {
-            DamageBranchAtPosition(routeBranches[i], RootGridPosition, BranchSpot.MaxHealth);
-
-            // if (routeBranches[i].IsEmpty)
-            // {
-            //     routeBranches[i].OnDestroy();
-            //     RemoveBranch(i);
-            //     i--;
-            // }
+            if (routeBranches[i].IsEmpty)
+            {
+                routeBranches[i].OnDestroy();
+                RemoveBranch(i);
+                i--;
+            }
+            else
+            {
+                routeBranches[i].IsConnectedToNest = false;
+            }
         }
 
         OnNestDestroy?.Invoke();
-        // throw new System.NotImplementedException();
     }
 
     void NestCompletelyDestroy()

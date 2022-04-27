@@ -184,8 +184,7 @@ public class GridManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            Debug.Log(_antNestHubs[i].IsFireAnt);
-            if (_antNestHubs[i].IsFireAnt)
+            if (_antNestHubs[i].IsFireAnt && _antNestHubs[i].enabled)
                 count++;
         }
         return count;
