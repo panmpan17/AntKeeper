@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bf90bf4eb374fad82740d4eead15ef, type: 3}
   m_Name: InteractControlButton
   m_EditorClassIdentifier: 
-  Value: {r: 0.21568626, g: 0.53755546, b: 1, a: 1}
+  Value: {r: 0, g: 0.41000032, b: 1, a: 1}

@@ -95,7 +95,8 @@ public class AntJar : AbstractHoldItem
 
     public void ShowAntNestTrueColor()
     {
-        _targetAntNest.ShowTrueColor();
+        if (_targetAntNest != null)
+            _targetAntNest.ShowTrueColor();
 
         _targetAntNest = null;
         _spriteRenderer.sprite = emptyJarSprite;

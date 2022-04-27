@@ -3255,7 +3255,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 450}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -3312,7 +3312,7 @@ MonoBehaviour:
   helpMenu: {fileID: 8310718289035784399}
   helpMenuClose: {fileID: 8310718288109463344}
   mobileControlSwitch: {fileID: 520936723907558160}
-  skipMenu: 1
+  skipMenu: 0
 --- !u!1 &8337981460448391196
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,6 +34,8 @@ public class QueenAntJar : AbstractHoldItem
     private State _state;
 
     private SpriteRenderer _spriteRenderer;
+    private bool _firstIsFireAnt;
+    private bool _secondIsFireAnt;
     private AntNest _firstAntNest;
     private AntNest _targetAntNest;
 
@@ -55,10 +57,17 @@ public class QueenAntJar : AbstractHoldItem
     {
         if (collectTimer.Running)
         {
+            if (_targetAntNest == null)
+            {
+                collectTimer.Running = false;
+                PlayerBehaviour.Input.enabled = true;
+                progressBar.gameObject.SetActive(false);
+                return;
+            }
+
             if (collectTimer.UpdateEnd)
             {
                 collectTimer.Running = false;
-
                 PlayerBehaviour.Input.enabled = true;
 
                 progressBar.gameObject.SetActive(false);
@@ -68,11 +77,13 @@ public class QueenAntJar : AbstractHoldItem
                     _state = State.OneAnt;
                     _spriteRenderer.color = oneAntJarColor;
                     _firstAntNest = _targetAntNest;
+                    _firstIsFireAnt = _firstAntNest.IsFireAnt;
                 }
                 else
                 {
                     _state = State.TwoAnt;
                     _spriteRenderer.color = twoAntJarColor;
+                    _secondIsFireAnt = _targetAntNest.IsFireAnt;
                 }
 
                 return;
@@ -186,7 +197,7 @@ public class QueenAntJar : AbstractHoldItem
     public void PlantAnt()
     {
         // Debug.LogFormat("plant ant {0} at {1}", _firstAntNest.IsFireAnt, PlayerBehaviour.SelectedGridPosition);
-        if (_firstAntNest.IsFireAnt != _targetAntNest.IsFireAnt)
+        if (_firstIsFireAnt != _secondIsFireAnt)
             return;
         
         GridManager.ins.InstantiateAntNestOnGridWithoutChecking(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
