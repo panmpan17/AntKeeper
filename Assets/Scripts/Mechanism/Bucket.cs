@@ -83,7 +83,7 @@ public class Bucket : AbstractHoldItem
 
             if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNestHub antNest, out AntRouteBranch branch))
             {
-                antNest.TryKillSpot(branch, PlayerBehaviour.SelectedGridPosition, killSpeed * Time.deltaTime);
+                antNest.DamageBranchAtPosition(branch, PlayerBehaviour.SelectedGridPosition, killSpeed * Time.deltaTime);
             }
         }
     }

@@ -191,10 +191,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: 96737d45c2223423cb2f88cf8792a6d1, type: 2}
     UseVariable: 1
   growInterval:
-    ConstantMin: 0
-    ConstantMax: 0
+    ConstantMin: 2.5
+    ConstantMax: 2
     Variable: {fileID: 11400000, guid: f6c1801e20d9544a4a81de099aec2fcd, type: 2}
-    UseVariable: 1
+    UseVariable: 0
   maxSize:
     ConstantMin: 0
     ConstantMax: 0
@@ -230,10 +230,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: 1e7f295bf8d9b4d2aa1e00a2dedaf2fb, type: 2}
     UseVariable: 1
   spreadInterval:
-    ConstantMin: 0
-    ConstantMax: 0
+    ConstantMin: 35
+    ConstantMax: 40
     Variable: {fileID: 11400000, guid: f5ee39eb378024a7690dd055f9545f11, type: 2}
-    UseVariable: 1
+    UseVariable: 0
 --- !u!114 &8562711151390871126
 MonoBehaviour:
   m_ObjectHideFlags: 0

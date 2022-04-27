@@ -193,7 +193,7 @@ public class AntRouteGrowControl : MonoBehaviour
             if (overlapNest == _hub)
             {
                 if (overlapBranch.IsConnectedToNest)
-                    return true;
+                    return false;
 
                 overlapBranch.IsConnectedToNest = true;
                 RouteSizeIncrease();
@@ -201,11 +201,9 @@ public class AntRouteGrowControl : MonoBehaviour
                 branch.AddBranchOff(overlapBranch);
                 return true;
             }
-            else
-            {
-                if (!CompeteOtherNest(position, overlapNest, overlapBranch))
-                    return false;
-            }
+
+            if (!CompeteOtherNest(position, overlapNest, overlapBranch))
+                return false;
         }
 
         RouteSizeIncrease();
@@ -224,14 +222,12 @@ public class AntRouteGrowControl : MonoBehaviour
             return false;
         
 
-        for (int i = 0; i < _hub.routeBranches.Count; i++)
-        {
-            AntRouteBranch _branch = _hub.routeBranches[i];
-            if (_branch.RootGridPosition == newBranchData.Root && _branch.Direction == newBranchData.Direction)
-                return false;
-            if (_branch.RootGridPosition == newBranchData.NextPosition)
-                return false;
-        }
+        // for (int i = 0; i < _hub.routeBranches.Count; i++)
+        // {
+        //     AntRouteBranch _branch = _hub.routeBranches[i];
+        //     if (_branch.RootGridPosition == newBranchData.Root && _branch.Direction == newBranchData.Direction)
+        //         return false;
+        // }
 
         if (GridManager.ins.TryFindAntNestBranch(newBranchData.NextPosition, out AntNestHub overlapNest, out AntRouteBranch overlapBranch))
         {
@@ -241,6 +237,15 @@ public class AntRouteGrowControl : MonoBehaviour
                 return false;
         }
 
+        AntRouteBranch newBranch = AddNewRouteBranch(newBranchData);
+        branch.AddBranchOff(newBranch);
+
+        RouteSizeIncrease();
+        return true;
+    }
+
+    AntRouteBranch AddNewRouteBranch(BranchData newBranchData)
+    {
         AntRouteBranch newBranch = new AntRouteBranch(
             newBranchData.Root,
             routeMap.GetCellCenterWorld(newBranchData.Root),
@@ -250,13 +255,10 @@ public class AntRouteGrowControl : MonoBehaviour
             length: newBranchData.ExccedPositionCount
             );
         newBranch.AddGrowPosition(newBranchData.NextPosition, routeMap.GetCellCenterWorld(newBranchData.NextPosition));
-
-        branch.AddBranchOff(newBranch);
-        _hub.routeBranches.Add(newBranch);
         routeMap.SetTile(newBranchData.NextPosition, tilemapReference.ColliderTile);
 
-        RouteSizeIncrease();
-        return true;
+        _hub.routeBranches.Add(newBranch);
+        return newBranch;
     }
 
 
@@ -280,31 +282,31 @@ public class AntRouteGrowControl : MonoBehaviour
     #region Compete with others
     bool CompeteOtherNest(Vector3Int position, AntNestHub overlapNest, AntRouteBranch overlapBranch)
     {
-        if (!CanCompeteWithOtherAntNest(overlapNest, overlapBranch))
+        if (!CanCompeteWithNestBranch(overlapNest, overlapBranch))
             return false;
 
         if (position == overlapNest.RootGridPosition)
         {
-            if (!CanKillOtherAntNest(overlapNest))
+            if (!CanKillOffNestHub(overlapNest))
                 return false;
+
             overlapNest.MainNestHubDestroy();
+            return true;
         }
-        else
-        {
-            overlapNest.TryKillSpot(overlapBranch, position, BranchSpot.MaxHealth);
-            overlapNest.TakeDamageFromOtherNest(1 / overlapNest.RouteSize);
-        }
+
+        overlapNest.DamageBranchAtPosition(overlapBranch, position, BranchSpot.MaxHealth);
+        overlapNest.TakeDamageFromOtherNest(1 / overlapNest.RouteSize);
         return true;
     }
 
-    bool CanCompeteWithOtherAntNest(AntNestHub overlapNest, AntRouteBranch overlapBranch)
+    bool CanCompeteWithNestBranch(AntNestHub overlapNest, AntRouteBranch overlapBranch)
     {
         if (_hub.IsBiggerThan(overlapNest))
             return true;
         return overlapBranch.IsConnectedToNest;
     }
 
-    bool CanKillOtherAntNest(AntNestHub overlapNest)
+    bool CanKillOffNestHub(AntNestHub overlapNest)
     {
         return _hub.IsBiggerThan(overlapNest);
     }

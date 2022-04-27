@@ -9,7 +9,7 @@ using TMPro;
 
 namespace UnityEngine.UI
 {
-    public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
+    public class ToggleSwitch : Selectable, IPointerClickHandler, ISubmitHandler
     {
         [SerializeField]
         private bool isOn;
@@ -21,14 +21,18 @@ namespace UnityEngine.UI
         private TextMeshProUGUI text;
 
         [SerializeField]
+        private EventReference triggerEvent;
+
+        [SerializeField]
         private SwitchStateVisualization onState;
         [SerializeField]
         private SwitchStateVisualization offState;
 
         public bool IsOn => isOn;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             handle = handleImage.GetComponent<RectTransform>();
             ApplyState(isOn ? onState : offState);
         }
@@ -38,20 +42,16 @@ namespace UnityEngine.UI
             ToggleChoice();
         }
 
+        public void OnSubmit(BaseEventData eventData)
+        {
+            ToggleChoice();
+        }
+
         public void ChangeState(bool isOn)
         {
             this.isOn = isOn;
-
-            if (isOn)
-            {
-                ApplyState(onState);
-                onState.Event.Invoke();
-            }
-            else
-            {
-                ApplyState(offState);
-                offState.Event.Invoke();
-            }
+            ApplyState(isOn ? onState : offState);
+            triggerEvent?.Invoke(isOn);
         }
         public void ChangeStateWithoutTriggerEvent(bool isOn)
         {
@@ -62,17 +62,8 @@ namespace UnityEngine.UI
         public void ToggleChoice()
         {
             isOn = !isOn;
-
-            if (isOn)
-            {
-                ApplyState(onState);
-                onState.Event.Invoke();
-            }
-            else
-            {
-                ApplyState(offState);
-                offState.Event.Invoke();
-            }
+            ApplyState(isOn ? onState : offState);
+            triggerEvent?.Invoke(isOn);
         }
 
         void ApplyState(SwitchStateVisualization visualization)
@@ -90,7 +81,7 @@ namespace UnityEngine.UI
             public Vector2 HandleAnchorPosition;
             public ColorReference HandleColor;
             public ColorReference TextColor;
-            public UnityEvent Event;
+            // public UnityEvent Event;
         }
     }
 }

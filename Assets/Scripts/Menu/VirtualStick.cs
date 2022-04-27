@@ -4,25 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class VirtualStick : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
+public class VirtualStick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
     private bool baseFollowByHandle;
     [SerializeField]
     private bool moveBaseOnFirstTouch;
-    [SerializeField]
-    private Rect moveConstrainRect;
 
     [SerializeField]
     private Transform wheelBase;
     [SerializeField]
     private RectTransform handle;
-    private Transform canvasTransform;
     [SerializeField]
     private float radius;
 
     private Vector2 _originPosition;
     private RectTransform _rectTransform;
+    private Transform _canvasTransform;
+    private CanvasGroup _wheelBaseCanvasGroup;
 
     public event System.Action<Vector2> OnMovementAxisChange;
 
@@ -30,12 +29,14 @@ public class VirtualStick : MonoBehaviour, IPointerDownHandler, IDragHandler, IE
     {
         _originPosition = handle.anchoredPosition;
 
-        canvasTransform = transform.root;
+        _canvasTransform = transform.root;
         _rectTransform = GetComponent<RectTransform>();
+        _wheelBaseCanvasGroup = wheelBase.GetComponent<CanvasGroup>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        _wheelBaseCanvasGroup.alpha = 1;
         ChangeBasePosition(eventData.position);
         handle.anchoredPosition = _originPosition;
     }
@@ -43,7 +44,7 @@ public class VirtualStick : MonoBehaviour, IPointerDownHandler, IDragHandler, IE
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 delta = eventData.position - (Vector2)wheelBase.position;
-        float scaledRadius = radius * canvasTransform.localScale.x;
+        float scaledRadius = radius * _canvasTransform.localScale.x;
 
         if (delta.sqrMagnitude >= scaledRadius * scaledRadius)
         {
@@ -71,12 +72,18 @@ public class VirtualStick : MonoBehaviour, IPointerDownHandler, IDragHandler, IE
     {
         handle.anchoredPosition = _originPosition;
         OnMovementAxisChange?.Invoke(Vector2.zero);
+        _wheelBaseCanvasGroup.alpha = 0.5f;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _wheelBaseCanvasGroup.alpha = 0.5f;
     }
 
     void ChangeBasePosition(Vector3 position)
     {
-        Rect rect = moveConstrainRect;
-        rect.center *= transform.root.localScale.x;
+        Rect rect = _rectTransform.rect;
+        rect.center += (Vector2)transform.position;
         rect.size *= transform.root.localScale.x;
         position.x = Mathf.Clamp(position.x, rect.xMin, rect.xMax);
         position.y = Mathf.Clamp(position.y, rect.yMin, rect.yMax);
@@ -87,6 +94,9 @@ public class VirtualStick : MonoBehaviour, IPointerDownHandler, IDragHandler, IE
     void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0, 0, 0.3f);
-        Gizmos.DrawCube(moveConstrainRect.center * transform.root.localScale.x, moveConstrainRect.size * transform.root.localScale.x);
+
+        Rect rect = GetComponent<RectTransform>().rect;
+        Gizmos.DrawCube((Vector3)rect.center + transform.position, rect.size * transform.root.localScale.x);
+        Gizmos.DrawSphere(wheelBase.position, 10f);
     }
 }

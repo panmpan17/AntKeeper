@@ -74,7 +74,7 @@ public class AntNestHub : MonoBehaviour
     }
 
 
-    public void TryKillSpot(AntRouteBranch targetBranch, Vector3Int position, float damageAmount)
+    public void DamageBranchAtPosition(AntRouteBranch targetBranch, Vector3Int position, float damageAmount)
     {
         Vector3Int[] removedPositions = targetBranch.KillSpot(position, damageAmount, out AntRouteBranch newBranch);
         if (removedPositions != null)
@@ -203,9 +203,12 @@ public class AntNestHub : MonoBehaviour
 
     public void MainNestHubDestroy()
     {
+        if (!enabled) return;
+        enabled = false;
+
         tilemapReference.Tilemap.SetTile(RootGridPosition, null);
 
-        for (int i = 0; i < routeBranches.Count; i++)
+        for (int i = routeBranches.Count - 1; i >= 0; i--)
         {
             if (routeBranches[i].IsEmpty)
             {
@@ -213,10 +216,13 @@ public class AntNestHub : MonoBehaviour
                 RemoveBranch(i);
                 i--;
             }
+            else
+            {
+                routeBranches[i].IsConnectedToNest = false;
+            }
         }
 
         OnNestDestroy?.Invoke();
-        // throw new System.NotImplementedException();
     }
 
     void NestCompletelyDestroy()

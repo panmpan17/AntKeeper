@@ -97,11 +97,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectTimer:
-    TargetTime: 3
+    TargetTime: 2
     Running: 0
     ReverseMode: 0
   plantTimer:
-    TargetTime: 3
+    TargetTime: 2
     Running: 0
     ReverseMode: 0
   progressBar: {fileID: 4560711313867450932}
