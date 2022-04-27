@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestAntNestSeperate.unity
     guid: 3c4b09eb1af694d82b826727cc946508
+  - enabled: 1
+    path: Assets/Scenes/TestQueenAnt.unity
+    guid: 487920afae2b94b55aec3e350f7098ec
   m_configObjects: {}

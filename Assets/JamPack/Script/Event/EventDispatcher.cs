@@ -9,6 +9,7 @@ public class EventDispatcher : MonoBehaviour
     private EventReference eventReference;
 
     public UnityEvent Event;
+    public UnityEventWithBoolean BooleanEvent;
 
     void OnEnable()
     {
@@ -23,4 +24,11 @@ public class EventDispatcher : MonoBehaviour
     {
         Event.Invoke();
     }
+    public void DispatchEvent(bool booleanValue)
+    {
+        BooleanEvent.Invoke(booleanValue);
+    }
+
+    [System.Serializable]
+    public class UnityEventWithBoolean : UnityEvent<bool> {}
 }
