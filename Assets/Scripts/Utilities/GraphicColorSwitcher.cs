@@ -18,6 +18,12 @@ public class GraphicColorSwitcher : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    void Start()
+    {
+        if (UnityEditor.EditorApplication.isPlaying)
+            enabled = false;
+    }
+
     void Reset()
     {
         targetGraphics = GetComponentsInChildren<Graphic>();

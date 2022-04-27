@@ -123,7 +123,7 @@ public class AntNest : MonoBehaviour
                 ));
         }
 
-        GridManager.ins.RegisterAntNest(this);
+        // GridManager.ins.RegisterAntNest(this);
 
         if (startedSize != null)
             WarmUp(startedSize.PickRandomNumber());
@@ -172,7 +172,7 @@ public class AntNest : MonoBehaviour
             AntRouteBranch branch = _routeBranches[i];
             if (!branch.IsConnectedToNest && branch.UpdateNotConnectedDieTimer())
             {
-                _routeBranches.RemoveAt(i);
+                // _hub.RemoveBranch(i);
 
                 Vector3Int[] gridPosition = branch.AllGridPosition();
                 RemoveGridCollider(gridPosition);
@@ -221,25 +221,25 @@ public class AntNest : MonoBehaviour
         if (!GridManager.ins.CheckGroundAvalibleForAnt(position))
             return false;
 
-        if (GridManager.ins.TryFindAntNestBranch(position, out AntNest againstNest, out AntRouteBranch overlapBranch))
-        {
-            if (againstNest == this)
-            {
-                if (overlapBranch.IsConnectedToNest)
-                    return true;
+        // if (GridManager.ins.TryFindAntNestBranch(position, out AntNest againstNest, out AntRouteBranch overlapBranch))
+        // {
+        //     if (againstNest == this)
+        //     {
+        //         if (overlapBranch.IsConnectedToNest)
+        //             return true;
 
-                overlapBranch.IsConnectedToNest = true;
-                RouteSizeIncrease();
-                branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
-                branch.AddBranchOff(overlapBranch);
-                return true;
-            }
-            else
-            {
-                if (!CompeteOtherNest(position, againstNest, overlapBranch))
-                    return false;
-            }
-        }
+        //         overlapBranch.IsConnectedToNest = true;
+        //         RouteSizeIncrease();
+        //         branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
+        //         branch.AddBranchOff(overlapBranch);
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         if (!CompeteOtherNest(position, againstNest, overlapBranch))
+        //             return false;
+        //     }
+        // }
 
         RouteSizeIncrease();
         branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
@@ -256,13 +256,13 @@ public class AntNest : MonoBehaviour
         if (!GridManager.ins.CheckGroundAvalibleForAnt(newBranchData.NextPosition))
             return false;
 
-        if (GridManager.ins.TryFindAntNestBranch(newBranchData.NextPosition, out AntNest againstNest, out AntRouteBranch overlapBranch))
-        {
-            if (againstNest == this)
-                return false;
-            if (!CompeteOtherNest(newBranchData.NextPosition, againstNest, overlapBranch))
-                return false;
-        }
+        // if (GridManager.ins.TryFindAntNestBranch(newBranchData.NextPosition, out AntNest againstNest, out AntRouteBranch overlapBranch))
+        // {
+        //     if (againstNest == this)
+        //         return false;
+        //     if (!CompeteOtherNest(newBranchData.NextPosition, againstNest, overlapBranch))
+        //         return false;
+        // }
 
         AntRouteBranch newBranch = new AntRouteBranch(
             newBranchData.Root,
@@ -352,7 +352,7 @@ public class AntNest : MonoBehaviour
             int index = _routeBranches.IndexOf(branch);
             if (index > 3)
             {
-                _routeBranches.RemoveAt(index);
+                // _hub.RemoveBranch(index);
             }
         }
 
@@ -378,7 +378,7 @@ public class AntNest : MonoBehaviour
 
     void DestroyNest()
     {
-        GridManager.ins.UnregisterAntNest(this);
+        // GridManager.ins.UnregisterAntNest(this);
 
         for (int i = 0; i < _routeBranches.Count; i++)
         {

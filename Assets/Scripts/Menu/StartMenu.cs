@@ -32,6 +32,8 @@ public class StartMenu : MonoBehaviour
     [Header("Editor Only")]
     [SerializeField]
     private bool skipMenu;
+    [SerializeField]
+    private ValueWithEnable<bool> showVirtualStick;
 #endif
 
     private Canvas _canvas;
@@ -49,11 +51,15 @@ public class StartMenu : MonoBehaviour
 
     IEnumerator Start()
     {
+        bool showStick = false;
 #if TURN_ON_MOBILE_CONTROL_AT_START
-        mobileControlSwitch.ChangeState(true);
-#else
-        mobileControlSwitch.ChangeState(false);
+        showStick = true;
 #endif
+#if UNITY_EDITOR
+        if (showVirtualStick.Enable)
+            showStick = showVirtualStick.Value;
+#endif
+        mobileControlSwitch.ChangeState(showStick);
 
         yield return new WaitForEndOfFrame();
 

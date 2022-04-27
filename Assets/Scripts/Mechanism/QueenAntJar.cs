@@ -147,7 +147,7 @@ public class QueenAntJar : AbstractHoldItem
 
     void EmptyJarCheck()
     {
-        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNest targetNest))
+        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest))
         {
             _targetAntNest = targetNest;
             PlayerBehaviour.Input.enabled = false;
@@ -159,7 +159,7 @@ public class QueenAntJar : AbstractHoldItem
 
     void OneAntJarCheck()
     {
-        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNest targetNest))
+        if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest))
         {
             if (targetNest == _firstAntNest)
                 return;
