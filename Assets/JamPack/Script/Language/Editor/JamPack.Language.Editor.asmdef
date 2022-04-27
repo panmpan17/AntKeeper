@@ -1,0 +1,19 @@
+{
+    "name": "JamPack.Language.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7df56073ffc3d43788299df0d4c2d898",
+        "GUID:b3e6f91867d504d4e9ddca51b47047c9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b20c82ba14474a3da1d810689e82920, type: 3}
+  m_Name: Chinese
+  m_EditorClassIdentifier: 
+  ID: 0
+  Texts:
+  - ID: -1
+    Text: "\u932F\u8AA4"
+  - ID: 1
+    Text: "\u4E2D\u6587"
+  - ID: 2
+    Text: "\u5169\u500B\u6C34\u6876\u3001\u5FEB\u901F\u64F4\u5F35"
+  - ID: 3
+    Text: "\u4E00\u500B\u6C34\u6876\u3001\u4E00\u500B\u57F9\u990A\u7F50\u3001\u6162\u6210\u9577\u3001\u6BBA\u5FEB\u901F"
+  - ID: 4
+    Text: 
