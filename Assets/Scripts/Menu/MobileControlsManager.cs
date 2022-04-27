@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class MobileControlsManager : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerInput playerInput;
+    // [SerializeField]
+    // private PlayerInput playerInput;
 
     [SerializeField]
     private VirtualStick virtualStick;
@@ -15,6 +15,9 @@ public class MobileControlsManager : MonoBehaviour
     private MoreEventButton dashButton;
     [SerializeField]
     private MoreEventButton interactButton;
+
+    [SerializeField]
+    private PlayerInputEvent inputEvent;
 
     void Awake()
     {
@@ -26,21 +29,21 @@ public class MobileControlsManager : MonoBehaviour
 
     void OnMobileMovementPerformed(Vector2 axis)
     {
-        playerInput.OnMobileMovementPerformed(axis);
+        inputEvent.OnMovementAxisChange.Invoke(axis);
     }
 
     void OnDashClicked(PointerEventData eventData)
     {
-        playerInput.OnMobileDashButtonPerformed();
+        inputEvent.OnDash.Invoke();
     }
 
     void OnInteractStarted(PointerEventData eventData)
     {
-        playerInput.OnMobileInteractPerforemed();
+        inputEvent.OnInteractPerformed.Invoke();
     }
 
     void OnInteractEnded(PointerEventData eventData)
     {
-        playerInput.OnMobileInteractCanceled();
+        inputEvent.OnInteractCanceled.Invoke();
     }
 }

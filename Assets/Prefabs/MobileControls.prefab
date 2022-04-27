@@ -118,10 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90cd0c9ae957449fb878284a330fbb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
   virtualStick: {fileID: 3331607753572363632}
   dashButton: {fileID: 2509839727074206103}
   interactButton: {fileID: 2509839727682907699}
+  inputEvent: {fileID: 11400000, guid: 7b4ab34d475c340079b61edc6764dea3, type: 2}
 --- !u!114 &7802349257006950855
 MonoBehaviour:
   m_ObjectHideFlags: 0

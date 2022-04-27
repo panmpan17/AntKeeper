@@ -17,8 +17,6 @@ public class StartMenu : MonoBehaviour
     private Timer fadeTimer;
 
     [SerializeField]
-    private EventSystem eventSystem;
-    [SerializeField]
     private GameObject helpButton;
     [SerializeField]
     private GameObject helpMenu;
@@ -95,12 +93,12 @@ public class StartMenu : MonoBehaviour
     public void HelpButtonPressed()
     {
         helpMenu.SetActive(true);
-        eventSystem.SetSelectedGameObject(helpMenuClose);
+        EventSystem.current.SetSelectedGameObject(helpMenuClose);
     }
 
     public void CloseHelpMenu()
     {
         helpMenu.SetActive(false);
-        eventSystem.SetSelectedGameObject(helpButton);
+        EventSystem.current.SetSelectedGameObject(helpButton);
     }
 }

@@ -63,6 +63,7 @@ public class AntRouteGrowControl : MonoBehaviour
     {
         _hub = GetComponent<AntNestHub>();
         _hub.OnStart += OnHubStarted;
+        _hub.OnNestDestroy += delegate { _growIntervalTimer.Running = false; };
 
         _maxSize = maxSize.PickRandomNumber();
         _growIntervalTimer = new Timer(growInterval.PickRandomNumber());
@@ -123,7 +124,7 @@ public class AntRouteGrowControl : MonoBehaviour
 
     void Update()
     {
-        if (_growIntervalTimer.UpdateEnd)
+        if (_growIntervalTimer.Running && _growIntervalTimer.UpdateEnd)
         {
             if (TryExpandBranch())
             {
@@ -131,7 +132,6 @@ public class AntRouteGrowControl : MonoBehaviour
                 _growIntervalTimer.Reset();
                 _growIntervalTimer.TargetTime = growInterval.PickRandomNumber();
             }
-            // else if ()
         }
 
         for (int i = 0; i < _hub.routeBranches.Count; i++)

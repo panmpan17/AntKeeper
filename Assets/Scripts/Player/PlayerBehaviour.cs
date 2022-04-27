@@ -53,6 +53,8 @@ public class PlayerBehaviour : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _movement.OnFacingChange += ChangeHoldItemPosition;
         _movement.OnDashPerformed += HandleDashPerformed;
+
+        selectedGridIndicator.SetParent(null);
     }
 
     void FixedUpdate()
@@ -153,7 +155,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 SelectedGridPosition = cellPosition;
                 SelectedGridCenterPosition = centerPosition;
-                selectedGridIndicator.transform.position = centerPosition;
+                selectedGridIndicator.position = centerPosition;
 
                 selectedGridIndicator.gameObject.SetActive(true);
 

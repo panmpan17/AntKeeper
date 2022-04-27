@@ -4,12 +4,14 @@ using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Vector2 MovementAxis { get; private set; }
-    public event Action OnMovementPerformedEvent;
+    [SerializeField]
+    private PlayerInputEvent inputEvent;
 
+    public Vector2 MovementAxis { get; private set; }
+
+    public event Action OnMovementPerformedEvent;
     public event Action OnInteractPerformedEvent;
     public event Action OnInteractCanceledEvent;
-
     public event Action OnDashPerformedEvent;
 
     private InputScheme _inputScheme;
@@ -25,6 +27,11 @@ public class PlayerInput : MonoBehaviour
         _inputScheme.Game.Interact.canceled += HandleInteractCanceled;
 
         _inputScheme.Game.Dash.performed += HandleDashPerformed;
+
+        inputEvent.OnMovementAxisChange += OnMobileMovementPerformed;
+        inputEvent.OnDash += OnMobileDashButtonPerformed;
+        inputEvent.OnInteractPerformed += OnMobileInteractPerforemed;
+        inputEvent.OnInteractCanceled += OnMobileInteractCanceled;
     }
 
 

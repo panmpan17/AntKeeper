@@ -1504,7 +1504,6 @@ MonoBehaviour:
     TargetTime: 0.5
     Running: 0
     ReverseMode: 0
-  eventSystem: {fileID: 0}
   animalCounText: {fileID: 3215032838416470079}
   fireAntCounText: {fileID: 3215032839685694261}
   stars:

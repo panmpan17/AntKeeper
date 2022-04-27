@@ -124,7 +124,7 @@ public class AntNestHub : MonoBehaviour
     }
     public bool IsGridPositionOverlapBranch(Vector3Int position, out AntRouteBranch branch)
     {
-        if (position == RootGridPosition)
+        if (position == RootGridPosition && enabled)
         {
             if (IsRootBranchAlive(out branch))
                 return true;
@@ -165,6 +165,9 @@ public class AntNestHub : MonoBehaviour
 
     bool IsRootBranchAlive()
     {
+        if (routeBranches.Count < 4)
+            return false;
+
         for (int i = 0; i < 4; i++)
         {
             if (!routeBranches[i].IsEmpty)

@@ -14,9 +14,6 @@ public class EndMenu : MonoBehaviour
     private Timer fadeTimer;
 
     [SerializeField]
-    private EventSystem eventSystem;
-
-    [SerializeField]
     private TextMeshProUGUI animalCounText;
     [SerializeField]
     private TextMeshProUGUI fireAntCounText;
@@ -136,7 +133,7 @@ public class EndMenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.6f);
 
         replayButton.SetActive(true);
-        eventSystem.SetSelectedGameObject(replayButton);
+        EventSystem.current.SetSelectedGameObject(replayButton);
     }
 
     void AddShowStarAnimation(int index)
