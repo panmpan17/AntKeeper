@@ -161,6 +161,12 @@ public class EndMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void OnMainMenuPressed()
+    {
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
+    }
+
     private class StarApearAnimaion
     {
         public RectTransform RectTransform;
