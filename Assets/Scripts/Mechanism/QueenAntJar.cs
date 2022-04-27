@@ -36,8 +36,8 @@ public class QueenAntJar : AbstractHoldItem
     private SpriteRenderer _spriteRenderer;
     private bool _firstIsFireAnt;
     private bool _secondIsFireAnt;
-    private AntNest _firstAntNest;
-    private AntNest _targetAntNest;
+    private AntNestHub _firstAntNest;
+    private AntNestHub _targetAntNest;
 
     public bool HasAnt => _targetAntNest != null;
 

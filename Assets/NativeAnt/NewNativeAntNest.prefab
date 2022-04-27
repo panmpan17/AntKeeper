@@ -168,7 +168,7 @@ MonoBehaviour:
     ConstantMax: 0
     Variable: {fileID: 11400000, guid: f72418191947248f4af9aa83491f567b, type: 2}
     UseVariable: 1
-  rootResistent: 100
+  rootResistent: 70
 --- !u!114 &8756300886345247994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,17 +183,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemapReference: {fileID: 11400000, guid: 353a5d13fefa74d3f9a53bb1b72ab8da, type: 2}
   routeLine: {fileID: 8756300886793795039}
-  initialSizeOnStart: 1
+  initialSizeOnStart: 0
   initialSize:
     ConstantMin: 0
     ConstantMax: 0
     Variable: {fileID: 11400000, guid: a40b926fc160844ac889b0858d35f559, type: 2}
     UseVariable: 1
   growInterval:
-    ConstantMin: 0
-    ConstantMax: 0
+    ConstantMin: 3.3
+    ConstantMax: 3.8
     Variable: {fileID: 11400000, guid: 4d18fb05b9473439f8bddb7e39d8875a, type: 2}
-    UseVariable: 1
+    UseVariable: 0
   maxSize:
     ConstantMin: 0
     ConstantMax: 0
@@ -229,10 +229,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: 4798a7bd3ed8b4249b52c1c8dc1cd745, type: 2}
     UseVariable: 1
   spreadInterval:
-    ConstantMin: 0
-    ConstantMax: 0
+    ConstantMin: 40
+    ConstantMax: 45
     Variable: {fileID: 11400000, guid: 9d5570485bd144f79b76f1fbceb0de51, type: 2}
-    UseVariable: 1
+    UseVariable: 0
 --- !u!1 &8756300886793795033
 GameObject:
   m_ObjectHideFlags: 0
