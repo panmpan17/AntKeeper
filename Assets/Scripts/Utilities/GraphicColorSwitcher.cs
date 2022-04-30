@@ -10,7 +10,7 @@ using MPack;
 public class GraphicColorSwitcher : MonoBehaviour
 {
     public Graphic[] targetGraphics;
-    public ColorVariable colorVariable;
+    public ColorReference colorVariable;
 
     void Awake()
     {
@@ -37,9 +37,6 @@ public class GraphicColorSwitcher : MonoBehaviour
 
     void ApplyColor()
     {
-        if (colorVariable == null)
-            return;
-
         for (int i = 0; i < targetGraphics.Length; i++)
         {
             targetGraphics[i].color = colorVariable.Value;

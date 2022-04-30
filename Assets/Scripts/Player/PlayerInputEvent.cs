@@ -10,4 +10,5 @@ public class PlayerInputEvent : ScriptableObject
     public System.Action OnDash;
     public System.Action OnInteractPerformed;
     public System.Action OnInteractCanceled;
+    public System.Action OnPause;
 }

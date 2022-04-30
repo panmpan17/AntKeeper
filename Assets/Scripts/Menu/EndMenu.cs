@@ -171,14 +171,14 @@ public class EndMenu : MonoBehaviour
 
     public void OnReplayPressed()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnMainMenuPressed()
     {
-        SceneManager.LoadScene("TempMainMenu");
         Time.timeScale = 1;
+        SceneManager.LoadScene("TempMainMenu");
     }
 
     private class StarApearAnimaion

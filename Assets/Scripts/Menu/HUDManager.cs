@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using MPack;
 
@@ -11,6 +12,11 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI timeText;
+
+    [SerializeField]
+    private PlayerInputEvent inputEvent;
+    [SerializeField]
+    private Button pauseButton;
 
     [Header("Warn")]
     [SerializeField]
@@ -48,6 +54,8 @@ public class HUDManager : MonoBehaviour
         ins = this;
         _canvas = GetComponent<Canvas>();
         enabled = false;
+
+        pauseButton.onClick.AddListener(OnPauseClicked);
     }
 
     void Start()
@@ -121,5 +129,10 @@ public class HUDManager : MonoBehaviour
     public void UpdateFireAntCount()
     {
         fireAntCountText.text = string.Format("FireAnt {0}", GridManager.ins.CountFireAnt());
+    }
+
+    void OnPauseClicked()
+    {
+        inputEvent.OnPause?.Invoke();
     }
 }

@@ -6,9 +6,6 @@ using UnityEngine.EventSystems;
 
 public class MobileControlsManager : MonoBehaviour
 {
-    // [SerializeField]
-    // private PlayerInput playerInput;
-
     [SerializeField]
     private VirtualStick virtualStick;
     [SerializeField]
@@ -29,21 +26,26 @@ public class MobileControlsManager : MonoBehaviour
 
     void OnMobileMovementPerformed(Vector2 axis)
     {
-        inputEvent.OnMovementAxisChange.Invoke(axis);
+        inputEvent.OnMovementAxisChange?.Invoke(axis);
     }
 
     void OnDashClicked(PointerEventData eventData)
     {
-        inputEvent.OnDash.Invoke();
+        inputEvent.OnDash?.Invoke();
     }
 
     void OnInteractStarted(PointerEventData eventData)
     {
-        inputEvent.OnInteractPerformed.Invoke();
+        inputEvent.OnInteractPerformed?.Invoke();
     }
 
     void OnInteractEnded(PointerEventData eventData)
     {
-        inputEvent.OnInteractCanceled.Invoke();
+        inputEvent.OnInteractCanceled?.Invoke();
+    }
+
+    void OnPauseClicked()
+    {
+        inputEvent.OnPause?.Invoke();
     }
 }

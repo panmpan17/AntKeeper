@@ -28,12 +28,20 @@ public class PlayerInput : MonoBehaviour
 
         _inputScheme.Game.Dash.performed += HandleDashPerformed;
 
+        _inputScheme.Game.Pause.performed += HandlePausePreformed;
+
         inputEvent.OnMovementAxisChange += OnMobileMovementPerformed;
         inputEvent.OnDash += OnMobileDashButtonPerformed;
         inputEvent.OnInteractPerformed += OnMobileInteractPerforemed;
         inputEvent.OnInteractCanceled += OnMobileInteractCanceled;
+        inputEvent.OnPause += OnPausePrssed;
     }
 
+    void Start()
+    {
+        PauseMenu.ins.OnPaused += delegate { enabled = false; };
+        PauseMenu.ins.OnResumed += delegate { enabled = true; };
+    }
 
     #region Input Action handle
     void HandleMovementPerformed(CallbackContext callbackContext)
@@ -55,6 +63,11 @@ public class PlayerInput : MonoBehaviour
     void HandleDashPerformed(CallbackContext callbackContext)
     {
         OnDashPerformedEvent?.Invoke();
+    }
+
+    void HandlePausePreformed(CallbackContext callbackContext)
+    {
+        PauseMenu.ins.Pause();
     }
     #endregion
 
@@ -83,6 +96,12 @@ public class PlayerInput : MonoBehaviour
     {
         if (!enabled) return;
         OnInteractCanceledEvent?.Invoke();
+    }
+
+    public void OnPausePrssed()
+    {
+        if (!enabled) return;
+        PauseMenu.ins.Pause();
     }
     #endregion
 
