@@ -13,11 +13,17 @@ public class EndMenu : MonoBehaviour
     [ShortTimer]
     private Timer fadeTimer;
 
+    [Header("UI Elements")]
     [SerializeField]
     private TextMeshProUGUI animalCounText;
     [SerializeField]
     private TextMeshProUGUI fireAntCounText;
+    [SerializeField]
+    private GameObject replayButton;
+    [SerializeField]
+    private GameObject mainMenuButton;
 
+    [Header("Stars")]
     [SerializeField]
     private GameObject[] stars;
     [SerializeField]
@@ -29,8 +35,16 @@ public class EndMenu : MonoBehaviour
     [SerializeField]
     private AnimationCurveReference starScaleCurve;
 
+    [Header("Score Calculation")]
     [SerializeField]
-    private GameObject replayButton;
+    [Range(0, 1f)]
+    private float oneStarRequireAnimals = 0.5f;
+    [SerializeField]
+    [Range(0, 1f)]
+    private float twoStarRequireAnimals = 0.7f;
+    [SerializeField]
+    [Range(0, 1f)]
+    private float threeStarRequireAnimals = 0.9f;
 
     private StarApearAnimaion _animatingStar;
     private Canvas _canvas;
@@ -49,6 +63,7 @@ public class EndMenu : MonoBehaviour
 
         _canvas.enabled = _canvasGroup.enabled = enabled = false;
         replayButton.SetActive(false);
+        mainMenuButton.SetActive(false);
     }
 
     void Update()
@@ -109,30 +124,29 @@ public class EndMenu : MonoBehaviour
 
         float animalSuvivePercentage = (float)animalCount / (float)GridManager.ins.OriginAnimalCount;
 
-        if (animalSuvivePercentage > 0.5f)
+        if (animalSuvivePercentage > oneStarRequireAnimals)
         {
             AddShowStarAnimation(0);
             while (_animatingStar != null) yield return null;
 
-            if (animalSuvivePercentage > 0.7f)
+            if (animalSuvivePercentage > twoStarRequireAnimals)
             {
                 yield return new WaitForSecondsRealtime(0.6f);
                 AddShowStarAnimation(1);
                 while (_animatingStar != null) yield return null;
 
-                if (animalSuvivePercentage > 0.9f)
+                if (animalSuvivePercentage > threeStarRequireAnimals)
                 {
                     yield return new WaitForSecondsRealtime(0.6f);
                     AddShowStarAnimation(2);
                 }
-
-
             }
         }
 
         yield return new WaitForSecondsRealtime(0.6f);
 
         replayButton.SetActive(true);
+        mainMenuButton.SetActive(true);
         EventSystem.current.SetSelectedGameObject(replayButton);
     }
 
@@ -163,7 +177,7 @@ public class EndMenu : MonoBehaviour
 
     public void OnMainMenuPressed()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("TempMainMenu");
         Time.timeScale = 1;
     }
 

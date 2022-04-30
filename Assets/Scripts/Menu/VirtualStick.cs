@@ -90,13 +90,4 @@ public class VirtualStick : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         wheelBase.position = position;
     }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(1, 0, 0, 0.3f);
-
-        Rect rect = GetComponent<RectTransform>().rect;
-        Gizmos.DrawCube((Vector3)rect.center + transform.position, rect.size * transform.root.localScale.x);
-        Gizmos.DrawSphere(wheelBase.position, 10f);
-    }
 }

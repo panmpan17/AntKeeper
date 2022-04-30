@@ -86558,7 +86558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4efb283e70b442ba0325888e852ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 150
+  gameTime: 120
   playerBehaviour: {fileID: 915436049}
   beepAudio: {fileID: 8300000, guid: 764fa2d6eab604a30b78de65c7cbc1cb, type: 3}
   startAudio: {fileID: 8300000, guid: 4b2252ff553244f59b2e8d51b8f75f86, type: 3}
@@ -87944,6 +87944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1019953162}
   - component: {fileID: 1019953163}
+  - component: {fileID: 1019953164}
   m_Layer: 0
   m_Name: BGM
   m_TagString: Untagged
@@ -88062,6 +88063,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1019953164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019953161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: 9ddba083a80674e32839f9470741191c, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1019953163}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1020109583
 PrefabInstance:
   m_ObjectHideFlags: 0

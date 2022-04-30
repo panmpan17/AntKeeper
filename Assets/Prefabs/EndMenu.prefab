@@ -91,11 +91,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 3215032838919637261}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -1084,12 +1084,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 7151992652322578267}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 0.92186743, b: 0.7311321, a: 1}
@@ -1654,6 +1654,8 @@ MonoBehaviour:
     ReverseMode: 0
   animalCounText: {fileID: 3215032838416470079}
   fireAntCounText: {fileID: 3215032839685694261}
+  replayButton: {fileID: 3215032838919637263}
+  mainMenuButton: {fileID: 887959728812357059}
   stars:
   - {fileID: 3215032837981711727}
   - {fileID: 3215032838423184787}
@@ -1678,7 +1680,9 @@ MonoBehaviour:
       m_RotationOrder: 4
     Variable: {fileID: 11400000, guid: 827b8ca3d2f3e4a3f88c9384e7d57236, type: 2}
     UseVariable: 1
-  replayButton: {fileID: 3215032838919637263}
+  oneStarRequireAnimals: 0.5
+  twoStarRequireAnimals: 0.65
+  threeStarRequireAnimals: 0.8
 --- !u!1 &3215032839974812912
 GameObject:
   m_ObjectHideFlags: 0

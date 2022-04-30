@@ -45,34 +45,50 @@ public class GridManager : MonoBehaviour
     {
         ins = this;
 
-        antNestCollection.gameObject.SetActive(false);
-
         routeColliderMapReference.Tilemap = routeColliderMap;
 
         for (int i = 0; i < startFireAntNests.Length; i++)
-        {
-            var growControl = Instantiate(fireAntPrefab, antNestCollection).GetComponent<AntRouteGrowControl>();
-            growControl.InitialSizeOnStart = true;
-            growControl.transform.position = startFireAntNests[i].position;
-        }
+            InstainateAntNestOnStart(fireAntPrefab, startFireAntNests[i].position);
 
         for (int i = 0; i < startNativeAntNests.Length; i++)
+            InstainateAntNestOnStart(navtiveAntPrefab, startNativeAntNests[i].position);
+    }
+
+    void InstainateAntNestOnStart(GameObject prefab, Vector3 position)
+    {
+        GameObject newNest = Instantiate(prefab, position, Quaternion.identity, antNestCollection);
+        newNest.transform.position = position;
+
+        var growControl = newNest.GetComponent<AntRouteGrowControl>();
+        growControl.InitialSizeOnStart = true;
+        growControl.enabled = false;
+
+        if (newNest.GetComponent<AntKillAnimalControl>() is var animalControl && animalControl)
         {
-            var growControl = Instantiate(navtiveAntPrefab, antNestCollection).GetComponent<AntRouteGrowControl>();
-            growControl.InitialSizeOnStart = true;
-            growControl.transform.position = startNativeAntNests[i].position;
+            animalControl.enabled = false;
         }
     }
 
     void Start()
     {
-        GameManager.ins.OnGameReady += OnGameReady;
+        GameManager.ins.OnGameStart += OnGameStart;
     }
 
-    void OnGameReady()
+    void OnGameStart()
     {
         _originAnimalCount = _animals.Count;
-        antNestCollection.gameObject.SetActive(true);
+
+        for (int i = 0; i < _antNestHubs.Count; i++)
+        {
+            if (_antNestHubs[i].GetComponent<AntRouteGrowControl>() is var growControl && growControl)
+            {
+                growControl.enabled = true;
+            }
+            if (_antNestHubs[i].GetComponent<AntKillAnimalControl>() is var animalControl && animalControl)
+            {
+                animalControl.enabled = true;
+            }
+        }
     }
 
     #region Register and unregister

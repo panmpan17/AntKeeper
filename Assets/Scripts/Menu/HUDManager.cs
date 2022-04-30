@@ -41,21 +41,11 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI fireAntCountText;
 
-    [SerializeField]
-    private TextMeshProUGUI startCountDownText;
-
     private Canvas _canvas;
 
     void Awake()
     {
         ins = this;
-
-        timeText.gameObject.SetActive(false);
-        animalCountText.gameObject.SetActive(false);
-        fireAntCountText.gameObject.SetActive(false);
-        startCountDownText.gameObject.SetActive(true);
-        startCountDownText.text = "";
-
         _canvas = GetComponent<Canvas>();
         enabled = false;
     }
@@ -68,6 +58,7 @@ public class HUDManager : MonoBehaviour
     void OnEnable()
     {
         _canvas.enabled = true;
+        UpdateAnimalCount();
     }
     void OnDisable()
     {
@@ -130,17 +121,5 @@ public class HUDManager : MonoBehaviour
     public void UpdateFireAntCount()
     {
         fireAntCountText.text = string.Format("FireAnt {0}", GridManager.ins.CountFireAnt());
-    }
-
-    public void ChangeCountDownText(string text)
-    {
-        startCountDownText.text = text;
-    }
-    public void HideCountDownText()
-    {
-        startCountDownText.gameObject.SetActive(false);
-        timeText.gameObject.SetActive(true);
-        animalCountText.gameObject.SetActive(true);
-        fireAntCountText.gameObject.SetActive(true);
     }
 }

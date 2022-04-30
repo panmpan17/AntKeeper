@@ -13,18 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerBehaviour playerBehaviour;
 
-    [SerializeField]
-    private AudioClip beepAudio;
-    [SerializeField]
-    private AudioClip startAudio;
-
-    [SerializeField]
-    private AudioSource audioSource;
-
     public event System.Action<int> GameTimeChanged;
     private Timer _oneSecondTimer = new Timer(1);
 
-    public event System.Action OnGameReady;
     public event System.Action OnGameStart;
 
     #if UNITY_EDITOR
@@ -47,60 +38,10 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    public void StartGame()
+    void OnEnable()
     {
-        enabled = true;
-        GameTimeChanged?.Invoke(gameTime);
-
-        HUDManager.ins.enabled = true;
-
-        OnGameReady?.Invoke();
-
-#if UNITY_EDITOR
-        if (skipStartCountDown)
-        {
-            CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
-            HUDManager.ins.UpdateAnimalCount();
-            HUDManager.ins.HideCountDownText();
-            playerBehaviour.Input.enabled = true;
-            OnGameStart?.Invoke();
-        }
-        else
-        {
-            StartCoroutine(StartCountDown());
-        }
-#else
-        StartCoroutine(StartCountDown());
-#endif
-    }
-
-    IEnumerator StartCountDown()
-    {
-        var waitOneSec = new WaitForSeconds(1.2f);
-
-        yield return new WaitForSeconds(0.5f);
-        HUDManager.ins.ChangeCountDownText("Ready?");
-        yield return waitOneSec;
-        CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
-        audioSource.PlayOneShot(beepAudio);
-        HUDManager.ins.ChangeCountDownText("3");
-
-        yield return waitOneSec;
-        audioSource.PlayOneShot(beepAudio);
-        HUDManager.ins.ChangeCountDownText("2");
-
-        yield return waitOneSec;
-        audioSource.PlayOneShot(beepAudio);
-        HUDManager.ins.ChangeCountDownText("1");
-
-        yield return waitOneSec;
-        HUDManager.ins.ChangeCountDownText("Start!");
-        audioSource.PlayOneShot(startAudio);
-
-        yield return waitOneSec;
         playerBehaviour.Input.enabled = true;
-        HUDManager.ins.UpdateAnimalCount();
-        HUDManager.ins.HideCountDownText();
+        GameTimeChanged?.Invoke(gameTime);
         OnGameStart?.Invoke();
     }
 

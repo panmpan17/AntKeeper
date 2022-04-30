@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using MPack;
+using TMPro;
 
 
 public class StartMenu : MonoBehaviour
@@ -16,6 +17,8 @@ public class StartMenu : MonoBehaviour
     [ShortTimer]
     private Timer fadeTimer;
 
+    [SerializeField]
+    private CanvasGroup menuCanvasGroup;
     [SerializeField]
     private GameObject helpButton;
     [SerializeField]
@@ -26,25 +29,37 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     private ToggleSwitch mobileControlSwitch;
 
+    [Header("Start Countdown")]
+    [SerializeField]
+    private TextMeshProUGUI startCountDownText;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip beepAudio;
+    [SerializeField]
+    private AudioClip startAudio;
+
 #if UNITY_EDITOR
     [Header("Editor Only")]
     [SerializeField]
     private bool skipMenu;
     [SerializeField]
+    private bool skipStartCountDown;
+    [SerializeField]
     private ValueWithEnable<bool> showVirtualStick;
 #endif
 
     private Canvas _canvas;
-    private CanvasGroup _canvasGroup;
 
     void Awake()
     {
         _canvas = GetComponent<Canvas>();
-        _canvasGroup = GetComponent<CanvasGroup>();
         _canvas.enabled = true;
 
         helpMenu.SetActive(false);
         fadeTimer.Running = false;
+
+        startCountDownText.text = "";
     }
 
     IEnumerator Start()
@@ -64,11 +79,53 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipMenu)
         {
-            // StartButtonPressed();
-            GameManager.ins.StartGame();
-            _canvasGroup.blocksRaycasts = _canvas.enabled = enabled = false;
+            fadeTimer.Running = false;
+            StartCoroutine(StartCountDown());
+            menuCanvasGroup.alpha = 0;
         }
 #endif
+    }
+
+    IEnumerator StartCountDown()
+    {
+        if (skipStartCountDown)
+        {
+            CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
+            StartGame();
+            yield break;
+        }
+
+        var waitOneSec = new WaitForSeconds(1.2f);
+
+        yield return new WaitForSeconds(0.5f);
+        startCountDownText.text = "Ready?";
+        yield return waitOneSec;
+        CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
+        audioSource.PlayOneShot(beepAudio);
+        startCountDownText.text = "3";
+
+        yield return waitOneSec;
+        audioSource.PlayOneShot(beepAudio);
+        startCountDownText.text = "2";
+
+        yield return waitOneSec;
+        audioSource.PlayOneShot(beepAudio);
+        startCountDownText.text = "1";
+
+        yield return waitOneSec;
+        startCountDownText.text = "Start!";
+        audioSource.PlayOneShot(startAudio);
+
+        yield return waitOneSec;
+        startCountDownText.gameObject.SetActive(false);
+        StartGame();
+    }
+
+    void StartGame()
+    {
+        GameManager.ins.enabled = true;
+        HUDManager.ins.enabled = true;
+        _canvas.enabled = enabled = false;
     }
 
     void Update()
@@ -77,16 +134,16 @@ public class StartMenu : MonoBehaviour
         {
             if (fadeTimer.UpdateEnd)
             {
-                GameManager.ins.StartGame();
-                _canvasGroup.blocksRaycasts = _canvas.enabled = enabled = false;
+                fadeTimer.Running = false;
+                StartCoroutine(StartCountDown());
             }
-            _canvasGroup.alpha = 1 - fadeTimer.Progress;
+            menuCanvasGroup.alpha = 1 - fadeTimer.Progress;
         }
     }
 
     public void StartButtonPressed()
     {
-        _canvasGroup.interactable = false;
+        menuCanvasGroup.interactable = false;
         fadeTimer.Reset();
     }
 
