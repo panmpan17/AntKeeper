@@ -29,19 +29,25 @@ ScriptedImporter:
     about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 2"
   - animationName: walk
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 9"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 8"
   - animationName: dash
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 10; To: 10"
   - animationName: h_idle
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 11; To: 13"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 14"
   - animationName: h_walk
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 14; To: 20"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 15; To: 21"
   - animationName: h_dash
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 21; To: 21"
+  - animationName: dash_
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 9; To: 11"
+  - animationName: h_dash_
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 22; To: 24"
   atlas: {instanceID: 0}
   importType: 0
   bindType: 0

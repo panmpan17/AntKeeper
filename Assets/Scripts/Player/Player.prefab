@@ -332,9 +332,13 @@ MonoBehaviour:
   dashUseIgnoreLayer: 1
   dashIgnoreLayer: 9
   dashInfo:
-    Force: 10
+    Delay:
+      TargetTime: 0.1
+      Running: 0
+      ReverseMode: 0
+    Force: 8
     Timer:
-      TargetTime: 0.17
+      TargetTime: 0.2
       Running: 0
       ReverseMode: 0
     Curve: {fileID: 11400000, guid: 97b83181fa7de4903beab06f2b111f98, type: 2}
@@ -389,7 +393,7 @@ MonoBehaviour:
     HoldItemPosition: {x: 0, y: -0.6, z: 0.1}
     SelectGridPoint: {fileID: 2229355667643346839}
   faceDownSetting:
-    HoldItemPosition: {x: 0, y: -0.472, z: -0.1}
+    HoldItemPosition: {x: 0, y: -0.5, z: -0.1}
     SelectGridPoint: {fileID: 2229355669447207518}
   faceRightSetting:
     HoldItemPosition: {x: 0.22, y: -0.47, z: -0.1}

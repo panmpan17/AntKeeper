@@ -26,22 +26,28 @@ ScriptedImporter:
   animationSettings:
   - animationName: idle
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 0"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 2"
   - animationName: walk
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 1; To: 1"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 8"
   - animationName: dash
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 2; To: 2"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 9; To: 9"
   - animationName: h_idle
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 3"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 14"
   - animationName: h_walk
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 4; To: 4"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 15; To: 20"
   - animationName: h_dash
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 5; To: 5"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 12"
+  - animationName: dash_
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 9; To: 11"
+  - animationName: h_dash_
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 21; To: 23"
   atlas: {instanceID: 0}
   importType: 0
   bindType: 0

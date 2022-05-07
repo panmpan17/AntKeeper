@@ -52,7 +52,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         _movement = GetComponent<PlayerMovement>();
         _movement.OnFacingChange += ChangeHoldItemPosition;
-        _movement.OnDashPerformed += HandleDashPerformed;
+        _movement.OnDashStarted += HandleDashPerformed;
 
         selectedGridIndicator.SetParent(null);
     }

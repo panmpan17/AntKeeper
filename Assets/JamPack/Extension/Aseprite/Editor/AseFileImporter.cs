@@ -306,7 +306,7 @@ namespace AsepriteImporter
                         break;
                 }
 
-                if (!importSettings.loopTime)
+                if (animation.TagName.EndsWith("_") || !importSettings.loopTime)
                 {
                     animationClip.wrapMode = WrapMode.Once;
                     settings.loopTime = false;

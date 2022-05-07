@@ -7,8 +7,8 @@ using MPack;
 [System.Serializable]
 public struct DashInfo
 {
+    public Timer Delay;
     public float Force;
-    [ShortTimer]
     public Timer Timer;
     public AnimationCurveVariable Curve;
 

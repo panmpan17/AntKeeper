@@ -34,10 +34,14 @@ public class PlayerMovement : MonoBehaviour
 
     public event System.Action OnFacingChange;
     public event System.Action OnPositionChange;
+
+    public event System.Action OnDashStarted;
     public event System.Action OnDashPerformed;
     public event System.Action OnDashEnded;
+
     public event System.Action OnWalkStarted;
     public event System.Action OnWalkEnded;
+
     public event System.Action OnStuckAntRoute;
     public event System.Action OnExitAntRoute;
 
@@ -135,6 +139,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsDashing)
         {
+            if (_runningDash.Delay.Running)
+            {
+                if (!_runningDash.Delay.FixedUpdateEnd)
+                    return true;
+
+                _runningDash.Delay.Running = false;
+                OnDashPerformed?.Invoke();
+            }
+
             if (_runningDash.Timer.FixedUpdateEnd)
             {
                 IsDashing = false;
@@ -144,6 +157,11 @@ public class PlayerMovement : MonoBehaviour
                     Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, false);
 
                 OnDashEnded?.Invoke();
+
+                if (_movementState == MovementState.Idle)
+                    OnWalkEnded?.Invoke();
+                else
+                    OnWalkStarted?.Invoke();
             }
             else
             {
@@ -179,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
         IsDashing = true;
         _runningDash = dashInfo;
+        _runningDash.Delay.Running = _runningDash.Delay.TargetTime > 0;
 
 
         // Set dash direction
@@ -208,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         if (dashUseIgnoreLayer)
             Physics2D.IgnoreLayerCollision(gameObject.layer, dashIgnoreLayer, true);
 
-        OnDashPerformed?.Invoke();
+        OnDashStarted?.Invoke();
     }
 
     public void Freeze()

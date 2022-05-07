@@ -65,7 +65,8 @@ public class PlayerAnimation : MonoBehaviour
         _movement.OnFacingChange += ChangeFacingAnimation;
         _movement.OnWalkStarted += OnWalkStarted;
         _movement.OnWalkEnded += OnWalkEnded;
-        _movement.OnDashPerformed += OnDashStarted;
+        _movement.OnDashStarted += OnDashStarted;
+        _movement.OnDashPerformed += OnDashPerformed;
         _movement.OnDashEnded += OnDashEnded;
         _movement.OnStuckAntRoute += OnStuckAntRoute;
         _movement.OnExitAntRoute += OnExitAntRoute;
@@ -136,6 +137,11 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     void OnDashStarted()
+    {
+        SwitchToAnimation("dash_");
+    }
+
+    void OnDashPerformed()
     {
         dashTrail.emitting = true;
         spritePositionTimer.Timer.Reset();
