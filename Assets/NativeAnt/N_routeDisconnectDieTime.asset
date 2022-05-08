@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: N_routeDisconnectDieTime
   m_EditorClassIdentifier: 
   Min: 6
-  Max: 8
+  Max: 7

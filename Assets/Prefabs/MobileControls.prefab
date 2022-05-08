@@ -488,7 +488,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetGraphics:
   - {fileID: 2509839727074206096}
-  colorVariable: {fileID: 11400000, guid: 6031ae0e5721f4c13985dc4b6d03ebfe, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 6031ae0e5721f4c13985dc4b6d03ebfe, type: 2}
+    UseVariable: 1
 --- !u!1 &2509839727682907690
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +643,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetGraphics:
   - {fileID: 2509839727682907692}
-  colorVariable: {fileID: 11400000, guid: 99acab14cf1834776aa81f4df48abf2b, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 99acab14cf1834776aa81f4df48abf2b, type: 2}
+    UseVariable: 1
 --- !u!1 &2509839727942917308
 GameObject:
   m_ObjectHideFlags: 0

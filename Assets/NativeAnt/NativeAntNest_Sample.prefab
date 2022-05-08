@@ -168,7 +168,7 @@ MonoBehaviour:
     ConstantMax: 0
     Variable: {fileID: 11400000, guid: f72418191947248f4af9aa83491f567b, type: 2}
     UseVariable: 1
-  rootResistent: 70
+  rootResistent: 60
 --- !u!114 &8756300886345247994
 MonoBehaviour:
   m_ObjectHideFlags: 0

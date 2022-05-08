@@ -686,7 +686,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetGraphics:
   - {fileID: 3215032838416470079}
-  colorVariable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+    UseVariable: 1
 --- !u!1 &3215032838423184787
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +995,10 @@ MonoBehaviour:
   targetGraphics:
   - {fileID: 3215032838826646635}
   - {fileID: 3215032839685694261}
-  colorVariable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+    UseVariable: 1
 --- !u!1 &3215032838919637263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1298,10 @@ MonoBehaviour:
   targetGraphics:
   - {fileID: 3215032839487772114}
   - {fileID: 3215032838416470079}
-  colorVariable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+    UseVariable: 1
 --- !u!1 &3215032839685694263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1452,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetGraphics:
   - {fileID: 3215032839685694261}
-  colorVariable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+  colorVariable:
+    Constant: {r: 0, g: 0, b: 0, a: 0}
+    Variable: {fileID: 11400000, guid: 1aca12945e0e54ed5bc2b3ef40ddc56f, type: 2}
+    UseVariable: 1
 --- !u!1 &3215032839780074939
 GameObject:
   m_ObjectHideFlags: 0
