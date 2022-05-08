@@ -306,7 +306,7 @@ public class AntRouteGrowControl : MonoBehaviour
     {
         if (_hub.IsBiggerThan(overlapNest))
             return true;
-        return overlapBranch.IsConnectedToNest;
+        return !overlapBranch.IsConnectedToNest;
     }
 
     bool CanKillOffNestHub(AntNestHub overlapNest)

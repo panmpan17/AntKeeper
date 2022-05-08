@@ -88,12 +88,14 @@ public class StartMenu : MonoBehaviour
 
     IEnumerator StartCountDown()
     {
+#if UNITY_EDITOR
         if (skipStartCountDown)
         {
             CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
             StartGame();
             yield break;
         }
+#endif
 
         var waitOneSec = new WaitForSeconds(1.2f);
 

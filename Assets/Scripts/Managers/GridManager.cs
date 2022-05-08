@@ -59,14 +59,11 @@ public class GridManager : MonoBehaviour
         GameObject newNest = Instantiate(prefab, position, Quaternion.identity, antNestCollection);
         newNest.transform.position = position;
 
+        var hub = newNest.GetComponent<AntNestHub>();
+        hub.Freeze();
+
         var growControl = newNest.GetComponent<AntRouteGrowControl>();
         growControl.InitialSizeOnStart = true;
-        growControl.enabled = false;
-
-        if (newNest.GetComponent<AntKillAnimalControl>() is var animalControl && animalControl)
-        {
-            animalControl.enabled = false;
-        }
     }
 
     void Start()
@@ -80,14 +77,7 @@ public class GridManager : MonoBehaviour
 
         for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNestHubs[i].GetComponent<AntRouteGrowControl>() is var growControl && growControl)
-            {
-                growControl.enabled = true;
-            }
-            if (_antNestHubs[i].GetComponent<AntKillAnimalControl>() is var animalControl && animalControl)
-            {
-                animalControl.enabled = true;
-            }
+            _antNestHubs[i].Unfreeze();
         }
     }
 

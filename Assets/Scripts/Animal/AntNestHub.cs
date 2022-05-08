@@ -146,21 +146,34 @@ public class AntNestHub : MonoBehaviour
     #endregion
 
 
+    #region  Utilities
+    public void Freeze()
+    {
+        if (GetComponent<AntRouteGrowControl>() is var growControl && growControl != null)
+        {
+            growControl.enabled = false;
+        }
+        if (GetComponent<AntKillAnimalControl>() is var killControl && killControl != null)
+        {
+            killControl.enabled = false;
+        }
+    }
+
+    public void Unfreeze()
+    {
+        if (GetComponent<AntRouteGrowControl>() is var growControl && growControl != null)
+        {
+            growControl.enabled = true;
+        }
+        if (GetComponent<AntKillAnimalControl>() is var killControl && killControl != null)
+        {
+            killControl.enabled = true;
+        }
+    }
 
     public bool IsBiggerThan(AntNestHub otherHub)
     {
         return antNestSizeControl.Size > otherHub.antNestSizeControl.Size;
-    }
-
-    public void RemoveGridCollider(Vector3Int[] gridPositions)
-    {
-        for (int i = 0; i < gridPositions.Length; i++)
-        {
-            if (gridPositions[i] == RootGridPosition)
-                continue;
-            if (!IsGridPositionOverlapBranch(gridPositions[i]))
-                tilemapReference.Tilemap.SetTile(gridPositions[i], null);
-        }
     }
 
     bool IsRootBranchAlive()
@@ -188,13 +201,25 @@ public class AntNestHub : MonoBehaviour
         branch = null;
         return false;
     }
+    #endregion
+
+
+    #region Take Damage
+    public void RemoveGridCollider(Vector3Int[] gridPositions)
+    {
+        for (int i = 0; i < gridPositions.Length; i++)
+        {
+            if (gridPositions[i] == RootGridPosition)
+                continue;
+            if (!IsGridPositionOverlapBranch(gridPositions[i]))
+                tilemapReference.Tilemap.SetTile(gridPositions[i], null);
+        }
+    }
 
     public void TakeDamageFromOtherNest(float damageAmount)
     {
         OnOtherNestAttack?.Invoke(damageAmount);
     }
-
-
 
     public void RemoveBranch(int index)
     {
@@ -234,6 +259,8 @@ public class AntNestHub : MonoBehaviour
         OnAntRouteBranchEmpty?.Invoke();
         Destroy(gameObject);
     }
+    #endregion
+
 
     #region Editor
     void OnDrawGizmosSelected()

@@ -51,6 +51,8 @@ public class PauseMenu : MonoBehaviour
         _canvas.enabled = false;
         OnResumed?.Invoke();
         _canvasGroup.interactable = false;
+
+        uIInputModule.cancel.action.performed -= OnCancelPerformed;
     }
 
     public void MainMenu()
