@@ -23,4 +23,34 @@ MonoBehaviour:
   - ID: 3
     Text: One Bucket, One Queen Ant Jar, Slow Grow, Hard Kill
   - ID: 4
-    Text: 
+    Text: 'Ant nest will continuously expand.
+
+      They will compete for land,
+      the bigger one will win.'
+  - ID: 5
+    Text: 'When nest big enough, it will show weather it''s native or invasive.
+
+      Green
+      is native, red is invasive.'
+  - ID: 6
+    Text: 'There''s two different ant invasive (red) and native (green).
+
+      Invasive
+      ant would kill all animals they touched; Native wouldn''t.'
+  - ID: 7
+    Text: These tools could help you fight invasive ants.
+  - ID: 8
+    Text: 'Bucket can affectly delay ant''s expantion.
+
+      When bucket''s empty,
+      need to go back for refill.'
+  - ID: 9
+    Text: 'You can use empty jar to grab ant from ant path.
+
+      Then examine the
+      ant''s type using microscope.'
+  - ID: 10
+    Text: 'Queen ant jar can collect two ant queen from different ant nest.
+
+      Then
+      plant it on empty land to spread native ant.'
