@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60637239b63344fb8bc376370198f1b, type: 3}
   m_Name: N_StartSize
   m_EditorClassIdentifier: 
-  Min: 13
-  Max: 16
+  Min: 10
+  Max: 14

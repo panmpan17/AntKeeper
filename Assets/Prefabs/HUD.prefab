@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4669811, g: 0.905489, b: 1, a: 0.6117647}
+  m_Color: {r: 1, g: 0.6627451, b: 0.20392157, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -275,8 +275,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967260
-  m_fontColor: {r: 0.8632076, g: 1, b: 0.9982001, a: 1}
+    rgba: 4292673279
+  m_fontColor: {r: 1, g: 0.9943993, b: 0.8627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -501,7 +501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4009428108297389882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -559,8 +559,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967260
-  m_fontColor: {r: 0.8632076, g: 1, b: 0.9982001, a: 1}
+    rgba: 4292673279
+  m_fontColor: {r: 1, g: 0.9943993, b: 0.8627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -713,8 +713,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967260
-  m_fontColor: {r: 0.8632076, g: 1, b: 0.9982001, a: 1}
+    rgba: 4292673279
+  m_fontColor: {r: 1, g: 0.9943993, b: 0.8627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -830,7 +830,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -6, y: -10}
-  m_SizeDelta: {x: 140, y: 115.0754}
+  m_SizeDelta: {x: 140, y: 81.2408}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &6697320889627768488
 CanvasRenderer:
@@ -853,7 +853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46666667, g: 0.90588236, b: 1, a: 0.6117647}
+  m_Color: {r: 1, g: 0.6619852, b: 0.20392156, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

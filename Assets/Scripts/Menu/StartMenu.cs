@@ -79,6 +79,7 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipMenu)
         {
+            menuCanvasGroup.interactable = false;
             fadeTimer.Running = false;
             StartCoroutine(StartCountDown());
             menuCanvasGroup.alpha = 0;

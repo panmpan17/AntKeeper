@@ -41,7 +41,8 @@ public class AntRouteGrowControl : MonoBehaviour
     private float branchOffChance = 0.05f;
 
     [SerializeField]
-    private int showTrueColorAfterSize;
+    private ValueWithEnable<int> showTrueColorAfterSize;
+    // private int showTrueColorAfterSize;
 
     [Header("Die")]
     [SerializeField]
@@ -269,9 +270,9 @@ public class AntRouteGrowControl : MonoBehaviour
     {
         _size++;
 
-        if (!_hub.IsShowTrueColor)
+        if (showTrueColorAfterSize.Enable && !_hub.IsShowTrueColor)
         {
-            if (_size >= showTrueColorAfterSize)
+            if (_size >= showTrueColorAfterSize.Value)
             {
                 _hub.ShowTrueColor();
             }

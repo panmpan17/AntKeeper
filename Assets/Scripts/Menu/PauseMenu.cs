@@ -34,6 +34,11 @@ public class PauseMenu : MonoBehaviour
         uIInputModule = FindObjectOfType<InputSystemUIInputModule>();
     }
 
+    void OnDisable()
+    {
+        uIInputModule.cancel.action.performed -= OnCancelPerformed;
+    }
+
     public void Pause()
     {
         EventSystem.current.SetSelectedGameObject(resumeButton);

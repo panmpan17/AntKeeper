@@ -7,24 +7,26 @@ using MPack;
 public class QueenAntJar : AbstractHoldItem
 {
     [SerializeField]
+    private ParticleSystem particle;
+    [SerializeField]
     private Timer collectTimer;
     [SerializeField]
     private Timer plantTimer;
     [SerializeField]
     private FillBarControl progressBar;
 
-    // [SerializeField]
-    // private Sprite emptyJarSprite;
-    // [SerializeField]
-    // private Sprite oneAntJarSprite;
-    // [SerializeField]
-    // private Sprite twoAntJarSprite;
     [SerializeField]
-    private Color emptyJarColor;
+    private Sprite emptySprite;
     [SerializeField]
-    private Color oneAntJarColor;
+    private Sprite oneAntSprite;
     [SerializeField]
-    private Color twoAntJarColor;
+    private Sprite twoAntSprite;
+    // [SerializeField]
+    // private Color emptyJarColor;
+    // [SerializeField]
+    // private Color oneAntJarColor;
+    // [SerializeField]
+    // private Color twoAntJarColor;
 
     private enum State {
         Empty,
@@ -44,7 +46,7 @@ public class QueenAntJar : AbstractHoldItem
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = emptyJarColor;
+        _spriteRenderer.sprite = emptySprite;
 
         // _spriteRenderer.sprite = emptyJarSprite;
 
@@ -62,6 +64,7 @@ public class QueenAntJar : AbstractHoldItem
                 collectTimer.Running = false;
                 PlayerBehaviour.Input.enabled = true;
                 progressBar.gameObject.SetActive(false);
+                particle.Stop();
                 return;
             }
 
@@ -71,18 +74,19 @@ public class QueenAntJar : AbstractHoldItem
                 PlayerBehaviour.Input.enabled = true;
 
                 progressBar.gameObject.SetActive(false);
+                particle.Stop();
 
                 if (_state == State.Empty)
                 {
                     _state = State.OneAnt;
-                    _spriteRenderer.color = oneAntJarColor;
+                    _spriteRenderer.sprite = oneAntSprite;
                     _firstAntNest = _targetAntNest;
                     _firstIsFireAnt = _firstAntNest.IsFireAnt;
                 }
                 else
                 {
                     _state = State.TwoAnt;
-                    _spriteRenderer.color = twoAntJarColor;
+                    _spriteRenderer.sprite = twoAntSprite;
                     _secondIsFireAnt = _targetAntNest.IsFireAnt;
                 }
 
@@ -101,13 +105,14 @@ public class QueenAntJar : AbstractHoldItem
                 PlayerBehaviour.Input.enabled = true;
 
                 progressBar.gameObject.SetActive(false);
+                particle.Stop();
 
                 PlantAnt();
 
                 _state = State.Empty;
                 _firstAntNest = null;
                 _targetAntNest = null;
-                _spriteRenderer.color = emptyJarColor;
+                _spriteRenderer.sprite = emptySprite;
                 return;
             }
 
@@ -157,6 +162,8 @@ public class QueenAntJar : AbstractHoldItem
 
             collectTimer.Reset();
             progressBar.gameObject.SetActive(true);
+            particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
+            particle.Play();
         }
     }
 
@@ -174,6 +181,8 @@ public class QueenAntJar : AbstractHoldItem
 
             collectTimer.Reset();
             progressBar.gameObject.SetActive(true);
+            particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
+            particle.Play();
         }
     }
 
@@ -186,6 +195,8 @@ public class QueenAntJar : AbstractHoldItem
 
         plantTimer.Reset();
         progressBar.gameObject.SetActive(true);
+        particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
+        particle.Play();
     }
 
     public override void OnInteractEnd() { }

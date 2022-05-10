@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
     #if UNITY_EDITOR
     [Header("Editor Only")]
     [SerializeField]
-    private bool skipStartCountDown;
-    [SerializeField]
     private ValueWithEnable<int> overrideGameTime;
     [SerializeField]
     private ValueWithEnable<float> overrideTimeScale = new ValueWithEnable<float>(1);

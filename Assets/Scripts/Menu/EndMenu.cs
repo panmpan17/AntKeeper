@@ -106,7 +106,8 @@ public class EndMenu : MonoBehaviour
     IEnumerator ShowStatic()
     {
         int animalCount = GridManager.ins.CountAliveAnimal();
-        int fireAntCount = GridManager.ins.CountFireAnt();
+
+        GridManager.AntCountInfo countInfo = GridManager.ins.CountAnt();
 
         for (int i = 0; i <= animalCount; i++)
         {
@@ -115,7 +116,7 @@ public class EndMenu : MonoBehaviour
         }
         yield return new WaitForSecondsRealtime(1);
 
-        for (int i = 0; i <= fireAntCount; i++)
+        for (int i = 0; i <= countInfo.FireAnt; i++)
         {
             yield return null;
             fireAntCounText.text = i.ToString();

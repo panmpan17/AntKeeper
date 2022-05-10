@@ -38,6 +38,10 @@ public class GridManager : MonoBehaviour
     private List<AntNestHub> _antNestHubs = new List<AntNestHub>();
     private List<VirtualAnimalSpot> _animals = new List<VirtualAnimalSpot>();
 
+
+    public delegate void AntCountChangeDelegate(AntCountInfo count);
+    public event AntCountChangeDelegate OnAntCountChange;
+
     private int _originAnimalCount;
     public int OriginAnimalCount => _originAnimalCount;
 
@@ -68,7 +72,8 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.ins.OnGameStart += OnGameStart;
+        if (GameManager.ins != null)
+            GameManager.ins.OnGameStart += OnGameStart;
     }
 
     void OnGameStart()
@@ -92,12 +97,12 @@ public class GridManager : MonoBehaviour
     public void RegisterAntNest(AntNestHub antNestHub)
     {
         _antNestHubs.Add(antNestHub);
-        HUDManager.ins.UpdateFireAntCount();
+        OnAntCountChange?.Invoke(CountAnt());
     }
     public void UnregisterAntNest(AntNestHub antNestHub)
     {
         _antNestHubs.Remove(antNestHub);
-        HUDManager.ins.UpdateFireAntCount();
+        OnAntCountChange?.Invoke(CountAnt());
     }
 
     public void ReigsterAnimal(VirtualAnimalSpot animalSpot, out Vector3Int gridPosition)
@@ -203,15 +208,28 @@ public class GridManager : MonoBehaviour
         return count;
     }
 
-    public int CountFireAnt()
+    public AntCountInfo CountAnt()
     {
-        int count = 0;
+        AntCountInfo countInfo = new AntCountInfo();
+
         for (int i = 0; i < _antNestHubs.Count; i++)
         {
-            if (_antNestHubs[i].IsFireAnt && _antNestHubs[i].enabled)
-                count++;
+            if (_antNestHubs[i].IsFireAnt)
+            {
+                if (_antNestHubs[i].enabled)
+                    countInfo.FireAnt++;
+                else
+                    countInfo.FireAntDisabled++;
+            }
+            else
+            {
+                if (_antNestHubs[i].enabled)
+                    countInfo.NativeAnt++;
+                else
+                    countInfo.NativeAntDisabled++;
+            }
         }
-        return count;
+        return countInfo;
     }
     #endregion
 
@@ -261,4 +279,12 @@ public class GridManager : MonoBehaviour
         newAntNest.transform.position = grid.GetCellCenterWorld(position);
     }
     #endregion
+
+    public struct AntCountInfo
+    {
+        public int NativeAnt;
+        public int NativeAntDisabled;
+        public int FireAnt;
+        public int FireAntDisabled;
+    }
 }

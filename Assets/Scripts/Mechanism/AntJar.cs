@@ -8,6 +8,11 @@ public class AntJar : AbstractHoldItem
 {
     [SerializeField]
     private bool preventRepeat = true;
+
+    [SerializeField]
+    private ParticleSystem revealParticle;
+    [SerializeField]
+    private ParticleSystem particle;
     [SerializeField]
     [ShortTimer]
     private Timer collectTimer;
@@ -44,6 +49,7 @@ public class AntJar : AbstractHoldItem
 
                 collectTimer.Running = false;
                 collectProgressBar.gameObject.SetActive(false);
+                particle.Stop();
                 _spriteRenderer.sprite = jarHasAntSprite;
                 return;
             }
@@ -77,6 +83,8 @@ public class AntJar : AbstractHoldItem
 
             collectTimer.Reset();
             collectProgressBar.gameObject.SetActive(true);
+            particle.Play();
+            particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
         }
 
         return false;
@@ -96,7 +104,11 @@ public class AntJar : AbstractHoldItem
     public void ShowAntNestTrueColor()
     {
         if (_targetAntNest != null)
+        {
+            revealParticle.transform.position = _targetAntNest.transform.position;
+            revealParticle.Play();
             _targetAntNest.ShowTrueColor();
+        }
 
         _targetAntNest = null;
         _spriteRenderer.sprite = emptyJarSprite;

@@ -61,6 +61,7 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         GameManager.ins.GameTimeChanged += OnGameTimeChange;
+        // GridManager.ins.OnAntCountChange += UpdateAntCount;
     }
 
     void OnEnable()
@@ -126,9 +127,9 @@ public class HUDManager : MonoBehaviour
         animalCountText.text = string.Format("Animal {0}", GridManager.ins.CountAliveAnimal());
     }
 
-    public void UpdateFireAntCount()
+    void UpdateAntCount(GridManager.AntCountInfo countInfo)
     {
-        fireAntCountText.text = string.Format("FireAnt {0}", GridManager.ins.CountFireAnt());
+        fireAntCountText.text = string.Format("FireAnt {0}", countInfo.FireAnt);
     }
 
     void OnPauseClicked()
