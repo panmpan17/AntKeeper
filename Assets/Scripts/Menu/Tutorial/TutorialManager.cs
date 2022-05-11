@@ -2,34 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using MPack;
 
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField]
-    private LanguageData languageData;
+    private Button previousButton;
+    [SerializeField]
+    private Button nextButton;
+    [SerializeField]
+    private GameObject closeIndicate;
     [SerializeField]
     private GameObject[] tutorialSections;
     private int currentTutorialIndex;
 
+#if UNITY_EDITOR
+    [Header("Editor Only")]
+    [SerializeField]
+    private bool openOnStart;
+#endif
+
     private Canvas _canvas;
+    private Navigation nextNullNavigation;
+    private Navigation nextNormalNavigation;
 
     public event System.Action OnClose;
 
     void Awake()
     {
         _canvas = GetComponent<Canvas>();
-        LanguageMgr.AssignLanguageData(languageData);
-    }
 
-    void Start()
-    {
-        tutorialSections[0].SetActive(true);
-        for (int i = 1; i < tutorialSections.Length; i++)
-        {
-            tutorialSections[i].SetActive(false);
-        }
+        previousButton.onClick.AddListener(PreviousTutorial);
+        nextButton.onClick.AddListener(NextTutorial);
+        closeIndicate.SetActive(false);
+
+        enabled = _canvas.enabled = false;
+
+
+        nextNullNavigation = nextButton.navigation;
+        nextNullNavigation.selectOnLeft = null;
+        nextNormalNavigation = nextButton.navigation;
+
+#if UNITY_EDITOR
+        if (openOnStart)
+            Open();
+#endif
     }
 
     public void PreviousTutorial()
@@ -39,6 +58,13 @@ public class TutorialManager : MonoBehaviour
         if (--currentTutorialIndex < 0)
         {
             currentTutorialIndex = 0;
+        }
+
+        if (currentTutorialIndex == 0)
+        {
+            previousButton.interactable = false;
+            EventSystem.current.SetSelectedGameObject(nextButton.gameObject);
+            nextButton.navigation = nextNullNavigation;
         }
 
         tutorialSections[currentTutorialIndex].SetActive(true);
@@ -55,6 +81,25 @@ public class TutorialManager : MonoBehaviour
         }
 
         tutorialSections[currentTutorialIndex].SetActive(true);
+        previousButton.interactable = true;
+        nextButton.navigation = nextNormalNavigation;
+        closeIndicate.SetActive(currentTutorialIndex == tutorialSections.Length - 1);
+    }
+
+    public void Open()
+    {
+        currentTutorialIndex = 0;
+        tutorialSections[0].SetActive(true);
+        for (int i = 1; i < tutorialSections.Length; i++)
+        {
+            tutorialSections[i].SetActive(false);
+        }
+
+        previousButton.interactable = false;
+        nextButton.navigation = nextNullNavigation;
+
+        EventSystem.current.SetSelectedGameObject(nextButton.gameObject);
+        enabled = _canvas.enabled = true;
     }
 
     void CloseWindow()

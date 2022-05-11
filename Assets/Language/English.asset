@@ -54,3 +54,33 @@ MonoBehaviour:
 
       Then
       plant it on empty land to spread native ant.'
+  - ID: 101
+    Text: Close
+  - ID: 201
+    Text: Start
+  - ID: 202
+    Text: Tutorial
+  - ID: 203
+    Text: Music
+  - ID: 204
+    Text: Virtual Gamepad
+  - ID: 205
+    Text: Control
+  - ID: 206
+    Text: Move
+  - ID: 207
+    Text: Jump
+  - ID: 208
+    Text: Interact
+  - ID: 209
+    Text: Ready?
+  - ID: 210
+    Text: Start!
+  - ID: 301
+    Text: Resume
+  - ID: 302
+    Text: Main Menu
+  - ID: 401
+    Text: Time
+  - ID: 402
+    Text: Animal

@@ -63,7 +63,7 @@ public class EndMenu : MonoBehaviour
 
         _canvas.enabled = _canvasGroup.enabled = enabled = false;
         replayButton.SetActive(false);
-        mainMenuButton.SetActive(false);
+        // mainMenuButton.SetActive(false);
     }
 
     void Update()
@@ -147,7 +147,7 @@ public class EndMenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.6f);
 
         replayButton.SetActive(true);
-        mainMenuButton.SetActive(true);
+        // mainMenuButton.SetActive(true);
         EventSystem.current.SetSelectedGameObject(replayButton);
     }
 

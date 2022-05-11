@@ -119,17 +119,17 @@ public class HUDManager : MonoBehaviour
 
         var minute = gameTime / 60;
         var second = gameTime % 60;
-        timeText.text = string.Format("Time {0}:{1}", minute, second.ToString("D2"));
+        timeText.text = string.Format("{0}:{1}", minute, second.ToString("D2"));
     }
 
     public void UpdateAnimalCount()
     {
-        animalCountText.text = string.Format("Animal {0}", GridManager.ins.CountAliveAnimal());
+        animalCountText.text = GridManager.ins.CountAliveAnimal().ToString();
     }
 
     void UpdateAntCount(GridManager.AntCountInfo countInfo)
     {
-        fireAntCountText.text = string.Format("FireAnt {0}", countInfo.FireAnt);
+        fireAntCountText.text = countInfo.FireAnt.ToString();
     }
 
     void OnPauseClicked()

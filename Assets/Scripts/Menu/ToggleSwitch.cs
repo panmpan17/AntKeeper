@@ -39,12 +39,14 @@ namespace UnityEngine.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            ToggleChoice();
+            if (IsInteractable())
+                ToggleChoice();
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            ToggleChoice();
+            if (IsInteractable())
+                ToggleChoice();
         }
 
         public void ChangeState(bool isOn)

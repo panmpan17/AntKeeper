@@ -37,3 +37,33 @@ MonoBehaviour:
     Text: "\u53EF\u4EE5\u5229\u7528\u74F6\u5B50\u5728\u879E\u87FB\u7684\u9053\u8DEF\u4E0A\u6536\u96C6\u879E\u87FB\u3002\n\u518D\u5230\u986F\u5FAE\u93E1\u6AA2\u67E5\u87FB\u7AA9\u7684\u7A2E\u985E\u3002"
   - ID: 10
     Text: "\u87FB\u540E\u74F6\u5B50\u53EF\u4EE5\u88DD\u5169\u96BB\u87FB\u540E\uFF0C\u5F9E\u5169\u500B\u4E0D\u540C\u7684\u5DE2\u7A74\u6536\u96C6\u3002\n\u6536\u96C6\u5F8C\u53EF\u4EE5\u57CB\u5728\u7A7A\u5730\u4E0A\uFF0C\u8B93\u65B0\u7684\u5DE2\u7A74\u8301\u58EF\u3002"
+  - ID: 101
+    Text: "\u95DC\u9589"
+  - ID: 201
+    Text: "\u958B\u59CB\u904A\u6232"
+  - ID: 202
+    Text: "\u6559\u5B78"
+  - ID: 203
+    Text: "\u97F3\u6A02"
+  - ID: 204
+    Text: "\u865B\u64EC\u6416\u687F"
+  - ID: 205
+    Text: "\u63A7\u5236\u8A2D\u5B9A"
+  - ID: 206
+    Text: "\u79FB\u52D5"
+  - ID: 207
+    Text: "\u8DF3\u8E8D"
+  - ID: 208
+    Text: "\u4F7F\u7528"
+  - ID: 209
+    Text: "\u6E96\u5099\u597D\u4E86\u55CE?"
+  - ID: 210
+    Text: "\u958B\u59CB!"
+  - ID: 301
+    Text: "\u7E7C\u7E8C\u904A\u6232"
+  - ID: 302
+    Text: "\u4E3B\u9078\u55AE"
+  - ID: 401
+    Text: "\u6642\u9593"
+  - ID: 402
+    Text: "\u52D5\u7269"

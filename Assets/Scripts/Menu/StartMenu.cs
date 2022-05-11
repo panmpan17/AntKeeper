@@ -19,15 +19,25 @@ public class StartMenu : MonoBehaviour
 
     [SerializeField]
     private CanvasGroup menuCanvasGroup;
+
+
+    [SerializeField]
+    private ToggleSwitch mobileControlSwitch;
+
+    [Header("Tutorial")]
+    [SerializeField]
+    private GameObject tutorialButton;
+    [SerializeField]
+    private TutorialManager tutorial;
+
+    
+    [Header("Control")]
     [SerializeField]
     private GameObject helpButton;
     [SerializeField]
     private GameObject helpMenu;
     [SerializeField]
     private GameObject helpMenuClose;
-
-    [SerializeField]
-    private ToggleSwitch mobileControlSwitch;
 
     [Header("Start Countdown")]
     [SerializeField]
@@ -38,6 +48,11 @@ public class StartMenu : MonoBehaviour
     private AudioClip beepAudio;
     [SerializeField]
     private AudioClip startAudio;
+
+    [SerializeField]
+    private int readyTextLanguageID;
+    [SerializeField]
+    private int startTextLanguageID;
 
 #if UNITY_EDITOR
     [Header("Editor Only")]
@@ -60,6 +75,8 @@ public class StartMenu : MonoBehaviour
         fadeTimer.Running = false;
 
         startCountDownText.text = "";
+
+        tutorial.OnClose += OnTutorialClose;
     }
 
     IEnumerator Start()
@@ -79,6 +96,7 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipMenu)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             menuCanvasGroup.interactable = false;
             fadeTimer.Running = false;
             StartCoroutine(StartCountDown());
@@ -101,7 +119,7 @@ public class StartMenu : MonoBehaviour
         var waitOneSec = new WaitForSeconds(1.2f);
 
         yield return new WaitForSeconds(0.5f);
-        startCountDownText.text = "Ready?";
+        startCountDownText.text = LanguageMgr.GetTextById(readyTextLanguageID);
         yield return waitOneSec;
         CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
         audioSource.PlayOneShot(beepAudio);
@@ -116,7 +134,7 @@ public class StartMenu : MonoBehaviour
         startCountDownText.text = "1";
 
         yield return waitOneSec;
-        startCountDownText.text = "Start!";
+        startCountDownText.text = LanguageMgr.GetTextById(startTextLanguageID);
         audioSource.PlayOneShot(startAudio);
 
         yield return waitOneSec;
@@ -146,6 +164,7 @@ public class StartMenu : MonoBehaviour
 
     public void StartButtonPressed()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         menuCanvasGroup.interactable = false;
         fadeTimer.Reset();
     }
@@ -160,5 +179,15 @@ public class StartMenu : MonoBehaviour
     {
         helpMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(helpButton);
+    }
+
+    public void TutorialButtonPressed()
+    {
+        tutorial.Open();
+    }
+
+    void OnTutorialClose()
+    {
+        EventSystem.current.SetSelectedGameObject(tutorialButton);
     }
 }

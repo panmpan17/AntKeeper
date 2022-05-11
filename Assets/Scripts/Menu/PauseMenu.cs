@@ -56,6 +56,7 @@ public class PauseMenu : MonoBehaviour
         _canvas.enabled = false;
         OnResumed?.Invoke();
         _canvasGroup.interactable = false;
+        EventSystem.current.SetSelectedGameObject(null);
 
         uIInputModule.cancel.action.performed -= OnCancelPerformed;
     }
@@ -63,7 +64,8 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("TempMainMenu");
+        // SceneManager.LoadScene("TempMainMenu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OnCancelPerformed(InputAction.CallbackContext callbackContext)
