@@ -516,7 +516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a2c43f69e73054f148c726f84194cb1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 063297d51918b4602b290da763d9851d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1449,11 +1449,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 4634209674733407047}
   intervalTimer:
-    TargetTime: 0.13
+    TargetTime: 0.2
     Running: 0
     ReverseMode: 0
   sprites:
-  - {fileID: 21300000, guid: c2a97d74eade44fd698c0c1c2a1c3294, type: 3}
   - {fileID: 21300000, guid: 1193ce007aa7a4dbfb0d237316be38b3, type: 3}
   - {fileID: 21300000, guid: 829bce3e8493c41cc9694635d50fe914, type: 3}
   - {fileID: 21300000, guid: 28f6ef957ee4d4d80b83b610fb21bed4, type: 3}
@@ -1475,6 +1474,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 759b83139b13a46dc820b15856b03135, type: 3}
   - {fileID: 21300000, guid: 38746b149881e4ccaa0ee88df3f29dd9, type: 3}
   - {fileID: 21300000, guid: 47abfeb416a5e43acb41db83a5903944, type: 3}
+  - {fileID: 21300000, guid: b88dfc1f3f842471b839698545a67cbd, type: 3}
+  - {fileID: 21300000, guid: fda6acb673bcc4b68915abae165dbe1b, type: 3}
+  - {fileID: 21300000, guid: e14e3c789f1b34b159fd4a401cc00f13, type: 3}
+  - {fileID: 21300000, guid: c2a97d74eade44fd698c0c1c2a1c3294, type: 3}
   loopDelay:
     Enable: 1
     Value: 2
@@ -2116,7 +2119,7 @@ GameObject:
   - component: {fileID: 6325107827068937885}
   - component: {fileID: 7072571797487042516}
   m_Layer: 5
-  m_Name: QueenAntJar
+  m_Name: TestTube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,7 +2173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 063297d51918b4602b290da763d9851d, type: 3}
+  m_Sprite: {fileID: 894989723, guid: 10542f7bcab2444439f16ec96a41050e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2575,32 +2578,25 @@ MonoBehaviour:
     Running: 0
     ReverseMode: 0
   sprites:
-  - {fileID: 21300000, guid: 38af565c846544a2fabe684b085bc249, type: 3}
-  - {fileID: 21300000, guid: 93edce01a0f9845c0bdceba546924116, type: 3}
-  - {fileID: 21300000, guid: 0f49f215885a04a37a1ecb55e2c92a7a, type: 3}
-  - {fileID: 21300000, guid: f1b845743aa7b43198ec3ed4cf8666c4, type: 3}
-  - {fileID: 21300000, guid: cea5e6fa79bc94f89969d1704248e910, type: 3}
-  - {fileID: 21300000, guid: 420861cfda406469388717156bb4215e, type: 3}
-  - {fileID: 21300000, guid: 3be1f9b4061a841bc9e7ddbde0b9460a, type: 3}
-  - {fileID: 21300000, guid: a60284698395a413bb58bbe8d2de3a60, type: 3}
-  - {fileID: 21300000, guid: 10aee1bf081b649ce91381861d79e379, type: 3}
-  - {fileID: 21300000, guid: 468014c55f0a045a7952d5a949296985, type: 3}
-  - {fileID: 21300000, guid: 9e049b24ab62e4c0bad1318b5c96e0f8, type: 3}
-  - {fileID: 21300000, guid: 0b54fcecdc880418b9c86c6cf07906e2, type: 3}
-  - {fileID: 21300000, guid: 1962921a396ab4114b323929a2239709, type: 3}
-  - {fileID: 21300000, guid: 806131434ec764ad5816838b80e81e0e, type: 3}
-  - {fileID: 21300000, guid: 2ce794cf98e484c49b5930f5dec14d9d, type: 3}
-  - {fileID: 21300000, guid: c5a28dcc93b8d47749beb27df593cc87, type: 3}
-  - {fileID: 21300000, guid: 67a18c688398f42fba909e7023d2a339, type: 3}
-  - {fileID: 21300000, guid: d0ee4a10c8ab64eb1a3a09d0f17e57ce, type: 3}
-  - {fileID: 21300000, guid: 1a4c8add53f3b4c67b5df6a6c3a8d3f3, type: 3}
-  - {fileID: 21300000, guid: f4868a1543cc94815b5beb9fb0461d1a, type: 3}
-  - {fileID: 21300000, guid: cb1402796511944ebb2fb149c74b35ce, type: 3}
-  - {fileID: 21300000, guid: ce67dbb2f1d724d06b7b622edb976a4c, type: 3}
-  - {fileID: 21300000, guid: 135f213e1494b4232832d93d69cce6ca, type: 3}
-  - {fileID: 21300000, guid: 2f709f0b931ce407e87b02b02dac5473, type: 3}
-  - {fileID: 21300000, guid: a7cb5e0a8746b485f9750b47d601da34, type: 3}
-  - {fileID: 21300000, guid: 776270b7f1b664586893b28b73ab22cd, type: 3}
+  - {fileID: 21300000, guid: 7792fb126ecba4bd79f5d11557c1fe18, type: 3}
+  - {fileID: 21300000, guid: e00eb91e482b04396a70c4b8dd2bf72e, type: 3}
+  - {fileID: 21300000, guid: 860aee889244544268d9e60487b09ca6, type: 3}
+  - {fileID: 21300000, guid: 393d468a4247744298d8a004cd8c618a, type: 3}
+  - {fileID: 21300000, guid: 94dea54085ced4b37b0caf4c9717b8a5, type: 3}
+  - {fileID: 21300000, guid: 9e1e6fdc733b24993a365ba84f9c8b51, type: 3}
+  - {fileID: 21300000, guid: 8b37ed98d45414552bd2f896a145eef6, type: 3}
+  - {fileID: 21300000, guid: 318af6497b1644f5da9c1ab95c1b31a7, type: 3}
+  - {fileID: 21300000, guid: ef87c350840db4ea19b76e8ed7839118, type: 3}
+  - {fileID: 21300000, guid: e813a1c2f5b124dfb98901e2efd88c93, type: 3}
+  - {fileID: 21300000, guid: f4930b32ec1c94413bb5e556a367769a, type: 3}
+  - {fileID: 21300000, guid: d9748e6a3567f4fe8834f191927d031e, type: 3}
+  - {fileID: 21300000, guid: 58e27ff1cda6246ad9126616b4c8d00a, type: 3}
+  - {fileID: 21300000, guid: 00aa8bfdce2b9417b9606aa6714d6233, type: 3}
+  - {fileID: 21300000, guid: 738aaaeeee6c34e72a9056ba3fbfbfd9, type: 3}
+  - {fileID: 21300000, guid: 01dc7c17220f04caf9fdc1e8ccd9538b, type: 3}
+  - {fileID: 21300000, guid: 4e0fe120028a44f7e95c06e711896891, type: 3}
+  - {fileID: 21300000, guid: f49c14b24dcb945c6a0d8d05d2641663, type: 3}
+  - {fileID: 21300000, guid: 582b5bcb5a4974d6faefdd1de36bc7af, type: 3}
   loopDelay:
     Enable: 1
     Value: 2
@@ -2817,7 +2813,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4290440191
-  m_fontColor: {r: 1, g: 0.92156863, b: 0.7294118, a: 1}
+  m_fontColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
