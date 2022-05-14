@@ -119989,7 +119989,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7767857, y: 1}
+    m_SensorSize: {x: 1.7785349, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -120436,6 +120436,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3215032839935309865, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
+      propertyPath: staticProvider
+      value: 
+      objectReference: {fileID: 1538095601}
     - target: {fileID: 3215032839935309866, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
       propertyPath: m_Name
       value: EndMenu
@@ -120524,6 +120528,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8523567451528588603, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523567451528588606, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
+      propertyPath: staticProvider
+      value: 
+      objectReference: {fileID: 1538095601}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
 --- !u!1001 &4009428107849884768
@@ -120640,7 +120652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4939876884818145580, guid: 340227c131c7e4ea494770e262e86631, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4939876884818145580, guid: 340227c131c7e4ea494770e262e86631, type: 3}
       propertyPath: m_AnchorMax.x
@@ -120789,12 +120801,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
+      propertyPath: skipMenu
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: tutorial
       value: 
       objectReference: {fileID: 903016146}
     - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: skipStartCountDown
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754585, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: m_Pivot.x

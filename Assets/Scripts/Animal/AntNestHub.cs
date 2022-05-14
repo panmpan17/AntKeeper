@@ -201,6 +201,22 @@ public class AntNestHub : MonoBehaviour
         branch = null;
         return false;
     }
+
+    public int CountAreaSize()
+    {
+        var list = new List<Vector3Int>();
+        for (int i = 0; i < routeBranches.Count; i++)
+        {
+            Vector3Int[] positions = routeBranches[i].AllGridPosition();
+            for (int e = 0; e < positions.Length; e++)
+            {
+                if (list.Contains(positions[e]))
+                    continue;
+                list.Add(positions[e]);
+            }
+        }
+        return list.Count;
+    }
     #endregion
 
 
@@ -242,7 +258,7 @@ public class AntNestHub : MonoBehaviour
             {
                 routeBranches[i].OnDestroy();
                 RemoveBranch(i);
-                i--;
+                i++;
             }
             else
             {

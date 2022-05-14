@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGameStaticProvider
 {
     public static GridManager ins;
 
@@ -230,6 +230,54 @@ public class GridManager : MonoBehaviour
             }
         }
         return countInfo;
+    }
+
+    public GameStatic CollectGameStatic()
+    {
+        var statistic = ScriptableObject.CreateInstance<GameStatic>();
+        List<GameStatic.AntNestInfo> fireAnts = new List<GameStatic.AntNestInfo>();
+        List<GameStatic.AntNestInfo> nativeAnts = new List<GameStatic.AntNestInfo>();
+
+        for (int i = 0; i < _antNestHubs.Count; i++)
+        {
+            if (_antNestHubs[i].IsFireAnt)
+            {
+                fireAnts.Add(new GameStatic.AntNestInfo
+                {
+                    NestSize = _antNestHubs[i].Size,
+                    AreaSize = _antNestHubs[i].CountAreaSize(),
+                    StillAlive = _antNestHubs[i].enabled
+                });
+            }
+            else
+            {
+                nativeAnts.Add(new GameStatic.AntNestInfo
+                {
+                    NestSize = _antNestHubs[i].Size,
+                    AreaSize = _antNestHubs[i].CountAreaSize(),
+                    StillAlive = _antNestHubs[i].enabled
+                });
+            }
+        }
+
+        int totalTileCount = 0;
+        for (int x = baseMap.cellBounds.xMin; x < baseMap.cellBounds.xMax; x++)
+        {
+            for (int y = baseMap.cellBounds.yMin; y < baseMap.cellBounds.yMax; y++)
+            {
+                if (baseMap.HasTile(new Vector3Int(x, y, 0)))
+                    totalTileCount += 1;
+            }
+        }
+        statistic.TotalMapArea = totalTileCount;
+
+        statistic.OriginalAnimalCount = OriginAnimalCount;
+        statistic.ResultAnimalCount = CountAliveAnimal();
+
+        statistic.FireAnts = fireAnts.ToArray();
+        statistic.NativeAnts = nativeAnts.ToArray();
+
+        return statistic;
     }
     #endregion
 

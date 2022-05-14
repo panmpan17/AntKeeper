@@ -15,17 +15,26 @@ public class EndMenu : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField]
-    private TextMeshProUGUI animalCounText;
-    [SerializeField]
-    private TextMeshProUGUI fireAntCounText;
-    [SerializeField]
     private GameObject replayButton;
     [SerializeField]
-    private GameObject mainMenuButton;
+    private TextMeshProUGUI resultAnimalCount;
+    [SerializeField]
+    private TextMeshProUGUI originalAnimalCount;
+
+    [SerializeField]
+    private RectTransform mask;
+    [SerializeField]
+    private RectTransform fireAntBar;
+    [SerializeField]
+    private RectTransform nativeAntBar;
+    [SerializeField]
+    private AnimationCurve barWidthCurve;
 
     [Header("Stars")]
     [SerializeField]
     private GameObject[] stars;
+    [SerializeField]
+    private float starApearGap = 0.6f;
     [SerializeField]
     private float starAnimationTime;
     [SerializeField]
@@ -34,19 +43,19 @@ public class EndMenu : MonoBehaviour
     private AnimationCurveReference starFadeCurve;
     [SerializeField]
     private AnimationCurveReference starScaleCurve;
+    private WaitForSecondsRealtime starGapWait;
 
     [Header("Score Calculation")]
     [SerializeField]
-    [Range(0, 1f)]
-    private float oneStarRequireAnimals = 0.5f;
+    private float oneStarScore = 0.5f;
     [SerializeField]
-    [Range(0, 1f)]
-    private float twoStarRequireAnimals = 0.7f;
+    private float twoStarScore = 0.7f;
     [SerializeField]
-    [Range(0, 1f)]
-    private float threeStarRequireAnimals = 0.9f;
+    private float threeStarScore = 0.9f;
 
-    private StarApearAnimaion _animatingStar;
+    [SerializeField]
+    private GameObject staticProvider;
+
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
 
@@ -63,111 +72,129 @@ public class EndMenu : MonoBehaviour
 
         _canvas.enabled = _canvasGroup.enabled = enabled = false;
         replayButton.SetActive(false);
-        // mainMenuButton.SetActive(false);
-    }
 
-    void Update()
-    {
-        if (fadeTimer.Running)
-        {
-            if (fadeTimer.UnscaleUpdateTimeEnd)
-            {
-                fadeTimer.Running = false;
-                StartCoroutine(ShowStatic());
-                _canvasGroup.alpha = 1;
-            }
-
-            _canvasGroup.alpha = fadeTimer.Progress;
-        }
-
-        if (_animatingStar != null)
-        {
-            _animatingStar.Timer.UnscaleUpdate();
-
-            _animatingStar.RectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Value.Evaluate(_animatingStar.Timer.Progress));
-
-            Color color = _animatingStar.Image.color;
-            color.a = starFadeCurve.Value.Evaluate(_animatingStar.Timer.Progress);
-            _animatingStar.Image.color = color;
-
-            if (_animatingStar.Timer.Ended)
-            {
-                _animatingStar = null;
-            }
-        }
+        starGapWait = new WaitForSecondsRealtime(starApearGap);
     }
 
     public void Open()
     {
         _canvas.enabled = _canvasGroup.enabled = enabled = true;
         fadeTimer.Reset();
+
+        resultAnimalCount.text = "0";
+        originalAnimalCount.text = "/";
+
+        fireAntBar.sizeDelta = new Vector2(0, fireAntBar.sizeDelta.y);
+        nativeAntBar.sizeDelta = new Vector2(0, nativeAntBar.sizeDelta.y);
+
+        StartCoroutine(FadeIn());
+    }
+
+    IEnumerator FadeIn()
+    {
+        fadeTimer.Reset();
+        while (!fadeTimer.UnscaleUpdateTimeEnd)
+        {
+            _canvasGroup.alpha = fadeTimer.Progress;
+            yield return null;
+        }
+
+        StartCoroutine(ShowStatic());
+        _canvasGroup.alpha = 1;
     }
 
     IEnumerator ShowStatic()
     {
-        int animalCount = GridManager.ins.CountAliveAnimal();
+        var statistic = staticProvider.GetComponent<IGameStaticProvider>().CollectGameStatic();
 
-        GridManager.AntCountInfo countInfo = GridManager.ins.CountAnt();
-
-        for (int i = 0; i <= animalCount; i++)
-        {
-            yield return null;
-            animalCounText.text = string.Format("{0} / {1}", i, GridManager.ins.OriginAnimalCount);
-        }
-        yield return new WaitForSecondsRealtime(1);
-
-        for (int i = 0; i <= countInfo.FireAnt; i++)
-        {
-            yield return null;
-            fireAntCounText.text = i.ToString();
-        }
-        yield return new WaitForSecondsRealtime(1);
-
-        float animalSuvivePercentage = (float)animalCount / (float)GridManager.ins.OriginAnimalCount;
-
-        if (animalSuvivePercentage > oneStarRequireAnimals)
-        {
-            AddShowStarAnimation(0);
-            while (_animatingStar != null) yield return null;
-
-            if (animalSuvivePercentage > twoStarRequireAnimals)
-            {
-                yield return new WaitForSecondsRealtime(0.6f);
-                AddShowStarAnimation(1);
-                while (_animatingStar != null) yield return null;
-
-                if (animalSuvivePercentage > threeStarRequireAnimals)
-                {
-                    yield return new WaitForSecondsRealtime(0.6f);
-                    AddShowStarAnimation(2);
-                }
-            }
-        }
-
-        yield return new WaitForSecondsRealtime(0.6f);
+        yield return StartCoroutine(ShowAnimalCount(statistic));
+        yield return StartCoroutine(ShowArea(statistic));
+        yield return StartCoroutine(ShowStars(statistic));
+        yield return starGapWait;
 
         replayButton.SetActive(true);
-        // mainMenuButton.SetActive(true);
         EventSystem.current.SetSelectedGameObject(replayButton);
     }
 
-    void AddShowStarAnimation(int index)
+    IEnumerator ShowAnimalCount(GameStatic statistic)
     {
-        GameObject starGameObject = stars[index];
+        resultAnimalCount.text = "0";
+        originalAnimalCount.text = "/" + statistic.OriginalAnimalCount.ToString();
 
-        _animatingStar = new StarApearAnimaion {
-            RectTransform = starGameObject.GetComponent<RectTransform>(),
-            Image = starGameObject.GetComponent<Image>(),
-            Timer = new Timer(starAnimationTime),
-        };
+        yield return null;
 
-        _animatingStar.RectTransform.localScale = starStartScale;
+        for (int count = 1; count <= statistic.ResultAnimalCount; count++)
+        {
+            resultAnimalCount.text = count.ToString();
+            yield return null;
+        }
+    }
 
-        Color color = _animatingStar.Image.color;
-        color.a = 0;
-        _animatingStar.Image.color = color;
+    IEnumerator ShowArea(GameStatic statistic)
+    {
+        float fireAntWidth = statistic.FireAntAreaPercentage * mask.sizeDelta.x;
+        float nativeAntWidth = statistic.NativeAntAreaPercentage * mask.sizeDelta.x + fireAntWidth;
 
-        starGameObject.SetActive(true);
+        Timer timer = new Timer(1);
+
+        while (!timer.UnscaleUpdateTimeEnd)
+        {
+            fireAntBar.sizeDelta = new Vector2(Mathf.Lerp(0, fireAntWidth, barWidthCurve.Evaluate(timer.Progress)), fireAntBar.sizeDelta.y);
+            yield return null;
+        }
+
+        fireAntBar.sizeDelta = new Vector2(fireAntWidth, fireAntBar.sizeDelta.y);
+        nativeAntBar.sizeDelta = new Vector2(fireAntWidth, nativeAntBar.sizeDelta.y);
+
+        timer.Reset();
+
+        while (!timer.UnscaleUpdateTimeEnd)
+        {
+            nativeAntBar.sizeDelta = new Vector2(Mathf.Lerp(fireAntWidth, nativeAntWidth, barWidthCurve.Evaluate(timer.Progress)), fireAntBar.sizeDelta.y);
+            yield return null;
+        }
+
+        nativeAntBar.sizeDelta = new Vector2(nativeAntWidth, nativeAntBar.sizeDelta.y);
+    }
+
+    IEnumerator ShowStars(GameStatic statistic)
+    {
+        float score = statistic.CalculateScore();
+        Debug.Log(score);
+
+        if (score < oneStarScore) yield break;
+
+        yield return StartCoroutine(StarAnimation(stars[0]));
+
+        if (score < twoStarScore) yield break;
+
+        yield return starGapWait;
+        yield return StartCoroutine(StarAnimation(stars[1]));
+
+        if (score < threeStarScore) yield break;
+
+        yield return starGapWait;
+        yield return StartCoroutine(StarAnimation(stars[2]));
+    }
+
+    IEnumerator StarAnimation(GameObject star)
+    {
+
+        var rectTransform = star.GetComponent<RectTransform>();
+        var image = star.GetComponent<Image>();
+        var timer = new Timer(starAnimationTime);
+        
+        Color color = image.color;
+        star.SetActive(true);
+
+        while (!timer.UnscaleUpdateTimeEnd)
+        {
+            rectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Value.Evaluate(timer.Progress));
+
+            color.a = starFadeCurve.Value.Evaluate(timer.Progress);
+            image.color = color;
+            yield return null;
+        }
     }
 
     public void OnReplayPressed()
@@ -180,12 +207,5 @@ public class EndMenu : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("TempMainMenu");
-    }
-
-    private class StarApearAnimaion
-    {
-        public RectTransform RectTransform;
-        public Image Image;
-        public Timer Timer;
     }
 }
