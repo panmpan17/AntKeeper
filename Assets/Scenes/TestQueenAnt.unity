@@ -86685,7 +86685,7 @@ MonoBehaviour:
   gameTime: 150
   playerBehaviour: {fileID: 915436049}
   overrideGameTime:
-    Enable: 1
+    Enable: 0
     Value: 3
   overrideTimeScale:
     Enable: 0
@@ -111722,11 +111722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c96e450ebd354be6bfcc067b1ddd04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &1843703841 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5904141876854321450, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-  m_PrefabInstance: {fileID: 284889949822767853}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1852560793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120176,26 +120171,6 @@ PrefabInstance:
     - target: {fileID: 284889949950920869, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
       propertyPath: m_Name
       value: AntJar
-      objectReference: {fileID: 0}
-    - target: {fileID: 284889949950920870, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-      propertyPath: revealParticle
-      value: 
-      objectReference: {fileID: 1843703841}
-    - target: {fileID: 284889949950920870, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-      propertyPath: collectTimer.TargetTime
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5904141876854321450, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5904141876854321450, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5904141876854321450, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0db66473e5a95450da42e965b20eb5cf, type: 3}

@@ -8,7 +8,12 @@ public class AntJar : AbstractHoldItem
 {
     [SerializeField]
     private bool preventRepeat = true;
+    [SerializeField]
+    private Sprite jarHasAntSprite;
+    [SerializeField]
+    private Sprite emptyJarSprite;
 
+    [Header("Collect")]
     [SerializeField]
     private ParticleSystem particle;
     [SerializeField]
@@ -17,10 +22,13 @@ public class AntJar : AbstractHoldItem
     [SerializeField]
     private FillBarControl collectProgressBar;
 
+    [Header("Reveal")]
     [SerializeField]
-    private Sprite jarHasAntSprite;
+    private ParticleSystem revealTrailParticle;
     [SerializeField]
-    private Sprite emptyJarSprite;
+    private Timer revealTimer;
+    [SerializeField]
+    private AnimationCurve trailCurve;
 
     private SpriteRenderer _spriteRenderer;
     private AntNestHub _targetAntNest;
@@ -103,10 +111,26 @@ public class AntJar : AbstractHoldItem
     {
         if (_targetAntNest != null)
         {
-            _targetAntNest.ShowTrueColor();
+            StartCoroutine(FlyTo(_targetAntNest));
         }
 
         _targetAntNest = null;
         _spriteRenderer.sprite = emptyJarSprite;
+    }
+
+    IEnumerator FlyTo(AntNestHub hub)
+    {
+        Vector3 startPosition = transform.position;
+        revealTrailParticle.transform.position = startPosition;
+        revealTrailParticle.Play();
+        revealTimer.Reset();
+
+        while (!revealTimer.UpdateEnd)
+        {
+            revealTrailParticle.transform.position = Vector3.Lerp(startPosition, hub.transform.position, trailCurve.Evaluate(revealTimer.Progress));
+            yield return null;
+        }
+        revealTrailParticle.Stop();
+        hub.ShowTrueColor();
     }
 }

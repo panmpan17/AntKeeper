@@ -21,9 +21,11 @@ namespace MPack
 
         public ParticleSystem GetFreshEffect()
         {
-            if (Pools.Count > 0)
+            while (Pools.Count > 0)
             {
-                return Pools.Pop();
+                ParticleSystem particle = Pools.Pop();
+                if (particle != null)
+                    return particle;
             }
 
             return GameObject.Instantiate(Prefab);
