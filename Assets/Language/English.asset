@@ -65,7 +65,7 @@ MonoBehaviour:
   - ID: 204
     Text: Virtual Gamepad
   - ID: 205
-    Text: Control
+    Text: Credits
   - ID: 206
     Text: Move
   - ID: 207
@@ -76,6 +76,10 @@ MonoBehaviour:
     Text: Ready?
   - ID: 210
     Text: Start!
+  - ID: 211
+    Text: "<color=#89672F><b>Michael Pan \u6F58\u555F\u5143</b></color>\nProgram\nArt\nMusic\nSound
+      Effect\n\n<color=#89672F><b>martinhodler (Github)</b></color>\nAseprite-Importer
+      for Unity"
   - ID: 301
     Text: Resume
   - ID: 302
@@ -84,3 +88,7 @@ MonoBehaviour:
     Text: Time
   - ID: 402
     Text: Animal
+  - ID: 501
+    Text: Animal Count
+  - ID: 502
+    Text: Occupied Area

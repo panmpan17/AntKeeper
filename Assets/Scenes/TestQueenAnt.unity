@@ -120030,7 +120030,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7785349, y: 1}
+    m_SensorSize: {x: 1.7773851, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -120549,6 +120549,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8523567451528588602, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8523567451528588603, guid: 7d506f9d3e5ab475487056d8574550da, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -120821,9 +120825,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3055771196686222672, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseHelpMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: skipMenu
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: tutorial
@@ -120831,7 +120839,7 @@ PrefabInstance:
       objectReference: {fileID: 903016146}
     - target: {fileID: 8310718289187754584, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: skipStartCountDown
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754585, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: m_Pivot.x
@@ -120915,10 +120923,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754585, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8310718289187754586, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8310718289187754589, guid: 2d54009df32e34d06bd645a7fd35e4ee, type: 3}
