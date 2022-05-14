@@ -15,6 +15,8 @@ public class AntNestHub : MonoBehaviour
     private TilemapReference tilemapReference;
     [SerializeField]
     private LineRenderer routeLine;
+    [SerializeField]
+    private EffectReference revealColorEffect;
 
     [Header("Colors")]
     [SerializeField]
@@ -70,6 +72,13 @@ public class AntNestHub : MonoBehaviour
     }
     public void ShowTrueColor()
     {
+        revealColorEffect.AddWaitingList(new EffectReference.EffectQueue
+        {
+            Parent = null,
+            Position = transform.position,
+            UseScaleTime = true,
+        });
+
         ChangeRouteLineRendererColor(trueColor.Value);
     }
 
@@ -146,7 +155,7 @@ public class AntNestHub : MonoBehaviour
     #endregion
 
 
-    #region  Utilities
+    #region Utilities
     public void Freeze()
     {
         if (GetComponent<AntRouteGrowControl>() is var growControl && growControl != null)
@@ -274,6 +283,133 @@ public class AntNestHub : MonoBehaviour
         GridManager.ins.UnregisterAntNest(this);
         OnAntRouteBranchEmpty?.Invoke();
         Destroy(gameObject);
+    }
+    #endregion
+
+
+    #region Color
+    public void StartRevealColor(float stepInterval)
+    {
+        revealColorEffect.AddWaitingList(new EffectReference.EffectQueue {
+            Parent = null,
+            Position = transform.position,
+            UseScaleTime = false,
+        });
+
+        StartCoroutine(C_RevealColor(stepInterval));
+    }
+
+    IEnumerator C_RevealColor(float stepInterval)
+    {
+        List<RouteColorIncrement> routeColorIncrements = new List<RouteColorIncrement>();
+
+        for (int i = 0; i < routeBranches.Count; i++)
+        {
+            if (routeBranches[i].RootGridPosition == RootGridPosition)
+            {
+                routeColorIncrements.Add(new RouteColorIncrement(routeBranches[i], trueColor.Value));
+            }
+        }
+
+        while (true)
+        {
+            bool allFinished = true;
+            for (int i = 0; i < routeColorIncrements.Count; i++)
+            {
+                if (routeColorIncrements[i].Finished)
+                    continue;
+
+                if (!routeColorIncrements[i].Increment())
+                    allFinished = false;
+                
+                T(routeColorIncrements, routeColorIncrements[i].CurrentPosition);
+            }
+
+            if (allFinished)
+            {
+                break;
+            }
+            
+            yield return new WaitForSecondsRealtime(stepInterval);
+        }
+    }
+
+    void T(List<RouteColorIncrement> routeColorIncrements, Vector3Int position)
+    {
+        for (int i = 0; i < routeBranches.Count; i++)
+        {
+            if (routeBranches[i].RootGridPosition == position)
+            {
+                bool overlap = false;
+                for (int e = 0; e < routeColorIncrements.Count; e++)
+                {
+                    if (routeColorIncrements[e].line == routeBranches[i].line)
+                    {
+                        overlap = true;
+                        break;
+                    }
+                }
+
+                if (!overlap)
+                    routeColorIncrements.Add(new RouteColorIncrement(routeBranches[i], trueColor.Value));
+            }
+        }
+    }
+
+    private class RouteColorIncrement
+    {
+        private Vector3Int[] _gridPositions;
+        private int _gridPositionIndex;
+        public Vector3Int CurrentPosition => _gridPositions[_gridPositionIndex];
+
+        public bool Finished => _gridPositionIndex >= (line.positionCount - 1);
+
+        public LineRenderer line;
+
+        private Gradient _gradient;
+        private GradientColorKey[] _colorKeys;
+        private GradientAlphaKey[] _alphaKeys;
+
+        private Color _oldColor;
+        private Color _newColor;
+
+        public RouteColorIncrement(AntRouteBranch branch, Color newColor)
+        {
+            _gridPositions = branch.AllGridPosition();
+            _gridPositionIndex = 0;
+            line = branch.line;
+
+            _gradient = line.colorGradient;
+            _gradient.mode = GradientMode.Fixed;
+            GradientColorKey[] oldColorKeys = _gradient.colorKeys;
+            _alphaKeys = _gradient.alphaKeys;
+
+            GradientColorKey firstKey = oldColorKeys[0];
+            firstKey.color = newColor;
+            GradientColorKey lastKey = oldColorKeys[1];
+
+            _colorKeys = new GradientColorKey[3];
+            _colorKeys[0] = firstKey;
+            _colorKeys[1] = new GradientColorKey(newColor, 0f);
+            _colorKeys[2] = lastKey;
+
+            _oldColor = line.startColor;
+            _newColor = newColor;
+        }
+
+        public bool Increment()
+        {
+            if (Finished) return true;
+
+            _gridPositionIndex += 1;
+
+            float progress = (float)_gridPositionIndex / (float)(line.positionCount - 1);
+            _colorKeys[1].time = progress;
+            _gradient.SetKeys(_colorKeys, _alphaKeys);
+            line.colorGradient = _gradient;
+
+            return Finished;
+        }
     }
     #endregion
 

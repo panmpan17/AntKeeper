@@ -136,6 +136,7 @@ MonoBehaviour:
   isFireAnt: 0
   tilemapReference: {fileID: 11400000, guid: 353a5d13fefa74d3f9a53bb1b72ab8da, type: 2}
   routeLine: {fileID: 8756300886793795039}
+  revealColorEffect: {fileID: 11400000, guid: 6fd282c26793e474a90855196b94eda3, type: 2}
   hiddenColor:
     Constant: {r: 0, g: 0, b: 0, a: 0}
     Variable: {fileID: 11400000, guid: 9da7b358a70f541ce8ead6fe19a40ac2, type: 2}

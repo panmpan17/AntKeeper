@@ -328,6 +328,17 @@ public class GridManager : MonoBehaviour, IGameStaticProvider
     }
     #endregion
 
+    public void ShowAllColor()
+    {
+        for (int i = 0; i < _antNestHubs.Count; i++)
+        {
+            if (!_antNestHubs[i].IsShowTrueColor)
+            {
+                _antNestHubs[i].StartRevealColor(0.2f);
+            }
+        }
+    }
+
     public struct AntCountInfo
     {
         public int NativeAnt;

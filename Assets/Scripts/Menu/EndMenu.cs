@@ -160,7 +160,6 @@ public class EndMenu : MonoBehaviour
     IEnumerator ShowStars(GameStatic statistic)
     {
         float score = statistic.CalculateScore();
-        Debug.Log(score);
 
         if (score < oneStarScore) yield break;
 

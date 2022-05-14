@@ -10,8 +10,6 @@ public class AntJar : AbstractHoldItem
     private bool preventRepeat = true;
 
     [SerializeField]
-    private ParticleSystem revealParticle;
-    [SerializeField]
     private ParticleSystem particle;
     [SerializeField]
     [ShortTimer]
@@ -105,8 +103,6 @@ public class AntJar : AbstractHoldItem
     {
         if (_targetAntNest != null)
         {
-            revealParticle.transform.position = _targetAntNest.transform.position;
-            revealParticle.Play();
             _targetAntNest.ShowTrueColor();
         }
 

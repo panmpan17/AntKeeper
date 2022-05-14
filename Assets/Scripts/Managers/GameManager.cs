@@ -71,6 +71,10 @@ public class GameManager : MonoBehaviour
         playerBehaviour.Input.enabled = false;
 
         yield return new WaitForSecondsRealtime(3);
+
+        GridManager.ins.ShowAllColor();
+
+        yield return new WaitForSecondsRealtime(3);
         FindObjectOfType<EndMenu>(true).Open();
     }
 }
