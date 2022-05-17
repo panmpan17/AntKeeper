@@ -16,7 +16,9 @@ public class Bucket : AbstractHoldItem
         get => _currentFillAmount;
         set {
             value = Mathf.Clamp(value, 0, maxFillAmount);
-            fillBar.SetFillAmount(value / maxFillAmount);
+
+            if (PlayerBehaviour)
+                PlayerBehaviour.ProgressBar.SetFillAmount(value / maxFillAmount);
 
             bool wasUseFullBucket = UseFullBucketSprite;
             _currentFillAmount = value;
@@ -27,15 +29,12 @@ public class Bucket : AbstractHoldItem
             }
         }
     }
+    public float FillAmountProgress => _currentFillAmount / maxFillAmount;
     public bool IsFull => _currentFillAmount >= maxFillAmount;
     public bool UseFullBucketSprite => _currentFillAmount > maxFillAmount * 0.9f;
 
     [SerializeField]
     private float pourSpeed;
-    [SerializeField]
-    private FillBarControl fillBar;
-    private Vector3 _fillBarLocalPosition;
-    private Vector3 _fillBarLocalScale;
     [SerializeField]
     private float killSpeed;
     private bool _pouring;
@@ -64,13 +63,8 @@ public class Bucket : AbstractHoldItem
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _fillBarLocalPosition = fillBar.transform.localPosition;
-        _fillBarLocalScale = fillBar.transform.localScale;
-    }
-
-    void Start()
-    {
-        FillAmount = maxFillAmount;
+        _currentFillAmount = maxFillAmount;
+        ChangeBucketFullSprite();
     }
 
     void Update()
@@ -88,17 +82,10 @@ public class Bucket : AbstractHoldItem
         }
     }
 
-    public override bool OnInteractStart()
+    public override void OnInteractStart()
     {
-        if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
-        {
-            return groundInteractive.OnHoldItemInteract(this);
-        }
-
         if (FillAmount > 0)
             PourStart();
-
-        return false;
     }
 
     public override void OnInteractEnd()
@@ -107,6 +94,13 @@ public class Bucket : AbstractHoldItem
             PourEnd();
     }
 
+    public override void OnPickUpByHand(PlayerBehaviour playerBehaviour)
+    {
+        base.OnPickUpByHand(playerBehaviour);
+
+        PlayerBehaviour.ProgressBar.gameObject.SetActive(true);
+        PlayerBehaviour.ProgressBar.SetFillAmount(_currentFillAmount / maxFillAmount);
+    }
 
     #region Player movement event
     public override void OnSelectedGridChanged()
@@ -150,10 +144,6 @@ public class Bucket : AbstractHoldItem
         transform.rotation = Quaternion.identity;
         pourEffect.Stop();
         ChangeBucketFullSprite();
-
-
-        fillBar.transform.localPosition = _fillBarLocalPosition;
-        fillBar.transform.localScale = _fillBarLocalScale;
     }
 
 
@@ -189,17 +179,6 @@ public class Bucket : AbstractHoldItem
                 transform.rotation = Quaternion.identity;
                 _spriteRenderer.sprite = UseFullBucketSprite ? pourAnimation.FullSprite : pourAnimation.EmptySprite;
                 break;
-        }
-
-        if (pourAnimation.ChangeFillBarTransform)
-        {
-            fillBar.transform.localPosition = pourAnimation.LocalPosition;
-            fillBar.transform.localScale = pourAnimation.LocalScale;
-        }
-        else
-        {
-            fillBar.transform.localPosition = _fillBarLocalPosition;
-            fillBar.transform.localScale = _fillBarLocalScale;
         }
     }
 

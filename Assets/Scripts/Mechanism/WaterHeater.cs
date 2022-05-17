@@ -21,13 +21,20 @@ public class WaterHeater : AbstractGroundInteractive
     private new ParticleSystem particleSystem;
     [SerializeField]
     private Bucket filledBucket;
+    [SerializeField]
+    private FillBarControl barControl;
 
     protected override void Start()
     {
         base.Start();
 
         if (filledBucket != null)
+        {
+            barControl.gameObject.SetActive(!filledBucket.IsFull);
             PlaceItem(filledBucket);
+        }
+        else
+            barControl.gameObject.SetActive(false);
     }
 
     void Update()
@@ -35,10 +42,12 @@ public class WaterHeater : AbstractGroundInteractive
         if (filledBucket != null && !filledBucket.IsFull)
         {
             filledBucket.FillAmount += fillSpeed * Time.deltaTime;
+            barControl.SetFillAmount(filledBucket.FillAmountProgress);
 
             if (filledBucket.IsFull)
             {
                 particleSystem.Stop();
+                barControl.gameObject.SetActive(false);
             }
         }
     }
@@ -57,32 +66,38 @@ public class WaterHeater : AbstractGroundInteractive
         return false;
     }
 
-    public override bool OnHoldItemInteract(AbstractHoldItem item)
+    public override bool CanItemPlaceDown(AbstractHoldItem item)
     {
         if (item.GetType() == typeof(Bucket))
         {
-            var newBucket = (Bucket)item;
-
-            if (filledBucket != null)
-            {
-                item.PlayerBehaviour.SetHandItem(filledBucket);
-                particleSystem.Stop();
-            }
-            else
-            {
-                newBucket.PlayerBehaviour.ClearHandItem();
-            }
-
-            filledBucket = newBucket;
-            PlaceItem(item);
-
-            if (!filledBucket.IsFull)
-                particleSystem.Play();
-
             return true;
         }
 
         return false;
+    }
+
+    public override void PlaceDownItem(AbstractHoldItem item)
+    {
+        var newBucket = (Bucket)item;
+
+        if (filledBucket != null)
+        {
+            item.PlayerBehaviour.SetHandItem(filledBucket);
+            particleSystem.Stop();
+        }
+
+        filledBucket = newBucket;
+        PlaceItem(item);
+
+        if (!filledBucket.IsFull)
+        {
+            barControl.gameObject.SetActive(true);
+            particleSystem.Play();
+        }
+        else
+        {
+            barControl.gameObject.SetActive(false);
+        }
     }
 
     void PlaceItem(AbstractHoldItem item)

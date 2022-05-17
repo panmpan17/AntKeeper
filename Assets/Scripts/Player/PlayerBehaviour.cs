@@ -20,6 +20,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Other")]
     [SerializeField]
+    private FillBarControl progressBar;
+    public FillBarControl ProgressBar => progressBar;
+    [SerializeField]
     private AbstractHoldItem holdItem;
     [SerializeField]
     private Transform holdItemParent;
@@ -55,6 +58,8 @@ public class PlayerBehaviour : MonoBehaviour
         _movement.OnDashStarted += HandleDashPerformed;
 
         selectedGridIndicator.SetParent(null);
+
+        progressBar.gameObject.SetActive(false);
     }
 
     void FixedUpdate()
@@ -62,7 +67,7 @@ public class PlayerBehaviour : MonoBehaviour
         ChangeSelectedGrid();
 
         if (IsHolding)
-            SetHandItem(holdItem);
+            ChangeHoldItemPosition(_movement.Facing);
     }
 
 
@@ -71,15 +76,24 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (holdItem != null)
         {
-            if (holdItem.OnInteractStart())
+            if (holdItem.CanPlaceDownToGrounInteractive(out AbstractGroundInteractive groundInteractive))
+            {
+                holdItem.OnPlaceToGround(groundInteractive);
+                holdItem = null;
                 OnHoldItemChanged?.Invoke();
+                return;
+            }
+
+            holdItem.OnInteractStart();
         }
         else
         {
             if (GridManager.ins.TryFindGroundInteractive(SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
             {
                 if (groundInteractive.OnEmptyHandInteract(this))
+                {
                     OnHoldItemChanged?.Invoke();
+                }
                 return;
             }
         }
@@ -170,17 +184,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetHandItem(AbstractHoldItem item)
     {
-        item.ChangeRendererSorting(sortingLayerID, sortingOrder);
+        if (holdItem != item)
+        {
+            holdItem = item;
+            holdItem.transform.SetParent(holdItemParent, false);
+            holdItem.OnPickUpByHand(this);
+            holdItem.ChangeRendererSorting(sortingLayerID, sortingOrder);
+        }
 
-        holdItem = item;
-        holdItem.transform.SetParent(holdItemParent, false);
-        holdItem.Setup(this);
         ChangeHoldItemPosition(_movement.Facing);
-    }
-
-    public void ClearHandItem()
-    {
-        holdItem = null;
     }
 
 

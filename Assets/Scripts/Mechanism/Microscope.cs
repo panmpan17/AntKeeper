@@ -63,23 +63,23 @@ public class Microscope : AbstractGroundInteractive
         return true;
     }
 
-    public override bool OnHoldItemInteract(AbstractHoldItem item)
+    public override bool CanItemPlaceDown(AbstractHoldItem item)
     {
         if (item.GetType() == typeof(AntJar))
         {
-            antJar = (AntJar)item;
-
-            antJar.PlayerBehaviour.ClearHandItem();
-
-            PlaceItem(item);
-
-            if (antJar.HasAnt)
-                ExamineStart();
-            
             return true;
         }
 
         return false;
+    }
+
+    public override void PlaceDownItem(AbstractHoldItem item)
+    {
+        antJar = (AntJar)item;
+        PlaceItem(item);
+
+        if (antJar.HasAnt)
+            ExamineStart();
     }
 
     void PlaceItem(AbstractHoldItem item)

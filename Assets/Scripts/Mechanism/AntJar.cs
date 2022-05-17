@@ -19,8 +19,6 @@ public class AntJar : AbstractHoldItem
     [SerializeField]
     [ShortTimer]
     private Timer collectTimer;
-    [SerializeField]
-    private FillBarControl collectProgressBar;
 
     [Header("Reveal")]
     [SerializeField]
@@ -42,7 +40,7 @@ public class AntJar : AbstractHoldItem
         _spriteRenderer.sprite = emptyJarSprite;
 
         collectTimer.Running = false;
-        collectProgressBar.gameObject.SetActive(false);
+        // collectProgressBar.gameObject.SetActive(false);
     }
 
     void Update()
@@ -54,13 +52,13 @@ public class AntJar : AbstractHoldItem
                 PlayerBehaviour.Input.enabled = true;
 
                 collectTimer.Running = false;
-                collectProgressBar.gameObject.SetActive(false);
+                PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
                 particle.Stop();
                 _spriteRenderer.sprite = jarHasAntSprite;
                 return;
             }
 
-            collectProgressBar.SetFillAmount(collectTimer.Progress);
+            PlayerBehaviour.ProgressBar.SetFillAmount(collectTimer.Progress);
         }
     }
 
@@ -69,31 +67,24 @@ public class AntJar : AbstractHoldItem
         // throw new System.NotImplementedException();
     }
 
-    public override bool OnInteractStart()
+    public override void OnInteractStart()
     {
-        if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
-        {
-            return groundInteractive.OnHoldItemInteract(this);
-        }
-
         if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest, out AntRouteBranch targetBranch))
         {
             if (HasAnt)
-                return false;
+                return;
 
             if (preventRepeat && targetNest.IsShowTrueColor)
-                return false;
+                return;
 
             _targetAntNest = targetNest;
             PlayerBehaviour.Input.enabled = false;
 
             collectTimer.Reset();
-            collectProgressBar.gameObject.SetActive(true);
+            PlayerBehaviour.ProgressBar.gameObject.SetActive(true);
             particle.Play();
             particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
         }
-
-        return false;
     }
 
     public override void OnInteractEnd() {}

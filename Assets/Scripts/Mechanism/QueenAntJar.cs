@@ -12,8 +12,6 @@ public class QueenAntJar : AbstractHoldItem
     private Timer collectTimer;
     [SerializeField]
     private Timer plantTimer;
-    [SerializeField]
-    private FillBarControl progressBar;
 
     [SerializeField]
     private Sprite emptySprite;
@@ -21,12 +19,6 @@ public class QueenAntJar : AbstractHoldItem
     private Sprite oneAntSprite;
     [SerializeField]
     private Sprite twoAntSprite;
-    // [SerializeField]
-    // private Color emptyJarColor;
-    // [SerializeField]
-    // private Color oneAntJarColor;
-    // [SerializeField]
-    // private Color twoAntJarColor;
 
     private enum State {
         Empty,
@@ -52,7 +44,6 @@ public class QueenAntJar : AbstractHoldItem
 
         collectTimer.Running = false;
         plantTimer.Running = false;
-        progressBar.gameObject.SetActive(false);
     }
 
     void Update()
@@ -63,7 +54,7 @@ public class QueenAntJar : AbstractHoldItem
             {
                 collectTimer.Running = false;
                 PlayerBehaviour.Input.enabled = true;
-                progressBar.gameObject.SetActive(false);
+                PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
                 particle.Stop();
                 return;
             }
@@ -73,7 +64,7 @@ public class QueenAntJar : AbstractHoldItem
                 collectTimer.Running = false;
                 PlayerBehaviour.Input.enabled = true;
 
-                progressBar.gameObject.SetActive(false);
+                PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
                 particle.Stop();
 
                 if (_state == State.Empty)
@@ -93,7 +84,7 @@ public class QueenAntJar : AbstractHoldItem
                 return;
             }
 
-            progressBar.SetFillAmount(collectTimer.Progress);
+            PlayerBehaviour.ProgressBar.SetFillAmount(collectTimer.Progress);
         }
 
         if (plantTimer.Running)
@@ -104,7 +95,7 @@ public class QueenAntJar : AbstractHoldItem
 
                 PlayerBehaviour.Input.enabled = true;
 
-                progressBar.gameObject.SetActive(false);
+                PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
                 particle.Stop();
 
                 PlantAnt();
@@ -116,7 +107,7 @@ public class QueenAntJar : AbstractHoldItem
                 return;
             }
 
-            progressBar.SetFillAmount(plantTimer.Progress);
+            PlayerBehaviour.ProgressBar.SetFillAmount(plantTimer.Progress);
         }
     }
 
@@ -125,13 +116,8 @@ public class QueenAntJar : AbstractHoldItem
         // throw new System.NotImplementedException();
     }
 
-    public override bool OnInteractStart()
+    public override void OnInteractStart()
     {
-        if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out AbstractGroundInteractive groundInteractive))
-        {
-            return groundInteractive.OnHoldItemInteract(this);
-        }
-
         switch (_state)
         {
             case State.Empty:
@@ -146,8 +132,6 @@ public class QueenAntJar : AbstractHoldItem
                 TwoAntJarCheck();
                 break;
         }
-
-        return false;
     }
 
     void EmptyJarCheck()
@@ -161,7 +145,7 @@ public class QueenAntJar : AbstractHoldItem
             PlayerBehaviour.Input.enabled = false;
 
             collectTimer.Reset();
-            progressBar.gameObject.SetActive(true);
+            PlayerBehaviour.ProgressBar.gameObject.SetActive(true);
             particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
             particle.Play();
         }
@@ -180,7 +164,7 @@ public class QueenAntJar : AbstractHoldItem
             PlayerBehaviour.Input.enabled = false;
 
             collectTimer.Reset();
-            progressBar.gameObject.SetActive(true);
+            PlayerBehaviour.ProgressBar.gameObject.SetActive(true);
             particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
             particle.Play();
         }
@@ -194,7 +178,7 @@ public class QueenAntJar : AbstractHoldItem
         PlayerBehaviour.Input.enabled = false;
 
         plantTimer.Reset();
-        progressBar.gameObject.SetActive(true);
+        PlayerBehaviour.ProgressBar.gameObject.SetActive(true);
         particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
         particle.Play();
     }
@@ -212,18 +196,9 @@ public class QueenAntJar : AbstractHoldItem
 
     public void PlantAnt()
     {
-        // Debug.LogFormat("plant ant {0} at {1}", _firstAntNest.IsFireAnt, PlayerBehaviour.SelectedGridPosition);
         if (_firstIsFireAnt != _secondIsFireAnt)
             return;
         
         GridManager.ins.InstantiateAntNestOnGridWithoutChecking(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
     }
-
-    // public void ShowAntNestTrueColor()
-    // {
-    //     _targetAntNest.ShowTrueColor();
-
-    //     _targetAntNest = null;
-    //     _spriteRenderer.sprite = emptyJarSprite;
-    // }
 }

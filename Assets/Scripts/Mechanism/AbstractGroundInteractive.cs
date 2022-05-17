@@ -13,7 +13,9 @@ public abstract class AbstractGroundInteractive : MonoBehaviour
     }
 
     public abstract bool OnEmptyHandInteract(PlayerBehaviour playerBehaviour);
-    public abstract bool OnHoldItemInteract(AbstractHoldItem item);
+    // public abstract bool OnHoldItemInteract(AbstractHoldItem item);
+    public abstract bool CanItemPlaceDown(AbstractHoldItem item);
+    public abstract void PlaceDownItem(AbstractHoldItem item);
 
     #if UNITY_EDITOR
     void OnDrawGizmosSelected()

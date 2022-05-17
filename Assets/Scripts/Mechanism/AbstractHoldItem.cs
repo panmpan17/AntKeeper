@@ -6,12 +6,27 @@ public abstract class AbstractHoldItem : MonoBehaviour
 {
     public PlayerBehaviour PlayerBehaviour { get; protected set; }
 
-    public void Setup(PlayerBehaviour playerBehaviour)
+    public virtual void OnPickUpByHand(PlayerBehaviour playerBehaviour)
     {
         PlayerBehaviour = playerBehaviour;
     }
 
-    public abstract bool OnInteractStart();
+    public void OnPlaceToGround(AbstractGroundInteractive groundInteractive)
+    {
+        groundInteractive.PlaceDownItem(this);
+        PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
+        PlayerBehaviour = null;
+    }
+
+    public virtual bool CanPlaceDownToGrounInteractive(out AbstractGroundInteractive groundInteractive)
+    {
+        if (GridManager.ins.TryFindGroundInteractive(PlayerBehaviour.SelectedGridPosition, out groundInteractive))
+        {
+            return groundInteractive.CanItemPlaceDown(this);
+        }
+        return false;
+    }
+    public abstract void OnInteractStart();
     public abstract void OnInteractEnd();
 
     public abstract void OnSelectedGridChanged();

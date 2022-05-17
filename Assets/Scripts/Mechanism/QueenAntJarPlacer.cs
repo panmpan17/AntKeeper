@@ -30,19 +30,21 @@ public class QueenAntJarPlacer : AbstractGroundInteractive
         return false;
     }
 
-    public override bool OnHoldItemInteract(AbstractHoldItem item)
+    public override bool CanItemPlaceDown(AbstractHoldItem item)
     {
         if (item.GetType() == typeof(QueenAntJar))
         {
-            antJar = (QueenAntJar)item;
-
-            antJar.PlayerBehaviour.ClearHandItem();
-
-            PlaceItem(item);
             return true;
         }
 
         return false;
+    }
+
+
+    public override void PlaceDownItem(AbstractHoldItem item)
+    {
+        antJar = (QueenAntJar)item;
+        PlaceItem(item);
     }
 
     void PlaceItem(AbstractHoldItem item)
