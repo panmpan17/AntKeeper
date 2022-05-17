@@ -824,6 +824,266 @@ public partial class @InputScheme : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ScreenShot"",
+            ""id"": ""b23dec0a-b9b0-404f-8320-977978a7b5d6"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""62a38f82-e077-43b7-a3a2-bde7a33fdba6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Take"",
+                    ""type"": ""Button"",
+                    ""id"": ""91d26d63-824f-43db-9d5f-e982707bc83d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""9cbf7381-c3a9-41fa-a83f-038540a99e26"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Activate"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2f42cef-de9a-462a-97af-20690aca1292"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f99064d-5e8b-4d75-9e65-3779528d6b27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Proceed"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7a5e870-fcde-47d9-a7ea-406d80ca2482"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Keyboard WSAD"",
+                    ""id"": ""612c7a59-b1bf-4684-947b-e7f8b5a712f2"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""6f8a4b7c-c00f-4fda-928e-1378696654f0"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""bba92e39-b12c-4ada-83cf-c620c1f79484"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8d58d26a-a224-47d0-b2fd-fcf32c6a9de5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b9c0d42d-e8a1-47a8-93d8-2b7faa99daeb"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57255be5-2e01-473a-8e5c-b225c28b5151"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf50b49c-5ba3-420c-bd8c-10eea7da8579"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Take"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b456b9f-ecc1-49b8-b630-33bd36949ba2"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Take"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Controller"",
+                    ""id"": ""41ce807f-8dc5-4b8d-835c-731433e7eb4f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""37733d34-0224-47e4-b8e2-3cf92218e118"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""00a74632-24b7-4476-931c-48fce68ce2d9"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ecc4764-3a87-410c-9859-9fc45f795858"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=0.7)"",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5538662-4287-49dd-834a-0307fb45fa98"",
+                    ""path"": ""<Keyboard>/f2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65d62cb1-3c59-4fc3-92dc-965dc1d477fa"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button8"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ebab4a3-5688-4fba-93d8-10d4baf1a68c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5549510-31fc-46a7-8fef-6fde669c1b43"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7811c8fe-8608-4cb2-8be2-200529eb6801"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Proceed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dea0b3a5-71d9-429e-8e27-1abafd003382"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Proceed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -846,6 +1106,14 @@ public partial class @InputScheme : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // ScreenShot
+        m_ScreenShot = asset.FindActionMap("ScreenShot", throwIfNotFound: true);
+        m_ScreenShot_Movement = m_ScreenShot.FindAction("Movement", throwIfNotFound: true);
+        m_ScreenShot_Take = m_ScreenShot.FindAction("Take", throwIfNotFound: true);
+        m_ScreenShot_Zoom = m_ScreenShot.FindAction("Zoom", throwIfNotFound: true);
+        m_ScreenShot_Activate = m_ScreenShot.FindAction("Activate", throwIfNotFound: true);
+        m_ScreenShot_Cancel = m_ScreenShot.FindAction("Cancel", throwIfNotFound: true);
+        m_ScreenShot_Proceed = m_ScreenShot.FindAction("Proceed", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1063,6 +1331,79 @@ public partial class @InputScheme : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // ScreenShot
+    private readonly InputActionMap m_ScreenShot;
+    private IScreenShotActions m_ScreenShotActionsCallbackInterface;
+    private readonly InputAction m_ScreenShot_Movement;
+    private readonly InputAction m_ScreenShot_Take;
+    private readonly InputAction m_ScreenShot_Zoom;
+    private readonly InputAction m_ScreenShot_Activate;
+    private readonly InputAction m_ScreenShot_Cancel;
+    private readonly InputAction m_ScreenShot_Proceed;
+    public struct ScreenShotActions
+    {
+        private @InputScheme m_Wrapper;
+        public ScreenShotActions(@InputScheme wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_ScreenShot_Movement;
+        public InputAction @Take => m_Wrapper.m_ScreenShot_Take;
+        public InputAction @Zoom => m_Wrapper.m_ScreenShot_Zoom;
+        public InputAction @Activate => m_Wrapper.m_ScreenShot_Activate;
+        public InputAction @Cancel => m_Wrapper.m_ScreenShot_Cancel;
+        public InputAction @Proceed => m_Wrapper.m_ScreenShot_Proceed;
+        public InputActionMap Get() { return m_Wrapper.m_ScreenShot; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ScreenShotActions set) { return set.Get(); }
+        public void SetCallbacks(IScreenShotActions instance)
+        {
+            if (m_Wrapper.m_ScreenShotActionsCallbackInterface != null)
+            {
+                @Movement.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnMovement;
+                @Take.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnTake;
+                @Take.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnTake;
+                @Take.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnTake;
+                @Zoom.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnZoom;
+                @Zoom.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnZoom;
+                @Zoom.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnZoom;
+                @Activate.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnActivate;
+                @Activate.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnActivate;
+                @Activate.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnActivate;
+                @Cancel.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnCancel;
+                @Proceed.started -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnProceed;
+                @Proceed.performed -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnProceed;
+                @Proceed.canceled -= m_Wrapper.m_ScreenShotActionsCallbackInterface.OnProceed;
+            }
+            m_Wrapper.m_ScreenShotActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Take.started += instance.OnTake;
+                @Take.performed += instance.OnTake;
+                @Take.canceled += instance.OnTake;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
+                @Activate.started += instance.OnActivate;
+                @Activate.performed += instance.OnActivate;
+                @Activate.canceled += instance.OnActivate;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @Proceed.started += instance.OnProceed;
+                @Proceed.performed += instance.OnProceed;
+                @Proceed.canceled += instance.OnProceed;
+            }
+        }
+    }
+    public ScreenShotActions @ScreenShot => new ScreenShotActions(this);
     public interface IGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -1082,5 +1423,14 @@ public partial class @InputScheme : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IScreenShotActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnTake(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
+        void OnActivate(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+        void OnProceed(InputAction.CallbackContext context);
     }
 }

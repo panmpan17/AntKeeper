@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private PlayerBehaviour playerBehaviour;
+    public PlayerBehaviour Player => playerBehaviour;
 
     public event System.Action<int> GameTimeChanged;
     private Timer _oneSecondTimer = new Timer(1);

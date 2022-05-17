@@ -44,13 +44,13 @@ public class ScreenShotTaker : MonoBehaviour
         }
     }
 
-    void TakeScreenShot()
+    public static void TakeScreenShot()
     {
         string filePath = NewFileNameInDirectory("screeshot", ".png", Application.persistentDataPath);
         ScreenCapture.CaptureScreenshot(filePath);
     }
 
-    string NewFileNameInDirectory(string fileName, string fileExtension, string folder)
+    public static string NewFileNameInDirectory(string fileName, string fileExtension, string folder)
     {
         string path = Path.Join(folder, fileName + fileExtension);
         int count = 1;

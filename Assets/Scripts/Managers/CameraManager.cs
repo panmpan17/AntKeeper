@@ -11,9 +11,10 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField]
     private CinemachineVirtualCamera followPlayerVCamera;
-
     [SerializeField]
     private CinemachineVirtualCamera fullMapVCamera;
+    [SerializeField]
+    private CinemachineVirtualCamera screenShotVCamera;
 
     [SerializeField]
     private CameraState cameraState;
@@ -29,6 +30,7 @@ public class CameraManager : MonoBehaviour
     {
         FollowPlayer,
         FullMap,
+        ScreenShot,
     }
 
     void Awake()
@@ -42,6 +44,7 @@ public class CameraManager : MonoBehaviour
 
         followPlayerVCamera.enabled = cameraState == CameraState.FollowPlayer;
         fullMapVCamera.enabled = cameraState == CameraState.FullMap;
+        screenShotVCamera.enabled = cameraState == CameraState.ScreenShot;
     }
 
     public void SwitchCamera(CameraState state)
@@ -49,5 +52,6 @@ public class CameraManager : MonoBehaviour
         cameraState = state;
         followPlayerVCamera.enabled = cameraState == CameraState.FollowPlayer;
         fullMapVCamera.enabled = cameraState == CameraState.FullMap;
+        screenShotVCamera.enabled = cameraState == CameraState.ScreenShot;
     }
 }

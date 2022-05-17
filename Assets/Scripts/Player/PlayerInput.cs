@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
@@ -15,6 +16,9 @@ public class PlayerInput : MonoBehaviour
     public event Action OnDashPerformedEvent;
 
     private InputScheme _inputScheme;
+    private bool _screenShotLock = false;
+    private bool _interactCancelPerformed = false;
+    private bool _oneFrameSkip = false;
 
     void Awake()
     {
@@ -57,17 +61,26 @@ public class PlayerInput : MonoBehaviour
 
     void HandleInteractCanceled(CallbackContext callbackContext)
     {
-        OnInteractCanceledEvent?.Invoke();
+        if (_screenShotLock)
+            _interactCancelPerformed = true;
+        else
+            OnInteractCanceledEvent?.Invoke();
     }
 
     void HandleDashPerformed(CallbackContext callbackContext)
     {
-        OnDashPerformedEvent?.Invoke();
+        Debug.Log(_oneFrameSkip);
+        Debug.Log(_interactCancelPerformed);
+        if (_oneFrameSkip) return;
+
+        if (!_interactCancelPerformed)
+            OnDashPerformedEvent?.Invoke();
     }
 
     void HandlePausePreformed(CallbackContext callbackContext)
     {
-        PauseMenu.ins.Pause();
+        if (!_screenShotLock)
+            PauseMenu.ins.Pause();
     }
     #endregion
 
@@ -105,6 +118,24 @@ public class PlayerInput : MonoBehaviour
     }
     #endregion
 
+    public void LockForScreenShot() => _screenShotLock = true;
+    public void UnlockForScreenShot()
+    {
+        _screenShotLock = false;
+        if (_interactCancelPerformed)
+            OnInteractCanceledEvent?.Invoke();
+
+        _interactCancelPerformed = false;
+        StartCoroutine(C_OneFrameSkip());
+    }
+
+    IEnumerator C_OneFrameSkip()
+    {
+        Debug.Log(1);
+        _oneFrameSkip = true;
+        yield return null;
+        _oneFrameSkip = false;
+    }
 
     void OnEnable()
     {
