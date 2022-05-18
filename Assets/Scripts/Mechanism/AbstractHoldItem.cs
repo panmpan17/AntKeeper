@@ -13,8 +13,8 @@ public abstract class AbstractHoldItem : MonoBehaviour
 
     public void OnPlaceToGround(AbstractGroundInteractive groundInteractive)
     {
-        groundInteractive.PlaceDownItem(this);
         PlayerBehaviour.ProgressBar.gameObject.SetActive(false);
+        groundInteractive.PlaceDownItem(this);
         PlayerBehaviour = null;
     }
 

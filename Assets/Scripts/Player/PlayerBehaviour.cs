@@ -78,8 +78,9 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (holdItem.CanPlaceDownToGrounInteractive(out AbstractGroundInteractive groundInteractive))
             {
-                holdItem.OnPlaceToGround(groundInteractive);
+                var _holdItem = holdItem;
                 holdItem = null;
+                _holdItem.OnPlaceToGround(groundInteractive);
                 OnHoldItemChanged?.Invoke();
                 return;
             }
