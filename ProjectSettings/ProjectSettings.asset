@@ -84,7 +84,7 @@ PlayerSettings:
   deferSystemGesturesMode: 0
   hideHomeButton: 0
   submitAnalytics: 1
-  usePlayerLog: 0
+  usePlayerLog: 1
   bakeCollisionMeshes: 0
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
@@ -135,7 +135,11 @@ PlayerSettings:
     16:9: 1
     Others: 0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
