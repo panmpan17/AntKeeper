@@ -166,6 +166,10 @@ public class AntNestHub : MonoBehaviour
         {
             killControl.enabled = false;
         }
+        if (GetComponent<AntRouteSpreadControl>() is var spreadControl && spreadControl != null)
+        {
+            spreadControl.enabled = false;
+        }
     }
 
     public void Unfreeze()
@@ -177,6 +181,10 @@ public class AntNestHub : MonoBehaviour
         if (GetComponent<AntKillAnimalControl>() is var killControl && killControl != null)
         {
             killControl.enabled = true;
+        }
+        if (GetComponent<AntRouteSpreadControl>() is var spreadControl && spreadControl != null)
+        {
+            spreadControl.enabled = true;
         }
     }
 
