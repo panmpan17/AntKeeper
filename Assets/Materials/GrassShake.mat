@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GrassShake
   m_Shader: {fileID: -6465566751694194690, guid: c01ce8af5f0a64ee0bb5b117669bdc02, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -47,12 +48,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
-    - Vector1_3de086b6bff142879b82992581d3afda: 0.076
+    - Vector1_3de086b6bff142879b82992581d3afda: 0.01
     - Vector1_8456d803a7524476b4973a80d5cefc73: 0.5
     - Vector1_9ec92d3e1f9b47b686867197997a0c92: 0.15
     - Vector1_c613ed3b4d024190b23a116301bf3a4d: 0.861
-    - Vector1_f70c597b1ad0418ba9858a17da6109d9: 5.89
+    - Vector1_f70c597b1ad0418ba9858a17da6109d9: 3.78
     - _EnableExternalAlpha: 0
     m_Colors:
     - Color_10269215ce0f4c5ba481683b5d018dc5: {r: 0.5524198, g: 1.0539893, b: 0.44247663, a: 1}

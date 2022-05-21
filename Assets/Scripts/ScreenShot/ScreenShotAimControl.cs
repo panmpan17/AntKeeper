@@ -100,7 +100,7 @@ public class ScreenShotAimControl : MonoBehaviour
 
         GameManager.ins.Player.Input.LockForScreenShot();
         canvas.enabled = true;
-        HUDManager.ins.enabled = false;
+        if (HUDManager.ins != null) HUDManager.ins.enabled = false;
 
         transform.position = followPlayerVCamera.transform.position;
         _virtualCamera.m_Lens.OrthographicSize = followPlayerVCamera.m_Lens.OrthographicSize;
@@ -117,7 +117,7 @@ public class ScreenShotAimControl : MonoBehaviour
 
         GameManager.ins.Player.Input.UnlockForScreenShot();
         canvas.enabled = false;
-        HUDManager.ins.enabled = true;
+        if (HUDManager.ins != null) HUDManager.ins.enabled = true;
     }
 
 

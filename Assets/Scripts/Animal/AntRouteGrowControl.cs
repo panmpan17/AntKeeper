@@ -196,6 +196,8 @@ public class AntRouteGrowControl : MonoBehaviour
         {
             if (overlapNest == _hub)
             {
+                if (overlapBranch == branch)
+                    return false;
                 if (overlapBranch.IsConnectedToNest)
                     return false;
 
