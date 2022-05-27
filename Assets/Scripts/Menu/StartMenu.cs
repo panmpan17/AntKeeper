@@ -144,8 +144,8 @@ public class StartMenu : MonoBehaviour
 
     void StartGame()
     {
-        GameManager.ins.enabled = true;
         HUDManager.ins.enabled = true;
+        GameManager.ins.enabled = true;
         _canvas.enabled = enabled = false;
     }
 

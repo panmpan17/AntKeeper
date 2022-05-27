@@ -69,8 +69,6 @@ public class PlayerInput : MonoBehaviour
 
     void HandleDashPerformed(CallbackContext callbackContext)
     {
-        Debug.Log(_oneFrameSkip);
-        Debug.Log(_interactCancelPerformed);
         if (_oneFrameSkip) return;
 
         if (!_interactCancelPerformed)

@@ -27,11 +27,17 @@ public class GridManager : MonoBehaviour, IGameStaticProvider
     [SerializeField]
     private GameObject fireAntPrefab;
     [SerializeField]
-    private Transform[] startFireAntNests;
+    private int startFireAntCount;
+    // [SerializeField]
+    // private Transform[] startFireAntNests;
     [SerializeField]
     private GameObject navtiveAntPrefab;
     [SerializeField]
-    private Transform[] startNativeAntNests;
+    private int startNativeAntCount;
+    // [SerializeField]
+    // private Transform[] startNativeAntNests;
+    [SerializeField]
+    private Transform[] antNestSpawnPoints;
 
     private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
     // private List<AntNest> _antNests = new List<AntNest>();
@@ -50,15 +56,31 @@ public class GridManager : MonoBehaviour, IGameStaticProvider
         ins = this;
 
         routeColliderMapReference.Tilemap = routeColliderMap;
-
-        for (int i = 0; i < startFireAntNests.Length; i++)
-            InstainateAntNestOnStart(fireAntPrefab, startFireAntNests[i].position);
-
-        for (int i = 0; i < startNativeAntNests.Length; i++)
-            InstainateAntNestOnStart(navtiveAntPrefab, startNativeAntNests[i].position);
+        InstainateAntNestOnStart();
     }
 
-    void InstainateAntNestOnStart(GameObject prefab, Vector3 position)
+    void InstainateAntNestOnStart()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        for (int i = 0; i < antNestSpawnPoints.Length; i++)
+            positions.Add(antNestSpawnPoints[i].position);
+
+        for (int i = 0; i < startFireAntCount; i++)
+        {
+            int index = Random.Range(0, positions.Count);
+            InstainateAntNestAtPosition(fireAntPrefab, positions[index]);
+            positions.RemoveAt(index);
+        }
+
+        for (int i = 0; i < startNativeAntCount; i++)
+        {
+            int index = Random.Range(0, positions.Count);
+            InstainateAntNestAtPosition(navtiveAntPrefab, positions[index]);
+            positions.RemoveAt(index);
+        }
+    }
+
+    void InstainateAntNestAtPosition(GameObject prefab, Vector3 position)
     {
         GameObject newNest = Instantiate(prefab, position, Quaternion.identity, antNestCollection);
         newNest.transform.position = position;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using MPack;
 
 public class Bucket : AbstractHoldItem
@@ -34,8 +35,6 @@ public class Bucket : AbstractHoldItem
     public bool UseFullBucketSprite => _currentFillAmount > maxFillAmount * 0.9f;
 
     [SerializeField]
-    private float pourSpeed;
-    [SerializeField]
     private float killSpeed;
     private bool _pouring;
 
@@ -57,12 +56,18 @@ public class Bucket : AbstractHoldItem
     private Sprite fullBucket;
     [SerializeField]
     private ParticleSystem pourEffect;
+    private ParticleSystem.MainModule pourEffectMain;
+    private ParticleSystemRenderer[] pourEffectRenderers;
 
     private SpriteRenderer _spriteRenderer;
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        pourEffectMain = pourEffect.main;
+        pourEffectRenderers = pourEffect.GetComponentsInChildren<ParticleSystemRenderer>();
+
         _currentFillAmount = maxFillAmount;
         ChangeBucketFullSprite();
     }
@@ -71,7 +76,7 @@ public class Bucket : AbstractHoldItem
     {
         if (_pouring)
         {
-            FillAmount -= pourSpeed * Time.deltaTime;
+            FillAmount -= Time.deltaTime;
             if (FillAmount == 0)
                 PourEnd();
 
@@ -105,7 +110,7 @@ public class Bucket : AbstractHoldItem
     #region Player movement event
     public override void OnSelectedGridChanged()
     {
-        pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
+        // pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
     }
 
     public override void OnFacingChanged()
@@ -134,7 +139,7 @@ public class Bucket : AbstractHoldItem
         _pouring = true;
 
         ApplyPourAnimation();
-        pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
+        // pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
         pourEffect.Play();
     }
 
@@ -169,6 +174,13 @@ public class Bucket : AbstractHoldItem
 
     void ApplyPourAnimation(PourAnimation pourAnimation)
     {
+        pourEffect.transform.localPosition = pourAnimation.ParticleLocalPosition;
+        pourEffect.transform.localRotation = Quaternion.Euler(pourAnimation.ParticleLocalRotation);
+        pourEffectMain.startLifetime = pourAnimation.ParticleLifeTime;
+
+        for (int i = 0; i < pourEffectRenderers.Length; i++)
+            pourEffectRenderers[i].sortingOrder = pourAnimation.particleSortingOrder;
+
         switch (pourAnimation.Type)
         {
             case PourAnimation.TransitionType.Rotation:
@@ -256,9 +268,12 @@ public class Bucket : AbstractHoldItem
         public Sprite FullSprite;
         public Sprite EmptySprite;
 
-        public bool ChangeFillBarTransform;
-        public Vector3 LocalPosition;
-        public Vector3 LocalScale;
+        [Header("Water Stream")]
+        public Vector3 ParticleLocalPosition;
+        public Vector3 ParticleLocalRotation;
+        public float ParticleLifeTime;
+        [FormerlySerializedAs("particleSortingIndex")]
+        public int particleSortingOrder;
 
         public enum TransitionType { Rotation, Sprite }
     }

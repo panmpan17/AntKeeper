@@ -6,12 +6,14 @@ using MPack;
 public class AntRouteSpreadControl : MonoBehaviour
 {
     [SerializeField]
+    private float canSpreadSize;
+    [SerializeField]
     private RangeReference radiusRange;
     [SerializeField]
     private RangeReference spreadInterval;
     private Timer _spreadIntervalTimer;
 
-    public bool CanSpreadNewNest => _sizeControl.Size >= _sizeControl.MaxSize * 0.8f;
+    public bool CanSpreadNewNest => _sizeControl.Size >= canSpreadSize;
 
     private AntNestHub _hub;
     private AntNestSizeControl _sizeControl;
