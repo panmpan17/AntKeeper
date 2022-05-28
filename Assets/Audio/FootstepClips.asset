@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994316c0b71284ffc8bae7d028b0adca, type: 3}
+  m_Name: FootstepClips
+  m_EditorClassIdentifier: 
+  DefaultVolume: 0.48
+  Clips:
+  - {fileID: 8300000, guid: bf9892a7f4a7242a4926b429395df3ed, type: 3}
+  - {fileID: 8300000, guid: 4274458c690ee423f9e1c4bdf838d848, type: 3}
+  AudioMixerGroup: {fileID: 340621982639554983, guid: 1baf7015920e148599e52572644c1962, type: 2}

@@ -29,6 +29,12 @@ public class PlayerMovement : MonoBehaviour
     private Timer dashColddownTimer;
     private DashInfo _runningDash;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AudioPreset footstepPreset;
+    [SerializeField]
+    private Timer footstepSoundTimer;
+
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
 
@@ -120,6 +126,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 _movementState = MovementState.Walk;
                 OnWalkStarted?.Invoke();
+            }
+
+            if (footstepSoundTimer.FixedUpdateEnd)
+            {
+                footstepSoundTimer.Reset();
+                // footstepPreset.PlayOneShot(audioSource);
+                VirtualAudioManager.ins.PlayOneShotAtPosition(footstepPreset, transform.position);
             }
         }
         else
