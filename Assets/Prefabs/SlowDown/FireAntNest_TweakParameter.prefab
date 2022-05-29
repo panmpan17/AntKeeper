@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8562711151390871081}
   - component: {fileID: 8562711151390871126}
   m_Layer: 0
-  m_Name: FireAntNest_QueenAnt
+  m_Name: FireAntNest_TweakParameter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,10 +187,10 @@ MonoBehaviour:
   routeLine: {fileID: 8562711151546078989}
   initialSizeOnStart: 0
   initialSize:
-    ConstantMin: 0
-    ConstantMax: 0
+    ConstantMin: 12
+    ConstantMax: 16
     Variable: {fileID: 11400000, guid: 96737d45c2223423cb2f88cf8792a6d1, type: 2}
-    UseVariable: 1
+    UseVariable: 0
   growInterval:
     ConstantMin: 2.5
     ConstantMax: 2.8
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d36e642671f459e98358bfa1797349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canSpreadSize: 0.9
   radiusRange:
     ConstantMin: 0
     ConstantMax: 0
