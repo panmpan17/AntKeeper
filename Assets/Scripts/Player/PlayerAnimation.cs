@@ -49,6 +49,14 @@ public class PlayerAnimation : MonoBehaviour
     [HideInInspector]
     private Sprite faceLeftSprite;
 
+    [Header("Sound effect")]
+    [SerializeField]
+    private AudioPreset footstepSound;
+    [SerializeField]
+    private Timer footstepSoundTimer;
+    [SerializeField]
+    private AudioPreset dashSound;
+
     private PlayerBehaviour _behaviour;
     private PlayerMovement _movement;
 
@@ -76,6 +84,8 @@ public class PlayerAnimation : MonoBehaviour
         footStepParticleMain = footStepParticle.main;
         footStepParticleEmission = footStepParticle.emission;
         originEmissionSpeed = footStepParticleEmission.rateOverTime.constant;
+
+        footstepSoundTimer.Running = false;
     }
 
     void Start()
@@ -92,6 +102,15 @@ public class PlayerAnimation : MonoBehaviour
                 spritePositionTimer.Timer.Running = false;
             }
             spriteRenderer.transform.localPosition = new Vector3(0, spritePositionTimer.CurvedValue(positionCurve.Value), 0);
+        }
+
+        if (footstepSoundTimer.Running)
+        {
+            if (footstepSoundTimer.CustomUpdateRunTime(Time.deltaTime * _animator.speed))
+            {
+                footstepSoundTimer.Reset();
+                VirtualAudioManager.ins.PlayOneShot(footstepSound);
+            }
         }
     }
 
@@ -128,12 +147,14 @@ public class PlayerAnimation : MonoBehaviour
     {
         footStepParticle.Play();
         SwitchToAnimation("walk");
+        footstepSoundTimer.Running = true;
     }
 
     void OnWalkEnded()
     {
         footStepParticle.Stop();
         SwitchToAnimation("idle");
+        footstepSoundTimer.Running = false;
     }
 
     void OnDashStarted()
@@ -143,6 +164,8 @@ public class PlayerAnimation : MonoBehaviour
 
     void OnDashPerformed()
     {
+        footstepSoundTimer.Running = false;
+        VirtualAudioManager.ins.PlayOneShot(dashSound);
         dashTrail.emitting = true;
         spritePositionTimer.Timer.Reset();
     }

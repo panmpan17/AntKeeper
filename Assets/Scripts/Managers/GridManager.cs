@@ -28,21 +28,17 @@ public class GridManager : MonoBehaviour, IGameStaticProvider
     private GameObject fireAntPrefab;
     [SerializeField]
     private int startFireAntCount;
-    // [SerializeField]
-    // private Transform[] startFireAntNests;
     [SerializeField]
     private GameObject navtiveAntPrefab;
     [SerializeField]
     private int startNativeAntCount;
-    // [SerializeField]
-    // private Transform[] startNativeAntNests;
     [SerializeField]
     private Transform[] antNestSpawnPoints;
 
     private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
-    // private List<AntNest> _antNests = new List<AntNest>();
     private List<AntNestHub> _antNestHubs = new List<AntNestHub>();
     private List<VirtualAnimalSpot> _animals = new List<VirtualAnimalSpot>();
+    public List<VirtualAnimalSpot> Animals => _animals;
 
 
     public delegate void AntCountChangeDelegate(AntCountInfo count);

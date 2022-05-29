@@ -97,6 +97,22 @@ namespace MPack {
                 RunTime += Time.deltaTime;
         }
 
+        public bool CustomUpdateRunTime(float deltaTime)
+        {
+            if (ReverseMode)
+            {
+                if (RunTime > 0)
+                    RunTime -= deltaTime;
+                return RunTime <= 0;
+            }
+            else
+            {
+                if (RunTime < TargetTime)
+                    RunTime += deltaTime;
+                return RunTime >= TargetTime;
+            }
+        }
+
         /// <summary>
         /// Run time add Time.fixedDeltaTime, return weather run time reached target time
         /// </summary>

@@ -29,11 +29,13 @@ public class PlayerMovement : MonoBehaviour
     private Timer dashColddownTimer;
     private DashInfo _runningDash;
 
-    [Header("Sound")]
-    [SerializeField]
-    private AudioPreset footstepPreset;
-    [SerializeField]
-    private Timer footstepSoundTimer;
+    // [Header("Sound")]
+    // [SerializeField]
+    // private AudioPreset footstepPreset;
+    // [SerializeField]
+    // private Timer footstepSoundTimer;
+    // [SerializeField]
+    // private AudioPreset dashSound;
 
     private Facing _facing = Facing.Right;
     public Facing Facing => _facing;
@@ -98,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (HandleDash()) return;
+        if (HandleDashUpdate()) return;
 
         Vector2 axis = _playerInput.MovementAxis;
 
@@ -127,13 +129,6 @@ public class PlayerMovement : MonoBehaviour
                 _movementState = MovementState.Walk;
                 OnWalkStarted?.Invoke();
             }
-
-            if (footstepSoundTimer.FixedUpdateEnd)
-            {
-                footstepSoundTimer.Reset();
-                // footstepPreset.PlayOneShot(audioSource);
-                VirtualAudioManager.ins.PlayOneShotAtPosition(footstepPreset, transform.position);
-            }
         }
         else
         {
@@ -148,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    bool HandleDash()
+    bool HandleDashUpdate()
     {
         if (IsDashing)
         {

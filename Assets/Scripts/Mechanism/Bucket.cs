@@ -58,6 +58,8 @@ public class Bucket : AbstractHoldItem
     private ParticleSystem pourEffect;
     private ParticleSystem.MainModule pourEffectMain;
     private ParticleSystemRenderer[] pourEffectRenderers;
+    [SerializeField]
+    private AudioSource pourWaterSound;
 
     private SpriteRenderer _spriteRenderer;
 
@@ -139,8 +141,8 @@ public class Bucket : AbstractHoldItem
         _pouring = true;
 
         ApplyPourAnimation();
-        // pourEffect.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
         pourEffect.Play();
+        pourWaterSound.Play();
     }
 
     void PourEnd()
@@ -148,6 +150,7 @@ public class Bucket : AbstractHoldItem
         _pouring = false;
         transform.rotation = Quaternion.identity;
         pourEffect.Stop();
+        pourWaterSound.Stop();
         ChangeBucketFullSprite();
     }
 
