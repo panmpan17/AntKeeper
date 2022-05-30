@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace MPack {
     public class AudioOneShotPlayer : MonoBehaviour, IPoolableObj
@@ -37,7 +38,19 @@ namespace MPack {
             enabled = true;
         }
 
-        public void Play(AudioClip clip, System.Action<AudioOneShotPlayer> playEndCall=null, float _volumeMultiplier=1) {
+
+        public void Play(AudioClip clip, System.Action<AudioOneShotPlayer> playEndCall = null, float _volumeMultiplier = 1)
+        {
+            audioSource.clip = clip;
+            audioSource.volume = volume * _volumeMultiplier;
+            volumeMultiplier = _volumeMultiplier;
+            audioSource.Play();
+            audioSource.loop = false;
+
+            PlayEndCall = playEndCall;
+        }
+        public void Play(AudioMixerGroup mixerGroup, AudioClip clip, System.Action<AudioOneShotPlayer> playEndCall=null, float _volumeMultiplier=1) {
+            audioSource.outputAudioMixerGroup = mixerGroup;
             audioSource.clip = clip;
             audioSource.volume = volume * _volumeMultiplier;
             volumeMultiplier = _volumeMultiplier;

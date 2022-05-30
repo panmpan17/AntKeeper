@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using DigitalRuby.Tween;
 
 
 public class PauseMenu : MonoBehaviour
@@ -13,6 +14,8 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject resumeButton;
+    [SerializeField]
+    private GameObject settingButton;
 
     private InputSystemUIInputModule uIInputModule;
 
@@ -71,5 +74,11 @@ public class PauseMenu : MonoBehaviour
     void OnCancelPerformed(InputAction.CallbackContext callbackContext)
     {
         Resume();
+    }
+
+    public void OnSettingClose()
+    {
+        if (_canvas.enabled)
+            EventSystem.current.SetSelectedGameObject(settingButton);
     }
 }

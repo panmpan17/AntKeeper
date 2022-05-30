@@ -89,6 +89,7 @@ namespace MPack {
             AudioOneShotPlayer player = oneShotPlayerPool.Get();
             player.transform.position = position;
             player.Play(
+                preset.AudioMixerGroup,
                 preset.Clips[Random.Range(0, preset.Clips.Length)],
                 (_player) => oneShotPlayerPool.Put(_player), preset.DefaultVolume * volumeMultiplier);
             return player;
@@ -98,7 +99,7 @@ namespace MPack {
         {
             AudioOneShotPlayer player = oneShotPlayerPool.Get();
             player.transform.position = position;
-            player.Play(clip, (_player) => oneShotPlayerPool.Put(_player), volumeMultiplier);
+            player.Play(null, clip, (_player) => oneShotPlayerPool.Put(_player), volumeMultiplier);
             return player;
         }
     #endregion

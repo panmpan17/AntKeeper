@@ -10,9 +10,13 @@ public class LanguageManager : MonoBehaviour
     [SerializeField]
     private LanguageData chinese;
 
+    [SerializeField]
+    private bool isEnglish = true;
+
     void Awake()
     {
-        SwitchToEnglish();
+        if (isEnglish) SwitchToEnglish();
+        else SwitchToChinese();
     }
 
     public void SwitchToEnglish()
@@ -27,7 +31,15 @@ public class LanguageManager : MonoBehaviour
 
     public void Switch(bool boolean)
     {
+        isEnglish = boolean;
         if (boolean) SwitchToEnglish();
+        else SwitchToChinese();
+    }
+
+    public void Switch()
+    {
+        isEnglish = !isEnglish;
+        if (isEnglish) SwitchToEnglish();
         else SwitchToChinese();
     }
 }

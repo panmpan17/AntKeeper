@@ -16,6 +16,8 @@ MonoBehaviour:
   Texts:
   - ID: -1
     Text: Error
+  - ID: 0
+    Text: English
   - ID: 1
     Text: English
   - ID: 2
@@ -77,13 +79,19 @@ MonoBehaviour:
   - ID: 210
     Text: Start!
   - ID: 211
-    Text: "<color=#89672F><b>Michael Pan \u6F58\u555F\u5143</b></color>\nProgram\nArt\nMusic\nSound
-      Effect\n\n<color=#89672F><b>martinhodler (Github)</b></color>\nAseprite-Importer
+    Text: "<color=#fff><b>Michael Pan \u6F58\u555F\u5143</b></color>\nProgram\nArt\nMusic\nSound
+      Effect\n\n<color=#fff><b>martinhodler (Github)</b></color>\nAseprite-Importer
       for Unity"
+  - ID: 212
+    Text: Setting
+  - ID: 213
+    Text: Exit
   - ID: 301
     Text: Resume
   - ID: 302
     Text: Main Menu
+  - ID: 303
+    Text: Setting
   - ID: 401
     Text: Time
   - ID: 402
@@ -92,3 +100,15 @@ MonoBehaviour:
     Text: Animal Count
   - ID: 502
     Text: Occupied Area
+  - ID: 601
+    Text: Main
+  - ID: 602
+    Text: Music
+  - ID: 603
+    Text: Sound
+  - ID: 604
+    Text: Language
+  - ID: 605
+    Text: Back
+  - ID: 606
+    Text: Audio

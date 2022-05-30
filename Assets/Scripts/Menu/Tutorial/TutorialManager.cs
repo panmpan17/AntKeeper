@@ -18,6 +18,9 @@ public class TutorialManager : MonoBehaviour
     private GameObject[] tutorialSections;
     private int currentTutorialIndex;
 
+    [SerializeField]
+    private EventReference closeEvent;
+
 #if UNITY_EDITOR
     [Header("Editor Only")]
     [SerializeField]
@@ -27,8 +30,6 @@ public class TutorialManager : MonoBehaviour
     private Canvas _canvas;
     private Navigation nextNullNavigation;
     private Navigation nextNormalNavigation;
-
-    public event System.Action OnClose;
 
     void Awake()
     {
@@ -105,6 +106,6 @@ public class TutorialManager : MonoBehaviour
     void CloseWindow()
     {
         enabled = _canvas.enabled = false;
-        OnClose?.Invoke();
+        closeEvent.Invoke();
     }
 }

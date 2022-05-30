@@ -18,6 +18,11 @@ public class EventReference : ScriptableObject
         for (int i = eventDispatchers.Count - 1; i >= 0; i--)
             eventDispatchers[i].DispatchEvent(booleanValue);
     }
+    public void Invoke(float floatValue)
+    {
+        for (int i = eventDispatchers.Count - 1; i >= 0; i--)
+            eventDispatchers[i].DispatchEvent(floatValue);
+    }
 
     public void RegisterEvent(EventDispatcher dispatcher)
     {

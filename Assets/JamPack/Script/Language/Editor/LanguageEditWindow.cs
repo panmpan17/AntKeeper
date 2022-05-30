@@ -63,6 +63,8 @@ namespace MPack {
             m_headerStyle = new GUIStyle();
             m_headerStyle.fontSize = 18;
             m_headerStyle.normal.textColor = Color.white;
+
+            m_displayLanguage = -1;
         }
 
         private void ScanTextInEveryLanguageData() {

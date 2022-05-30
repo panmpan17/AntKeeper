@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bf90bf4eb374fad82740d4eead15ef, type: 3}
   m_Name: HUDText
   m_EditorClassIdentifier: 
-  Value: {r: 1, g: 0.9943993, b: 0.8627451, a: 1}
+  Value: {r: 0.7688679, g: 0.9852257, b: 1, a: 1}

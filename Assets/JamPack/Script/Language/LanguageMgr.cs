@@ -45,7 +45,7 @@ namespace MPack {
                 
             }
         #if UNITY_EDITOR
-            Debug.LogErrorFormat("Text id '{0}' has no language '{1}'", id, languageData.ID);
+            Debug.LogErrorFormat("Text id '{0}' not in language '{1}'", id, languageData.name);
         #endif
             return "";
 		}

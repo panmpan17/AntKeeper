@@ -16,6 +16,8 @@ MonoBehaviour:
   Texts:
   - ID: -1
     Text: "\u932F\u8AA4"
+  - ID: 0
+    Text: "\u4E2D\u6587"
   - ID: 1
     Text: "\u4E2D\u6587"
   - ID: 2
@@ -60,7 +62,7 @@ MonoBehaviour:
   - ID: 210
     Text: "\u958B\u59CB!"
   - ID: 211
-    Text: "<color=#89672F><b>Michael Pan \u6F58\u555F\u5143</b></color>\n\u7A0B\u5F0F\n\u7F8E\u8853\n\u97F3\u6A02\n\u97F3\u6548\n\n<color=#89672F><b>martinhodler
+    Text: "<color=#fff><b>Michael Pan \u6F58\u555F\u5143</b></color>\n\u7A0B\u5F0F\n\u7F8E\u8853\n\u97F3\u6A02\n\u97F3\u6548\n\n<color=#fff><b>martinhodler
       (Github)</b></color>\nAseprite-Importer for Unity"
   - ID: 301
     Text: "\u7E7C\u7E8C\u904A\u6232"
@@ -74,3 +76,21 @@ MonoBehaviour:
     Text: "\u52D5\u7269\u6578\u91CF"
   - ID: 502
     Text: "\u88AB\u4F54\u9818\u7684\u571F\u5730"
+  - ID: 212
+    Text: "\u8A2D\u5B9A"
+  - ID: 213
+    Text: "\u7D50\u675F"
+  - ID: 303
+    Text: "\u8A2D\u5B9A"
+  - ID: 601
+    Text: "\u4E3B\u97F3\u91CF"
+  - ID: 602
+    Text: "\u97F3\u6A02"
+  - ID: 603
+    Text: "\u97F3\u6548"
+  - ID: 604
+    Text: "\u8A9E\u8A00"
+  - ID: 605
+    Text: "\u8FD4\u56DE"
+  - ID: 606
+    Text: "\u8072\u97F3"

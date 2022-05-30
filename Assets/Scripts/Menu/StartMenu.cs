@@ -20,16 +20,22 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     private CanvasGroup menuCanvasGroup;
 
-
-    [SerializeField]
-    private ToggleSwitch mobileControlSwitch;
-
     [Header("Tutorial")]
     [SerializeField]
     private GameObject tutorialButton;
     [SerializeField]
-    private TutorialManager tutorial;
+    private EventReference openTutorialEvent;
+    [SerializeField]
+    private EventReference tutorialBackEvent;
 
+
+    [Header("Tutorial")]
+    [SerializeField]
+    private GameObject settingButton;
+    [SerializeField]
+    private EventReference openSettingEvent;
+    [SerializeField]
+    private EventReference settingBackEvent;
     
     [Header("Control")]
     [SerializeField]
@@ -65,6 +71,7 @@ public class StartMenu : MonoBehaviour
 #endif
 
     private Canvas _canvas;
+    private GameObject _lastButton;
 
     void Awake()
     {
@@ -75,8 +82,6 @@ public class StartMenu : MonoBehaviour
         fadeTimer.Running = false;
 
         startCountDownText.text = "";
-
-        tutorial.OnClose += OnTutorialClose;
     }
 
     IEnumerator Start()
@@ -89,13 +94,12 @@ public class StartMenu : MonoBehaviour
         if (showVirtualStick.Enable)
             showStick = showVirtualStick.Value;
 #endif
-        mobileControlSwitch.ChangeState(showStick);
-
         yield return new WaitForEndOfFrame();
 
 #if UNITY_EDITOR
         if (skipMenu)
         {
+            Debug.Log(99);
             EventSystem.current.SetSelectedGameObject(null);
             menuCanvasGroup.interactable = false;
             fadeTimer.Running = false;
@@ -110,6 +114,7 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipStartCountDown)
         {
+            Debug.Log(113);
             CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
             StartGame();
             yield break;
@@ -146,7 +151,7 @@ public class StartMenu : MonoBehaviour
     {
         HUDManager.ins.enabled = true;
         GameManager.ins.enabled = true;
-        _canvas.enabled = enabled = false;
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -183,11 +188,26 @@ public class StartMenu : MonoBehaviour
 
     public void TutorialButtonPressed()
     {
-        tutorial.Open();
+        _lastButton = EventSystem.current.currentSelectedGameObject;
+        openTutorialEvent.Invoke();
     }
 
-    void OnTutorialClose()
+    public void SettingButtonPressed()
     {
-        EventSystem.current.SetSelectedGameObject(tutorialButton);
+        _lastButton = EventSystem.current.currentSelectedGameObject;
+        openSettingEvent.Invoke();
+    }
+
+    public void ExitButtonPreseed()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
+    }
+
+    public void OnPopupClose()
+    {
+        EventSystem.current.SetSelectedGameObject(_lastButton);
     }
 }

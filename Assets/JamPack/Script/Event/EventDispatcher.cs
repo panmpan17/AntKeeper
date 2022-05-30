@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class EventDispatcher : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EventDispatcher : MonoBehaviour
 
     public UnityEvent Event;
     public UnityEventWithBoolean BooleanEvent;
+    [FormerlySerializedAs("FLoatEvent")]
+    public UnityEventWithFloat FloatEvent;
 
     void OnEnable()
     {
@@ -28,7 +31,13 @@ public class EventDispatcher : MonoBehaviour
     {
         BooleanEvent.Invoke(booleanValue);
     }
+    public void DispatchEvent(float floatValue)
+    {
+        FloatEvent.Invoke(floatValue);
+    }
 
     [System.Serializable]
     public class UnityEventWithBoolean : UnityEvent<bool> {}
+    [System.Serializable]
+    public class UnityEventWithFloat : UnityEvent<float> { }
 }

@@ -348,11 +348,6 @@ MonoBehaviour:
     TargetTime: 0.6
     Running: 0
     ReverseMode: 0
-  footstepPreset: {fileID: 11400000, guid: ab95499bb8de54231aa59eabb1d383df, type: 2}
-  footstepSoundTimer:
-    TargetTime: 0.4
-    Running: 0
-    ReverseMode: 0
 --- !u!114 &2229355668422195846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +379,12 @@ MonoBehaviour:
   faceDownSprite: {fileID: 6757282713640645180, guid: 29ff81c01ea814feda0cac81199bb130, type: 3}
   faceRightSprite: {fileID: 4334783836991956000, guid: 29ff81c01ea814feda0cac81199bb130, type: 3}
   faceLeftSprite: {fileID: 7388399842426930641, guid: 29ff81c01ea814feda0cac81199bb130, type: 3}
+  footstepSound: {fileID: 11400000, guid: ab95499bb8de54231aa59eabb1d383df, type: 2}
+  footstepSoundTimer:
+    TargetTime: 0.23
+    Running: 0
+    ReverseMode: 0
+  dashSound: {fileID: 11400000, guid: deaed73ff3d3f40b4a18e35c109c74d8, type: 2}
 --- !u!114 &2229355668422195841
 MonoBehaviour:
   m_ObjectHideFlags: 0
