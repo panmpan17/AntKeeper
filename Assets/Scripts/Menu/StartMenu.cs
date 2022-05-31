@@ -99,7 +99,6 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipMenu)
         {
-            Debug.Log(99);
             EventSystem.current.SetSelectedGameObject(null);
             menuCanvasGroup.interactable = false;
             fadeTimer.Running = false;
@@ -114,7 +113,6 @@ public class StartMenu : MonoBehaviour
 #if UNITY_EDITOR
         if (skipStartCountDown)
         {
-            Debug.Log(113);
             CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
             StartGame();
             yield break;

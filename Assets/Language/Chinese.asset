@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b20c82ba14474a3da1d810689e82920, type: 3}
   m_Name: Chinese
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 2
   Texts:
   - ID: -1
     Text: "\u932F\u8AA4"

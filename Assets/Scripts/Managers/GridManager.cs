@@ -4,26 +4,30 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class GridManager : MonoBehaviour, IGameStaticProvider
+public class GridManager : MonoBehaviour
 {
     public static GridManager ins;
 
+    [Header("Reference")]
     [SerializeField]
     private Grid grid;
     public Grid Grid => grid;
-
     [SerializeField]
     private Tilemap baseMap;
-
     [SerializeField]
     private Tilemap routeColliderMap;
     [SerializeField]
     private TilemapReference routeColliderMapReference;
+    [SerializeField]
+    private StatisticProvider statisticProvider;
 
+    [Header("Spawn Ants")]
     [SerializeField]
     private Transform antNestCollection;
     [SerializeField]
     private int antNestCountCap = 20;
+
+    [Header("Initial Ants")]
     [SerializeField]
     private GameObject fireAntPrefab;
     [SerializeField]
@@ -53,6 +57,8 @@ public class GridManager : MonoBehaviour, IGameStaticProvider
 
         routeColliderMapReference.Tilemap = routeColliderMap;
         InstainateAntNestOnStart();
+
+        statisticProvider.Get = CollectGameStatic;
     }
 
     void InstainateAntNestOnStart()

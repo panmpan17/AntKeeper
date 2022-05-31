@@ -58,14 +58,9 @@ public class HUDManager : MonoBehaviour
         pauseButton.onClick.AddListener(OnPauseClicked);
     }
 
-    void Start()
-    {
-        GameManager.ins.GameTimeChanged += OnGameTimeChange;
-        // GridManager.ins.OnAntCountChange += UpdateAntCount;
-    }
-
     void OnEnable()
     {
+        GameManager.ins.GameTimeChanged += OnGameTimeChange;
         _canvas.enabled = true;
         UpdateAnimalCount();
     }

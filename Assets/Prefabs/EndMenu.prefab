@@ -2062,7 +2062,7 @@ MonoBehaviour:
   oneStarScore: 80
   twoStarScore: 140
   threeStarScore: 200
-  staticProvider: {fileID: 0}
+  statisticProvider: {fileID: 11400000, guid: 172a0f31a015b49bf8e03cce67296bfc, type: 2}
 --- !u!1 &8523567451650183340
 GameObject:
   m_ObjectHideFlags: 0

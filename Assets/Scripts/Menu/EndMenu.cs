@@ -54,7 +54,7 @@ public class EndMenu : MonoBehaviour
     private float threeStarScore = 0.9f;
 
     [SerializeField]
-    private GameObject staticProvider;
+    private StatisticProvider statisticProvider;
 
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
@@ -105,7 +105,7 @@ public class EndMenu : MonoBehaviour
 
     IEnumerator ShowStatic()
     {
-        var statistic = staticProvider.GetComponent<IGameStaticProvider>().CollectGameStatic();
+        var statistic = statisticProvider.Get();
 
         yield return StartCoroutine(ShowAnimalCount(statistic));
         yield return StartCoroutine(ShowArea(statistic));

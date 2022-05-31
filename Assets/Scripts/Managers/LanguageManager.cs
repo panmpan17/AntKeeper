@@ -15,6 +15,8 @@ public class LanguageManager : MonoBehaviour
 
     void Awake()
     {
+        if (PlayerPrefs.HasKey("Language")) isEnglish = PlayerPrefs.GetInt("Language") == english.ID;
+
         if (isEnglish) SwitchToEnglish();
         else SwitchToChinese();
     }
@@ -22,11 +24,13 @@ public class LanguageManager : MonoBehaviour
     public void SwitchToEnglish()
     {
         LanguageMgr.AssignLanguageData(english);
+        PlayerPrefs.SetInt("Language", english.ID);
     }
 
     public void SwitchToChinese()
     {
         LanguageMgr.AssignLanguageData(chinese);
+        PlayerPrefs.SetInt("Language", chinese.ID);
     }
 
     public void Switch(bool boolean)

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FakeGameStatic : MonoBehaviour, IGameStaticProvider
+public class FakeGameStatistic : MonoBehaviour
 {
     [SerializeField]
     private GameStatic gameStatic;
+    [SerializeField]
+    private StatisticProvider statisticProvider;
 
     public GameStatic CollectGameStatic()
     {
@@ -14,6 +16,7 @@ public class FakeGameStatic : MonoBehaviour, IGameStaticProvider
 
     void Start()
     {
+        statisticProvider.Get = CollectGameStatic;
         FindObjectOfType<EndMenu>(true).Open();
     }
 }
