@@ -112,3 +112,35 @@ MonoBehaviour:
     Text: Back
   - ID: 606
     Text: Audio
+  - ID: 701
+    Text: Hidden Achievment
+  - ID: 702
+    Text: '?'
+  - ID: 703
+    Text: For the Future
+  - ID: 704
+    Text: Breed native ants 10 time in single game
+  - ID: 705
+    Text: For the Future?
+  - ID: 706
+    Text: Breed invasive ants 10 time in single game
+  - ID: 707
+    Text: Researcher
+  - ID: 708
+    Text: Identiy all the ants in single game
+  - ID: 709
+    Text: It's done?
+  - ID: 710
+    Text: Kill all ants in single game
+  - ID: 711
+    Text: It's done
+  - ID: 712
+    Text: Kill all invasive ants in single game
+  - ID: 713
+    Text: What have you Done?
+  - ID: 714
+    Text: Kill all native ants in single game
+  - ID: 715
+    Text: Hard working
+  - ID: 716
+    Text: Kill invasive ants 10 time in single game
