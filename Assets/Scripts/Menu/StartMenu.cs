@@ -1,7 +1,3 @@
-#if UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
-#define TURN_ON_MOBILE_CONTROL_AT_START
-#endif
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,39 +7,32 @@ using MPack;
 using TMPro;
 
 
-public class StartMenu : MonoBehaviour
+public class StartMenu : AbstractMenu
 {
-    [SerializeField]
-    [ShortTimer]
-    private Timer fadeTimer;
-
-    [SerializeField]
-    private CanvasGroup menuCanvasGroup;
-
-    [Header("Tutorial")]
-    [SerializeField]
-    private GameObject tutorialButton;
-    [SerializeField]
-    private EventReference openTutorialEvent;
-    [SerializeField]
-    private EventReference tutorialBackEvent;
+    // [Header("Tutorial")]
+    // [SerializeField]
+    // private GameObject tutorialButton;
+    // [SerializeField]
+    // private EventReference openTutorialEvent;
+    // [SerializeField]
+    // private EventReference tutorialBackEvent;
 
 
-    [Header("Tutorial")]
-    [SerializeField]
-    private GameObject settingButton;
-    [SerializeField]
-    private EventReference openSettingEvent;
-    [SerializeField]
-    private EventReference settingBackEvent;
+    // [Header("Setting")]
+    // [SerializeField]
+    // private GameObject settingButton;
+    // [SerializeField]
+    // private EventReference openSettingEvent;
+    // [SerializeField]
+    // private EventReference settingBackEvent;
     
-    [Header("Control")]
-    [SerializeField]
-    private GameObject helpButton;
-    [SerializeField]
-    private GameObject helpMenu;
-    [SerializeField]
-    private GameObject helpMenuClose;
+    // [Header("Control")]
+    // [SerializeField]
+    // private GameObject helpButton;
+    // [SerializeField]
+    // private GameObject helpMenu;
+    // [SerializeField]
+    // private GameObject helpMenuClose;
 
     [Header("Start Countdown")]
     [SerializeField]
@@ -70,42 +59,20 @@ public class StartMenu : MonoBehaviour
     private ValueWithEnable<bool> showVirtualStick;
 #endif
 
-    private Canvas _canvas;
-    private GameObject _lastButton;
-
-    void Awake()
-    {
-        _canvas = GetComponent<Canvas>();
-        _canvas.enabled = true;
-
-        helpMenu.SetActive(false);
-        fadeTimer.Running = false;
-
-        startCountDownText.text = "";
-    }
-
     IEnumerator Start()
     {
-        bool showStick = false;
-#if TURN_ON_MOBILE_CONTROL_AT_START
-        showStick = true;
-#endif
-#if UNITY_EDITOR
-        if (showVirtualStick.Enable)
-            showStick = showVirtualStick.Value;
-#endif
         yield return new WaitForEndOfFrame();
 
-#if UNITY_EDITOR
-        if (skipMenu)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-            menuCanvasGroup.interactable = false;
-            fadeTimer.Running = false;
-            StartCoroutine(StartCountDown());
-            menuCanvasGroup.alpha = 0;
-        }
-#endif
+// #if UNITY_EDITOR
+//         if (skipMenu)
+//         {
+//             EventSystem.current.SetSelectedGameObject(null);
+//             menuCanvasGroup.interactable = false;
+//             fadeTimer.Running = false;
+//             StartCoroutine(StartCountDown());
+//             menuCanvasGroup.alpha = 0;
+//         }
+// #endif
     }
 
     IEnumerator StartCountDown()
@@ -152,49 +119,51 @@ public class StartMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        if (fadeTimer.Running)
-        {
-            if (fadeTimer.UpdateEnd)
-            {
-                fadeTimer.Running = false;
-                StartCoroutine(StartCountDown());
-            }
-            menuCanvasGroup.alpha = 1 - fadeTimer.Progress;
-        }
-    }
+    // void Update()
+    // {
+    //     if (fadeTimer.Running)
+    //     {
+    //         if (fadeTimer.UpdateEnd)
+    //         {
+    //             fadeTimer.Running = false;
+    //             StartCoroutine(StartCountDown());
+    //         }
+    //         menuCanvasGroup.alpha = 1 - fadeTimer.Progress;
+    //     }
+    // }
 
     public void StartButtonPressed()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        menuCanvasGroup.interactable = false;
-        fadeTimer.Reset();
+        _canvasGroup.interactable = false;
+        MenuManager.ins.CloseMenu(delegate {
+            StartCoroutine(StartCountDown());
+        });
     }
 
-    public void HelpButtonPressed()
-    {
-        helpMenu.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(helpMenuClose);
-    }
+    // public void HelpButtonPressed()
+    // {
+    //     helpMenu.SetActive(true);
+    //     EventSystem.current.SetSelectedGameObject(helpMenuClose);
+    // }
 
-    public void CloseHelpMenu()
-    {
-        helpMenu.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(helpButton);
-    }
+    // public void CloseHelpMenu()
+    // {
+    //     helpMenu.SetActive(false);
+    //     EventSystem.current.SetSelectedGameObject(helpButton);
+    // }
 
-    public void TutorialButtonPressed()
-    {
-        _lastButton = EventSystem.current.currentSelectedGameObject;
-        openTutorialEvent.Invoke();
-    }
+    // public void TutorialButtonPressed()
+    // {
+    //     _lastButton = EventSystem.current.currentSelectedGameObject;
+    //     openTutorialEvent.Invoke();
+    // }
 
-    public void SettingButtonPressed()
-    {
-        _lastButton = EventSystem.current.currentSelectedGameObject;
-        openSettingEvent.Invoke();
-    }
+    // public void SettingButtonPressed()
+    // {
+    //     _lastButton = EventSystem.current.currentSelectedGameObject;
+    //     openSettingEvent.Invoke();
+    // }
 
     public void ExitButtonPreseed()
     {

@@ -6,6 +6,7 @@ namespace MPack {
     public class LanguageText : MonoBehaviour
     {
 		[SerializeField]
+		[LauguageID]
 		private int id = -1;
 		public int ID { get { return id; } }
 

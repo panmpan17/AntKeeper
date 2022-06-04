@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using MPack;
 
-public class AchievementMenu : MonoBehaviour
+public class AchievementMenu : AbstractMenu
 {
     [Header("Instainiate achievement")]
     [SerializeField]
