@@ -272,6 +272,8 @@ GameObject:
   - component: {fileID: 2229355668422195842}
   - component: {fileID: 3291473352255120858}
   - component: {fileID: 9092877266017003554}
+  - component: {fileID: 8127980107385240024}
+  - component: {fileID: 2572166476486535260}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -314,6 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputEvent: {fileID: 11400000, guid: 7b4ab34d475c340079b61edc6764dea3, type: 2}
+  openPauseEvent: {fileID: 11400000, guid: 4522acb19011d468eb3c8ddd87904e77, type: 2}
 --- !u!114 &2229355668422195844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +559,74 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2229355668422195962}
   m_Enabled: 1
+--- !u!114 &8127980107385240024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229355668422195962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: 76bede270433b463c9668fc3d017714a, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2229355668422195847}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FloatEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2572166476486535260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229355668422195962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: 7c49f7e668a0a4c8395242af09107cca, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2229355668422195847}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FloatEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2229355668777246081
 GameObject:
   m_ObjectHideFlags: 0

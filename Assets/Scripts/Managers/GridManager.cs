@@ -270,7 +270,8 @@ public class GridManager : MonoBehaviour
                 {
                     NestSize = _antNestHubs[i].Size,
                     AreaSize = _antNestHubs[i].CountAreaSize(),
-                    StillAlive = _antNestHubs[i].enabled
+                    StillAlive = _antNestHubs[i].enabled,
+                    Revealed = _antNestHubs[i].IsShowTrueColor
                 });
             }
             else
@@ -279,7 +280,8 @@ public class GridManager : MonoBehaviour
                 {
                     NestSize = _antNestHubs[i].Size,
                     AreaSize = _antNestHubs[i].CountAreaSize(),
-                    StillAlive = _antNestHubs[i].enabled
+                    StillAlive = _antNestHubs[i].enabled,
+                    Revealed = _antNestHubs[i].IsShowTrueColor
                 });
             }
         }

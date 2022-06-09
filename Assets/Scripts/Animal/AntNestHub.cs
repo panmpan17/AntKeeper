@@ -275,7 +275,7 @@ public class AntNestHub : MonoBehaviour
             {
                 routeBranches[i].OnDestroy();
                 RemoveBranch(i);
-                i++;
+                // i++;
             }
             else
             {

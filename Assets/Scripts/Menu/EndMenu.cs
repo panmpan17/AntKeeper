@@ -55,6 +55,8 @@ public class EndMenu : MonoBehaviour
 
     [SerializeField]
     private StatisticProvider statisticProvider;
+    [SerializeField]
+    private AchievementUnlockMenu achievementUnlockMenu;
 
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
@@ -99,24 +101,26 @@ public class EndMenu : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(ShowStatic());
+        StartCoroutine(C_ShowStatic());
         _canvasGroup.alpha = 1;
     }
 
-    IEnumerator ShowStatic()
+    IEnumerator C_ShowStatic()
     {
         var statistic = statisticProvider.Get();
 
-        yield return StartCoroutine(ShowAnimalCount(statistic));
-        yield return StartCoroutine(ShowArea(statistic));
-        yield return StartCoroutine(ShowStars(statistic));
+        yield return StartCoroutine(C_ShowAnimalCount(statistic));
+        yield return StartCoroutine(C_ShowArea(statistic));
+        yield return StartCoroutine(C_ShowStars(statistic));
         yield return starGapWait;
+
+        yield return StartCoroutine(achievementUnlockMenu.C_StartUnlock(statistic));
 
         replayButton.SetActive(true);
         EventSystem.current.SetSelectedGameObject(replayButton);
     }
 
-    IEnumerator ShowAnimalCount(GameStatic statistic)
+    IEnumerator C_ShowAnimalCount(GameStatic statistic)
     {
         resultAnimalCount.text = "0";
         originalAnimalCount.text = "/" + statistic.OriginalAnimalCount.ToString();
@@ -130,7 +134,7 @@ public class EndMenu : MonoBehaviour
         }
     }
 
-    IEnumerator ShowArea(GameStatic statistic)
+    IEnumerator C_ShowArea(GameStatic statistic)
     {
         float fireAntWidth = statistic.FireAntAreaPercentage * mask.sizeDelta.x;
         float nativeAntWidth = statistic.NativeAntAreaPercentage * mask.sizeDelta.x + fireAntWidth;
@@ -157,26 +161,26 @@ public class EndMenu : MonoBehaviour
         nativeAntBar.sizeDelta = new Vector2(nativeAntWidth, nativeAntBar.sizeDelta.y);
     }
 
-    IEnumerator ShowStars(GameStatic statistic)
+    IEnumerator C_ShowStars(GameStatic statistic)
     {
         float score = statistic.CalculateScore();
 
         if (score < oneStarScore) yield break;
 
-        yield return StartCoroutine(StarAnimation(stars[0]));
+        yield return StartCoroutine(C_StarAnimation(stars[0]));
 
         if (score < twoStarScore) yield break;
 
         yield return starGapWait;
-        yield return StartCoroutine(StarAnimation(stars[1]));
+        yield return StartCoroutine(C_StarAnimation(stars[1]));
 
         if (score < threeStarScore) yield break;
 
         yield return starGapWait;
-        yield return StartCoroutine(StarAnimation(stars[2]));
+        yield return StartCoroutine(C_StarAnimation(stars[2]));
     }
 
-    IEnumerator StarAnimation(GameObject star)
+    IEnumerator C_StarAnimation(GameObject star)
     {
 
         var rectTransform = star.GetComponent<RectTransform>();

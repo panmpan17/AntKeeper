@@ -34,24 +34,46 @@ public class MenuManager : MonoBehaviour
             menus[i].InstantClose();
     }
 
-    void FadeIn()
-    {}
+    void ChangeGradientAlpha(ITween<float> tweenData)
+    {
+        graidentCanvasGroup.alpha = tweenData.CurrentValue;
+    }
+
+
+#region Menu open and close
+    public void OpenMenu(AbstractMenu menu)
+    {
+        _canvas.enabled = true;
+        openedMenus.Push(menu);
+        menu.FadeInFromLeft();
+        FloatTween tween = gameObject.Tween("FadeOut", 0, 1, fadeDuration.Value, TweenScaleFunctions.QuadraticEaseInOut, ChangeGradientAlpha);
+        tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
+    }
 
     public void CloseMenu(System.Action finishEvent)
     {
+        openedMenus.Peek().FadeOutToLeft();
+        openedMenus.Clear();
         gameObject.Tween("FadeOut", 1, 0, fadeDuration.Value, TweenScaleFunctions.QuadraticEaseInOut, ChangeGradientAlpha, delegate {
             _canvas.enabled = false;
             finishEvent?.Invoke();
         });
     }
 
-    void ChangeGradientAlpha(ITween<float> tweenData)
+#if UNITY_EDITOR
+    public void InstantClose(System.Action finishEvent)
     {
-        graidentCanvasGroup.alpha = tweenData.CurrentValue;
+        openedMenus.Peek().InstantClose();
+        openedMenus.Clear();
+        _canvas.enabled = false;
+        finishEvent?.Invoke();
     }
+#endif
+#endregion
+
 
 #region  Menu switching
-    public void OpenMenu(string name)
+    public void SwitchMenu(string name)
     {
         for (int i = 0; i < menus.Length; i++)
         {
@@ -65,6 +87,7 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
+
     public void BackToLastMenu()
     {
         openedMenus.Pop().FadeOutToRight();

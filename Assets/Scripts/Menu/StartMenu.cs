@@ -9,161 +9,45 @@ using TMPro;
 
 public class StartMenu : AbstractMenu
 {
-    // [Header("Tutorial")]
-    // [SerializeField]
-    // private GameObject tutorialButton;
-    // [SerializeField]
-    // private EventReference openTutorialEvent;
-    // [SerializeField]
-    // private EventReference tutorialBackEvent;
-
-
-    // [Header("Setting")]
-    // [SerializeField]
-    // private GameObject settingButton;
-    // [SerializeField]
-    // private EventReference openSettingEvent;
-    // [SerializeField]
-    // private EventReference settingBackEvent;
-    
-    // [Header("Control")]
-    // [SerializeField]
-    // private GameObject helpButton;
-    // [SerializeField]
-    // private GameObject helpMenu;
-    // [SerializeField]
-    // private GameObject helpMenuClose;
-
-    [Header("Start Countdown")]
     [SerializeField]
-    private TextMeshProUGUI startCountDownText;
+    private EventReference startCountDownEvent;
     [SerializeField]
-    private AudioSource audioSource;
-    [SerializeField]
-    private AudioClip beepAudio;
-    [SerializeField]
-    private AudioClip startAudio;
-
-    [SerializeField]
-    private int readyTextLanguageID;
-    [SerializeField]
-    private int startTextLanguageID;
+    private EventReference openTutorialEvent;
 
 #if UNITY_EDITOR
     [Header("Editor Only")]
     [SerializeField]
     private bool skipMenu;
-    [SerializeField]
-    private bool skipStartCountDown;
-    [SerializeField]
-    private ValueWithEnable<bool> showVirtualStick;
 #endif
 
     IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
 
-// #if UNITY_EDITOR
-//         if (skipMenu)
-//         {
-//             EventSystem.current.SetSelectedGameObject(null);
-//             menuCanvasGroup.interactable = false;
-//             fadeTimer.Running = false;
-//             StartCoroutine(StartCountDown());
-//             menuCanvasGroup.alpha = 0;
-//         }
-// #endif
-    }
-
-    IEnumerator StartCountDown()
-    {
 #if UNITY_EDITOR
-        if (skipStartCountDown)
+        if (skipMenu)
         {
-            CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
-            StartGame();
-            yield break;
+            _canvasGroup.interactable = false;
+            _canvasGroup.alpha = 0;
+
+            EventSystem.current.SetSelectedGameObject(null);
+            MenuManager.ins.InstantClose(startCountDownEvent.Invoke);
         }
 #endif
-
-        var waitOneSec = new WaitForSeconds(1.2f);
-
-        yield return new WaitForSeconds(0.5f);
-        startCountDownText.text = LanguageMgr.GetTextById(readyTextLanguageID);
-        yield return waitOneSec;
-        CameraManager.ins.SwitchCamera(CameraManager.CameraState.FollowPlayer);
-        audioSource.PlayOneShot(beepAudio);
-        startCountDownText.text = "3";
-
-        yield return waitOneSec;
-        audioSource.PlayOneShot(beepAudio);
-        startCountDownText.text = "2";
-
-        yield return waitOneSec;
-        audioSource.PlayOneShot(beepAudio);
-        startCountDownText.text = "1";
-
-        yield return waitOneSec;
-        startCountDownText.text = LanguageMgr.GetTextById(startTextLanguageID);
-        audioSource.PlayOneShot(startAudio);
-
-        yield return waitOneSec;
-        startCountDownText.gameObject.SetActive(false);
-        StartGame();
     }
-
-    void StartGame()
-    {
-        HUDManager.ins.enabled = true;
-        GameManager.ins.enabled = true;
-        gameObject.SetActive(false);
-    }
-
-    // void Update()
-    // {
-    //     if (fadeTimer.Running)
-    //     {
-    //         if (fadeTimer.UpdateEnd)
-    //         {
-    //             fadeTimer.Running = false;
-    //             StartCoroutine(StartCountDown());
-    //         }
-    //         menuCanvasGroup.alpha = 1 - fadeTimer.Progress;
-    //     }
-    // }
 
     public void StartButtonPressed()
     {
         EventSystem.current.SetSelectedGameObject(null);
         _canvasGroup.interactable = false;
-        MenuManager.ins.CloseMenu(delegate {
-            StartCoroutine(StartCountDown());
-        });
+        MenuManager.ins.CloseMenu(startCountDownEvent.Invoke);
     }
 
-    // public void HelpButtonPressed()
-    // {
-    //     helpMenu.SetActive(true);
-    //     EventSystem.current.SetSelectedGameObject(helpMenuClose);
-    // }
-
-    // public void CloseHelpMenu()
-    // {
-    //     helpMenu.SetActive(false);
-    //     EventSystem.current.SetSelectedGameObject(helpButton);
-    // }
-
-    // public void TutorialButtonPressed()
-    // {
-    //     _lastButton = EventSystem.current.currentSelectedGameObject;
-    //     openTutorialEvent.Invoke();
-    // }
-
-    // public void SettingButtonPressed()
-    // {
-    //     _lastButton = EventSystem.current.currentSelectedGameObject;
-    //     openSettingEvent.Invoke();
-    // }
+    public void OpenTutorial()
+    {
+        _lastButton = EventSystem.current.currentSelectedGameObject;
+        openTutorialEvent.Invoke();
+    }
 
     public void ExitButtonPreseed()
     {

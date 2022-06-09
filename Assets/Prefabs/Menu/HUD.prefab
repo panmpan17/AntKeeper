@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11372549, g: 0.41960785, b: 0.5647059, a: 0.8}
+  m_Color: {r: 0.12156863, g: 0.44313726, b: 0.59607846, a: 0.6156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -486,9 +486,9 @@ MonoBehaviour:
   timeText: {fileID: 2946118918967131281}
   inputEvent: {fileID: 11400000, guid: 7b4ab34d475c340079b61edc6764dea3, type: 2}
   pauseButton: {fileID: 4619586792524800531}
-  warnColor: {r: 1, g: 0.5917661, b: 0, a: 1}
+  warnColor: {r: 1, g: 0.93333334, b: 0.4, a: 1}
   warningTime: 20
-  dangerColor: {r: 1, g: 0, b: 0, a: 1}
+  dangerColor: {r: 1, g: 0.3529412, b: 0.37254903, a: 1}
   dangerTime: 10
   rotateRange: 3
   rotateCount: 6
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11480955, g: 0.41933307, b: 0.5660378, a: 0.8}
+  m_Color: {r: 0.12156863, g: 0.44313726, b: 0.59607846, a: 0.6156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

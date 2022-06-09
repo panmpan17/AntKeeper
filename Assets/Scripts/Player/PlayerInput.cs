@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using MPack;
 using CallbackContext = UnityEngine.InputSystem.InputAction.CallbackContext;
 
 public class PlayerInput : MonoBehaviour
 {
     [SerializeField]
     private PlayerInputEvent inputEvent;
+
+    [SerializeField]
+    private EventReference openPauseEvent;
 
     public Vector2 MovementAxis { get; private set; }
 
@@ -41,11 +45,6 @@ public class PlayerInput : MonoBehaviour
         inputEvent.OnPause += OnPausePrssed;
     }
 
-    void Start()
-    {
-        PauseMenu.ins.OnPaused += delegate { enabled = false; };
-        PauseMenu.ins.OnResumed += delegate { enabled = true; };
-    }
 
     #region Input Action handle
     void HandleMovementPerformed(CallbackContext callbackContext)
@@ -78,7 +77,7 @@ public class PlayerInput : MonoBehaviour
     void HandlePausePreformed(CallbackContext callbackContext)
     {
         if (!_screenShotLock)
-            PauseMenu.ins.Pause();
+            openPauseEvent.Invoke();
     }
     #endregion
 
@@ -112,7 +111,7 @@ public class PlayerInput : MonoBehaviour
     public void OnPausePrssed()
     {
         if (!enabled) return;
-        PauseMenu.ins.Pause();
+        openPauseEvent.Invoke();
     }
     #endregion
 
@@ -129,7 +128,6 @@ public class PlayerInput : MonoBehaviour
 
     IEnumerator C_OneFrameSkip()
     {
-        Debug.Log(1);
         _oneFrameSkip = true;
         yield return null;
         _oneFrameSkip = false;
