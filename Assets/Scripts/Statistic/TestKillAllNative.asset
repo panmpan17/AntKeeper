@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be9338b85d6e247208815183579ae7bc, type: 3}
-  m_Name: FakeGameStatistic
+  m_Name: TestKillAllNative
   m_EditorClassIdentifier: 
   TotalMapArea: 150
   WalkDistance: 0
@@ -27,24 +27,16 @@ MonoBehaviour:
   PlantNewAntFailCount: 0
   OriginalAnimalCount: 50
   ResultAnimalCount: 25
-  NativeAnts:
-  - NestSize: 0.8
-    AreaSize: 26
-    StillAlive: 1
-    Revealed: 1
-  - NestSize: 0.4
-    AreaSize: 17
-    StillAlive: 1
-    Revealed: 0
+  NativeAnts: []
   FireAnts:
   - NestSize: 1
     AreaSize: 16
     StillAlive: 1
-    Revealed: 0
+    Revealed: 1
   - NestSize: 0.5
     AreaSize: 12
     StillAlive: 1
-    Revealed: 0
+    Revealed: 1
   - NestSize: 0.7
     AreaSize: 23
     StillAlive: 1

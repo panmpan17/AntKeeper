@@ -103,5 +103,6 @@ public class GameStatic : ScriptableObject
         public float NestSize;
         public int AreaSize;
         public bool StillAlive;
+        public bool Revealed;
     }
 }
