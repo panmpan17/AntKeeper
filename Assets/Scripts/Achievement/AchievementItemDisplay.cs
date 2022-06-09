@@ -14,6 +14,19 @@ public class AchievementItemDisplay : MonoBehaviour
     [SerializeField]
     private LanguageText descriptioinText;
 
+    [Header("Lock")]
+    [SerializeField]
+    private ColorReference lockNameColor;
+    [SerializeField]
+    private ColorReference lockDescriptionColor;
+
+    [Header("Hidden")]
+    [SerializeField]
+    private Sprite hiddenIcon;
+    [SerializeField]
+    [LauguageID]
+    private int hiddenDescriptionID;
+
     public void SetupUnlock(AchievementItem item)
     {
         icon.sprite = item.Icon;
@@ -25,13 +38,17 @@ public class AchievementItemDisplay : MonoBehaviour
     {
         icon.sprite = item.LockIcon;
         nameText.ChangeId(item.NameLanguageID);
+        nameText.GetComponent<GraphicColorSwitcher>().Color = lockNameColor;
         descriptioinText.ChangeId(item.DescriptionLanguageID);
+        descriptioinText.GetComponent<GraphicColorSwitcher>().Color = lockDescriptionColor;
     }
 
-    public void SetupHidden(AchievementItem item, Sprite hiddenIcon, int hiddenDescriptionID)
+    public void SetupHidden(AchievementItem item)
     {
         icon.sprite = hiddenIcon;
         nameText.ChangeId(item.NameLanguageID);
+        nameText.GetComponent<GraphicColorSwitcher>().Color = lockNameColor;
         descriptioinText.ChangeId(hiddenDescriptionID);
+        descriptioinText.GetComponent<GraphicColorSwitcher>().Color = lockDescriptionColor;
     }
 }

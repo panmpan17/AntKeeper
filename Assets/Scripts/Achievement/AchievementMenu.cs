@@ -19,13 +19,6 @@ public class AchievementMenu : AbstractMenu
     [SerializeField]
     private float padding;
 
-    [Header("Hidden achievement")]
-    [SerializeField]
-    private Sprite hiddenIcon;
-    [SerializeField]
-    [LauguageID]
-    private int hiddenAchievmmentDescriptionID;
-
 
     [Header("Reference")]
     [SerializeField]
@@ -40,21 +33,22 @@ public class AchievementMenu : AbstractMenu
     #if UNITY_EDITOR
     [Header("EditorOnly")]
     [SerializeField]
-    private bool overrideAchievedID;
+    private bool overrideAchievedIds;
     [SerializeField]
-    private string[] achievedIDs;
+    private string[] achievedIds;
     #endif
 
-    private string[] _achievedIDs;
+    private string[] _achievedIDs = new string[0];
 
     void Start()
     {
+        LoadAchievementSaveData();
+
         #if UNITY_EDITOR
-        if (overrideAchievedID)
-            _achievedIDs = achievedIDs;
+        if (overrideAchievedIds)
+            _achievedIDs = achievedIds;
         #endif
 
-        LoadAchievementSaveData();
         InstainiateAchievementItem();
         Open();
     }
@@ -83,7 +77,7 @@ public class AchievementMenu : AbstractMenu
             if (index == -1)
             {
                 if (achievement.Hidden)
-                    itemDisplay.SetupHidden(achievement, hiddenIcon, hiddenAchievmmentDescriptionID);
+                    itemDisplay.SetupHidden(achievement);
                 else
                     itemDisplay.SetupLock(achievement);
             }

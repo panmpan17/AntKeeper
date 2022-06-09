@@ -3,7 +3,7 @@ using UnityEngine;
 namespace MPack
 {
     [System.Serializable]
-    public class ColorReference
+    public struct ColorReference
     {
         public Color Constant;
         public ColorVariable Variable;

@@ -9,8 +9,17 @@ using MPack;
 [ExecuteInEditMode]
 public class GraphicColorSwitcher : MonoBehaviour
 {
-    public Graphic[] targetGraphics;
-    public ColorReference colorVariable;
+    [SerializeField]
+    private Graphic[] targetGraphics;
+    [SerializeField]
+    private ColorReference colorVariable;
+    public ColorReference Color {
+        get => colorVariable;
+        set {
+            colorVariable = value;
+            ApplyColor();
+        }
+    }
 
     void Awake()
     {

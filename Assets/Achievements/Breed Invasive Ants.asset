@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8620910946cfa4d6d8a9038dd5684733, type: 3}
-  m_Name: Kill All Ants
+  m_Name: Breed Invasive Ants
   m_EditorClassIdentifier: 
-  ID: single.kill.all-ant
-  Icon: {fileID: 21300000, guid: 063297d51918b4602b290da763d9851d, type: 3}
-  LockIcon: {fileID: -3953365634733000360, guid: 3fb205454fd7a4dbe9b7419ca2ac8fce, type: 3}
+  ID: single.breed.invasive.10
+  Icon: {fileID: 612448398, guid: c39b32449a3bc4481955be84010dc342, type: 3}
+  LockIcon: {fileID: -1008904806, guid: c39b32449a3bc4481955be84010dc342, type: 3}
   Hidden: 1
-  NameLanguageID: 709
-  DescriptionLanguageID: 710
+  NameLanguageID: 705
+  DescriptionLanguageID: 706
