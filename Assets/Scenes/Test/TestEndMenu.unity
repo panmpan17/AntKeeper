@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3d924f393ae4a338e6a18b9921e6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameStatic: {fileID: 11400000, guid: 2344bbabe6bec4193b6ba59970105ceb, type: 2}
+  gameStatic: {fileID: 11400000, guid: c5cb23306a1c445058ee5ba6978771f1, type: 2}
   statisticProvider: {fileID: 11400000, guid: 172a0f31a015b49bf8e03cce67296bfc, type: 2}
 --- !u!1001 &6545942727535879649
 PrefabInstance:

@@ -63,6 +63,7 @@ public class AntNestSizeControl : MonoBehaviour
 
         if (_size < sizeRange.Min)
         {
+            StatisticTracker.ins.AddPlayerDestroyHubRecord(_hub.IsFireAnt);
             _hub.MainNestHubDestroy();
         }
     }

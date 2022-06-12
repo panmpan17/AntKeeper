@@ -4917,12 +4917,12 @@ MonoBehaviour:
   preventRepeat: 1
   jarHasAntSprite: {fileID: 21300000, guid: 063297d51918b4602b290da763d9851d, type: 3}
   emptyJarSprite: {fileID: 21300000, guid: a2c43f69e73054f148c726f84194cb1c, type: 3}
+  alreadyExamine: {fileID: 11400000, guid: 355951ba3db64490588ec84dde7347c1, type: 2}
   particle: {fileID: 313829051}
   collectTimer:
     TargetTime: 1.9
     Running: 0
     ReverseMode: 0
-  collectProgressBar: {fileID: 0}
   revealTrailParticle: {fileID: 1566297142664734145}
   revealTimer:
     TargetTime: 0.8

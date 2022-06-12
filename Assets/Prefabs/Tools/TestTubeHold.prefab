@@ -383,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4560711313648587986, guid: 8a45630b972ea481780656199abfa216, type: 3}
       propertyPath: m_Name
-      value: TestCube
+      value: TestTube
       objectReference: {fileID: 0}
     - target: {fileID: 4560711313648587987, guid: 8a45630b972ea481780656199abfa216, type: 3}
       propertyPath: m_RootOrder

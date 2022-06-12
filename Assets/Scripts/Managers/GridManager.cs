@@ -14,12 +14,11 @@ public class GridManager : MonoBehaviour
     public Grid Grid => grid;
     [SerializeField]
     private Tilemap baseMap;
+    public Tilemap BaseMap => baseMap;
     [SerializeField]
     private Tilemap routeColliderMap;
     [SerializeField]
     private TilemapReference routeColliderMapReference;
-    [SerializeField]
-    private StatisticProvider statisticProvider;
 
     [Header("Spawn Ants")]
     [SerializeField]
@@ -42,11 +41,10 @@ public class GridManager : MonoBehaviour
     private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
     private List<AntNestHub> _antNestHubs = new List<AntNestHub>();
     private List<VirtualAnimalSpot> _animals = new List<VirtualAnimalSpot>();
+
+    public List<AntNestHub> AntNestHubs => _antNestHubs;
     public List<VirtualAnimalSpot> Animals => _animals;
 
-
-    public delegate void AntCountChangeDelegate(AntCountInfo count);
-    public event AntCountChangeDelegate OnAntCountChange;
 
     private int _originAnimalCount;
     public int OriginAnimalCount => _originAnimalCount;
@@ -58,7 +56,7 @@ public class GridManager : MonoBehaviour
         routeColliderMapReference.Tilemap = routeColliderMap;
         InstainateAntNestOnStart();
 
-        statisticProvider.Get = CollectGameStatic;
+        // statisticProvider.Get = CollectGameStatic;
     }
 
     void InstainateAntNestOnStart()
@@ -118,16 +116,8 @@ public class GridManager : MonoBehaviour
     }
 
 
-    public void RegisterAntNest(AntNestHub antNestHub)
-    {
-        _antNestHubs.Add(antNestHub);
-        OnAntCountChange?.Invoke(CountAnt());
-    }
-    public void UnregisterAntNest(AntNestHub antNestHub)
-    {
-        _antNestHubs.Remove(antNestHub);
-        OnAntCountChange?.Invoke(CountAnt());
-    }
+    public void RegisterAntNest(AntNestHub antNestHub) => _antNestHubs.Add(antNestHub);
+    public void UnregisterAntNest(AntNestHub antNestHub) => _antNestHubs.Remove(antNestHub);
 
     public void ReigsterAnimal(VirtualAnimalSpot animalSpot, out Vector3Int gridPosition)
     {
@@ -230,80 +220,6 @@ public class GridManager : MonoBehaviour
                 count++;
         }
         return count;
-    }
-
-    public AntCountInfo CountAnt()
-    {
-        AntCountInfo countInfo = new AntCountInfo();
-
-        for (int i = 0; i < _antNestHubs.Count; i++)
-        {
-            if (_antNestHubs[i].IsFireAnt)
-            {
-                if (_antNestHubs[i].enabled)
-                    countInfo.FireAnt++;
-                else
-                    countInfo.FireAntDisabled++;
-            }
-            else
-            {
-                if (_antNestHubs[i].enabled)
-                    countInfo.NativeAnt++;
-                else
-                    countInfo.NativeAntDisabled++;
-            }
-        }
-        return countInfo;
-    }
-
-    public GameStatic CollectGameStatic()
-    {
-        var statistic = ScriptableObject.CreateInstance<GameStatic>();
-        List<GameStatic.AntNestInfo> fireAnts = new List<GameStatic.AntNestInfo>();
-        List<GameStatic.AntNestInfo> nativeAnts = new List<GameStatic.AntNestInfo>();
-
-        for (int i = 0; i < _antNestHubs.Count; i++)
-        {
-            if (_antNestHubs[i].IsFireAnt)
-            {
-                fireAnts.Add(new GameStatic.AntNestInfo
-                {
-                    NestSize = _antNestHubs[i].Size,
-                    AreaSize = _antNestHubs[i].CountAreaSize(),
-                    StillAlive = _antNestHubs[i].enabled,
-                    Revealed = _antNestHubs[i].IsShowTrueColor
-                });
-            }
-            else
-            {
-                nativeAnts.Add(new GameStatic.AntNestInfo
-                {
-                    NestSize = _antNestHubs[i].Size,
-                    AreaSize = _antNestHubs[i].CountAreaSize(),
-                    StillAlive = _antNestHubs[i].enabled,
-                    Revealed = _antNestHubs[i].IsShowTrueColor
-                });
-            }
-        }
-
-        int totalTileCount = 0;
-        for (int x = baseMap.cellBounds.xMin; x < baseMap.cellBounds.xMax; x++)
-        {
-            for (int y = baseMap.cellBounds.yMin; y < baseMap.cellBounds.yMax; y++)
-            {
-                if (baseMap.HasTile(new Vector3Int(x, y, 0)))
-                    totalTileCount += 1;
-            }
-        }
-        statistic.TotalMapArea = totalTileCount;
-
-        statistic.OriginalAnimalCount = OriginAnimalCount;
-        statistic.ResultAnimalCount = CountAliveAnimal();
-
-        statistic.FireAnts = fireAnts.ToArray();
-        statistic.NativeAnts = nativeAnts.ToArray();
-
-        return statistic;
     }
     #endregion
 

@@ -20,6 +20,11 @@ public class QueenAntJar : AbstractHoldItem
     [SerializeField]
     private Sprite twoAntSprite;
 
+    [SerializeField]
+    private PromptItem needTwoNests;
+    [SerializeField]
+    private PromptItem twoTypesOfAnt;
+
     private enum State {
         Empty,
         OneAnt,
@@ -156,7 +161,10 @@ public class QueenAntJar : AbstractHoldItem
         if (GridManager.ins.TryFindAntNest(PlayerBehaviour.SelectedGridPosition, out AntNestHub overlapNest))
         {
             if (overlapNest == _firstAntNest)
+            {
+                needTwoNests.Show();
                 return;
+            }
             if (!overlapNest.enabled)
                 return;
 
@@ -197,8 +205,12 @@ public class QueenAntJar : AbstractHoldItem
     public void PlantAnt()
     {
         if (_firstIsFireAnt != _secondIsFireAnt)
+        {
+            twoTypesOfAnt.Show();
             return;
+        }
         
+        StatisticTracker.ins.AddBreedAntRecord(_firstIsFireAnt);
         GridManager.ins.InstantiateAntNestOnGridWithoutChecking(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
     }
 }

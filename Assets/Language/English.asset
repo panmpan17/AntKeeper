@@ -147,4 +147,8 @@ MonoBehaviour:
   - ID: 214
     Text: Achievement
   - ID: 802
-    Text: Test
+    Text: Already Examined
+  - ID: 801
+    Text: Need 2 Different Nest
+  - ID: 803
+    Text: There's two type of ants, they can't breed

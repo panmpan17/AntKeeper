@@ -13,6 +13,9 @@ public class AntJar : AbstractHoldItem
     [SerializeField]
     private Sprite emptyJarSprite;
 
+    [SerializeField]
+    private PromptItem alreadyExamine;
+
     [Header("Collect")]
     [SerializeField]
     private ParticleSystem particle;
@@ -74,8 +77,13 @@ public class AntJar : AbstractHoldItem
             if (HasAnt)
                 return;
 
+            Debug.Log(preventRepeat);
+            Debug.Log(targetNest.IsShowTrueColor);
             if (preventRepeat && targetNest.IsShowTrueColor)
+            {
+                alreadyExamine.Show();
                 return;
+            }
 
             _targetAntNest = targetNest;
             PlayerBehaviour.Input.enabled = false;

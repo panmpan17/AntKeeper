@@ -4925,3 +4925,5 @@ MonoBehaviour:
   emptySprite: {fileID: 125654675, guid: 10542f7bcab2444439f16ec96a41050e, type: 3}
   oneAntSprite: {fileID: 894989723, guid: 10542f7bcab2444439f16ec96a41050e, type: 3}
   twoAntSprite: {fileID: -1318439814, guid: 10542f7bcab2444439f16ec96a41050e, type: 3}
+  needTwoNests: {fileID: 11400000, guid: 388eea525838a448894e80ec127aee67, type: 2}
+  twoTypesOfAnt: {fileID: 11400000, guid: 1526b63ccb98847ee8d085c7e31dbe0c, type: 2}

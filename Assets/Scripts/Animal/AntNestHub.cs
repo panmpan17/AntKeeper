@@ -72,6 +72,8 @@ public class AntNestHub : MonoBehaviour
     }
     public void ShowTrueColor()
     {
+        IsShowTrueColor = true;
+
         revealColorEffect.AddWaitingList(new EffectReference.EffectQueue
         {
             Parent = null,
