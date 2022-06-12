@@ -3039,12 +3039,12 @@ MonoBehaviour:
   fadeFromLeftPosition: {x: 0, y: 0}
   achievements:
   - {fileID: 11400000, guid: 747aa4de136b548dfa0f34f0bb0b9848, type: 2}
-  - {fileID: 11400000, guid: f1fa1c19ec0d74407a0e0439ff5dec79, type: 2}
   - {fileID: 11400000, guid: f8740d87197f14d6086d67e1e05aa820, type: 2}
-  - {fileID: 11400000, guid: 54cd91c489d58404387b928c0ac48f7a, type: 2}
   - {fileID: 11400000, guid: 44423c9182a444e97affbd23f0eaeb75, type: 2}
-  - {fileID: 11400000, guid: 8c1777b904a844bdcad6c8fb5df8912f, type: 2}
   - {fileID: 11400000, guid: f806db34ffd0c40debd1d6183dada425, type: 2}
+  - {fileID: 11400000, guid: f1fa1c19ec0d74407a0e0439ff5dec79, type: 2}
+  - {fileID: 11400000, guid: 54cd91c489d58404387b928c0ac48f7a, type: 2}
+  - {fileID: 11400000, guid: 8c1777b904a844bdcad6c8fb5df8912f, type: 2}
   achievementItemDisplayPrefab: {fileID: 6412508639196106483, guid: a4889ecb0159e4f5f9c677c1b2e60126, type: 3}
   startAnchor: {x: 20, y: 10}
   padding: 13
@@ -3955,6 +3955,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8389787324347692583}
     m_Modifications:
+    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3930415149701072257, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4043,6 +4051,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting
       objectReference: {fileID: 0}
+    - target: {fileID: 3930415149701072284, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5035958445814562937, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.85
@@ -4051,6 +4063,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8389787324347692579}
+    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
 --- !u!114 &5853211470227390339 stripped

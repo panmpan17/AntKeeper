@@ -42,7 +42,14 @@ public class AchievementMenu : AbstractMenu
 
     void Start()
     {
-        LoadAchievementSaveData();
+        if (AchievementStoreData.Read(out AchievementStoreData data))
+        {
+            _achievedIDs = data.Unlockeds;
+            Debug.Log(_achievedIDs.Length);
+            for (int i = 0; i < _achievedIDs.Length; i++)
+                Debug.Log(_achievedIDs[i]);
+        }
+        // LoadAchievementSaveData();
 
         #if UNITY_EDITOR
         if (overrideAchievedIds)
@@ -51,11 +58,6 @@ public class AchievementMenu : AbstractMenu
 
         InstainiateAchievementItem();
         Open();
-    }
-
-    void LoadAchievementSaveData()
-    {
-        // AchievementSaveState 
     }
 
     void InstainiateAchievementItem()

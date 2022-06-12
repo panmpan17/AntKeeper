@@ -28,9 +28,9 @@ public class AchievementUnlockMenu : MonoBehaviour
 
     [Header("Achievement")]
     [SerializeField]
-    private AchievementItem breadInvasive;
+    private AchievementItem breedInvasive;
     [SerializeField]
-    private AchievementItem breadNative;
+    private AchievementItem breedNative;
 
     [SerializeField]
     private AchievementItem identifyAll;
@@ -54,11 +54,25 @@ public class AchievementUnlockMenu : MonoBehaviour
     {
         List<AchievementItem> unlocks = new List<AchievementItem>();
 
+        if (TestBreedInvasiveAnt(statistic)) unlocks.Add(breedInvasive);
+        if (TestBreedNativeAnt(statistic)) unlocks.Add(breedNative);
+
+
         if (TestIdentifyAll(statistic)) unlocks.Add(identifyAll);
+
 
         if (TestKillAll(statistic)) unlocks.Add(killAll);
         else if (TestKillAllNative(statistic)) unlocks.Add(killAllNative);
         else if (TestKillAllInvastive(statistic)) unlocks.Add(killAllInvasive);
+
+        if (TestKillFireAntTenTime(statistic))unlocks.Add(killInvasiveTenTime);
+
+
+        // Remove already unlocks achievement
+        AchievementStoreData.Read(out AchievementStoreData data);
+        data.Append(unlocks);
+        data.Save();
+
 
         if (unlocks.Count == 0)
         {
@@ -100,6 +114,9 @@ public class AchievementUnlockMenu : MonoBehaviour
     }
 
 
+    bool TestBreedInvasiveAnt(GameStatic statistic) => statistic.BreedFireAntCount >= 10;
+    bool TestBreedNativeAnt(GameStatic statistic) => statistic.BreedNativeAntCount >= 10;
+
     bool TestIdentifyAll(GameStatic statistic)
     {
         if (statistic.NativeAnts.Length + statistic.FireAnts.Length < 3)
@@ -125,4 +142,5 @@ public class AchievementUnlockMenu : MonoBehaviour
     bool TestKillAll(GameStatic statistic) => statistic.NativeAnts.Length + statistic.FireAnts.Length == 0;
     bool TestKillAllNative(GameStatic statistic) => statistic.NativeAnts.Length == 0;
     bool TestKillAllInvastive(GameStatic statistic) => statistic.FireAnts.Length == 0;
+    bool TestKillFireAntTenTime(GameStatic statistic) => statistic.BucketDestroyFireAntCount >= 10;
 }

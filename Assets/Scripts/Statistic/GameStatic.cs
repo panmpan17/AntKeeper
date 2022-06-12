@@ -18,10 +18,14 @@ public class GameStatic : ScriptableObject
     public int PickupBucketCount;
     public float PourWaterAmount;
     public float BucketCauseDamageAmount;
+    public int BucketDestroyFireAntCount;
+    public int BucketDestroyNativeAntCount;
 
-    [Header("Bucket")]
+    [Header("Ant Jar")]
     public int PickupAntJar;
     public int ExamineAntCount;
+    public int BreedFireAntCount;
+    public int BreedNativeAntCount;
 
     [Header("Test Tube")]
     public int PickupTestTube;
