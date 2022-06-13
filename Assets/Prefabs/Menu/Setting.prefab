@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3356299020025790031}
   - component: {fileID: 520182287456962321}
   - component: {fileID: 9165208313460463433}
-  - component: {fileID: 2288817098600998368}
   - component: {fileID: 5732525934465524995}
   m_Layer: 5
   m_Name: Resolution
@@ -156,7 +155,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1636994017766145036}
-    m_SelectOnDown: {fileID: 5035958445814563202}
+    m_SelectOnDown: {fileID: 6045303059698225489}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -188,7 +187,7 @@ MonoBehaviour:
   leftEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2288817098600998368}
+      - m_Target: {fileID: 82857212566295323}
         m_TargetAssemblyTypeName: EventTrigger, MPack
         m_MethodName: TriggerEvent
         m_Mode: 1
@@ -215,7 +214,7 @@ MonoBehaviour:
   rightEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2288817098600998368}
+      - m_Target: {fileID: 1830583266226231660}
         m_TargetAssemblyTypeName: EventTrigger, MPack
         m_MethodName: TriggerEvent
         m_Mode: 1
@@ -239,19 +238,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2288817098600998368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13918261964791326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6bc2d346178741d4947af80cf278e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: d5d0d1e456c6b49eb8a26caa4600098c, type: 2}
 --- !u!114 &5732525934465524995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +414,7 @@ GameObject:
   - component: {fileID: 5135736702487320708}
   - component: {fileID: 3788350086700832642}
   - component: {fileID: 8924419081075287385}
+  - component: {fileID: 82857212566295323}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -493,6 +480,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &82857212566295323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564104534991556115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6bc2d346178741d4947af80cf278e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: f3ae83e24009d49db862f80c683561d9, type: 2}
 --- !u!1 &1636994016701600327
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +685,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1636994017766145027}
   - component: {fileID: 1636994017766145036}
-  - component: {fileID: 2310017335140173752}
   - component: {fileID: 4156432202368750488}
   - component: {fileID: 7014474260884153671}
   m_Layer: 5
@@ -732,7 +731,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1636994018094590872}
-    m_SelectOnDown: {fileID: 5035958444803163987}
+    m_SelectOnDown: {fileID: 9165208313460463433}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -791,40 +790,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2310017335140173752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636994017766145026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: 371f45fc4f40542e6976042c2331a662, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  BooleanEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  FloatEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1636994017766145036}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-        m_MethodName: SetValueWithoutNotify
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &4156432202368750488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,7 +829,6 @@ GameObject:
   - component: {fileID: 1636994018094590871}
   - component: {fileID: 1636994018094590872}
   - component: {fileID: 6442263484218632257}
-  - component: {fileID: 8401273723843011515}
   - component: {fileID: 4825386973782091829}
   m_Layer: 5
   m_Name: MusicVolumeSlider
@@ -982,40 +946,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventReference: {fileID: 11400000, guid: 7bc851b858d24472385e667919cd629e, type: 2}
---- !u!114 &8401273723843011515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636994018094590870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: 9a37b3f2cc79c447c97b20444e7f7469, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  BooleanEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  FloatEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1636994018094590872}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-        m_MethodName: SetValueWithoutNotify
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &4825386973782091829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1339,8 +1269,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1636994017766145036}
-    m_SelectOnDown: {fileID: 5035958445814563202}
+    m_SelectOnUp: {fileID: 9165208313460463433}
+    m_SelectOnDown: {fileID: 5035958444803163987}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1435,7 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bc2d346178741d4947af80cf278e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: d5d0d1e456c6b49eb8a26caa4600098c, type: 2}
+  eventReference: {fileID: 11400000, guid: ad5398df0492b424cb0c04c2f27318f6, type: 2}
 --- !u!114 &8210529362165780482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,6 +1405,9 @@ GameObject:
   - component: {fileID: 3930415149701072257}
   - component: {fileID: 440798672306426392}
   - component: {fileID: 943235617875612979}
+  - component: {fileID: 2148452854589920702}
+  - component: {fileID: 2471270012187584549}
+  - component: {fileID: 6953326825082540455}
   m_Layer: 5
   m_Name: Setting
   m_TagString: Untagged
@@ -1534,6 +1467,20 @@ MonoBehaviour:
   firstSelected: {fileID: 8216347047820707020}
   fadeFromRightPosition: {x: 100, y: 0}
   fadeFromLeftPosition: {x: 0, y: 0}
+  mainVolumeSlider: {fileID: 8216347047820707010}
+  musicVolumeSlider: {fileID: 1636994018094590872}
+  soundEffectVolumeSlider: {fileID: 1636994017766145036}
+  avalibleResolution:
+  - {x: 800, y: 450}
+  - {x: 1280, y: 720}
+  - {x: 1600, y: 900}
+  - {x: 1920, y: 1080}
+  - {x: 2560, y: 1440}
+  - {x: 2880, y: 1620}
+  resolutionText: {fileID: 520182287456962321}
+  fullscreenLanguageId: 608
+  windowLanguageId: 609
+  displayTypeLanguageText: {fileID: 8210529362165780482}
 --- !u!225 &943235617875612979
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1546,6 +1493,108 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2148452854589920702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930415149701072284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: ad5398df0492b424cb0c04c2f27318f6, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 440798672306426392}
+        m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
+        m_MethodName: SwitchDisplayType
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FloatEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2471270012187584549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930415149701072284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: f3ae83e24009d49db862f80c683561d9, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 440798672306426392}
+        m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
+        m_MethodName: DownSizeResolution
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FloatEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6953326825082540455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3930415149701072284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: f6bd886b441dc4fd5b8dd5ae47878e5f, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 440798672306426392}
+        m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
+        m_MethodName: UpSizeResolution
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  BooleanEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FloatEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4712538785561960743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1606,7 @@ GameObject:
   - component: {fileID: 2015365348712920336}
   - component: {fileID: 2726662353679905714}
   - component: {fileID: 1046644656445840304}
+  - component: {fileID: 1830583266226231660}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -1622,6 +1672,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1830583266226231660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712538785561960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6bc2d346178741d4947af80cf278e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: f6bd886b441dc4fd5b8dd5ae47878e5f, type: 2}
 --- !u!1 &5035958445814562936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2696,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1636994017766145036}
+    m_SelectOnUp: {fileID: 6045303059698225489}
     m_SelectOnDown: {fileID: 5035958445814563202}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -2768,7 +2831,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8216347047820707021}
   - component: {fileID: 8216347047820707010}
-  - component: {fileID: 4792028594883917173}
   - component: {fileID: 6601603600086114911}
   - component: {fileID: 8141863363529599866}
   m_Layer: 5
@@ -2866,40 +2928,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ButtonTween, Assembly-CSharp
         m_MethodName: PlaySwitchChangeSound
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4792028594883917173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8216347047820707020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: 46ea242373aae4b97964c4654b38239a, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  BooleanEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  FloatEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8216347047820707010}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-        m_MethodName: SetValueWithoutNotify
-        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

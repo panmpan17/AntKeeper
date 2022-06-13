@@ -185,6 +185,25 @@ MonoBehaviour:
   firstSelected: {fileID: 8389787323269288263}
   fadeFromRightPosition: {x: 100, y: 0}
   fadeFromLeftPosition: {x: 0, y: 0}
+  creditText: {fileID: 521038077251386956}
+  format: '<color=#fff><b>{0}</b></color>
+
+    {1}'
+  credits:
+  - Name: "Michael Pan \u6F58\u555F\u5143"
+    Occupation: 'Program
+
+      Art
+
+      Sound Effect'
+  - Name: martinhodler (Github)
+    Occupation: Aseprite-Importer for Unity
+  - Name: Jeff Jognson
+    Occupation: Tween
+  - Name: mixkit / Kenney
+    Occupation: Sound Effect
+  - Name: ecrett music
+    Occupation: Music
 --- !u!1 &521038076525444506
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +764,6 @@ GameObject:
   - component: {fileID: 521038077251386959}
   - component: {fileID: 521038077251386956}
   - component: {fileID: 521038077251386958}
-  - component: {fileID: 529802418177825970}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -890,19 +908,6 @@ MonoBehaviour:
     Constant: {r: 0, g: 0, b: 0, a: 0}
     Variable: {fileID: 11400000, guid: a176e4e23a3ff485fb08ab492b2f05b3, type: 2}
     UseVariable: 1
---- !u!114 &529802418177825970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521038077251386946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1374b8f3500cf4ddf851100c29bf9562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 211
 --- !u!1 &549896531516729398
 GameObject:
   m_ObjectHideFlags: 0
@@ -6696,6 +6701,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8389787324347692583}
     m_Modifications:
+    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3930415149701072257, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6786,12 +6799,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3930415149701072284, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5035958445814563202, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8389787324347692579}
+    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.517
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
 --- !u!114 &5853211470227390339 stripped
