@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using TMPro;
+using TMPro.EditorUtilities;
+
 
 namespace MPack {
     public class LanguageEditWindow : EditorWindow
@@ -84,6 +87,8 @@ namespace MPack {
 
             string allCharString = new string(allChars.ToArray());
             Debug.Log(allCharString);
+            GUIUtility.systemCopyBuffer = allCharString;
+            TMPro_FontAssetCreatorWindow.ShowFontAtlasCreatorWindow(TMP_Settings.defaultFontAsset);
         }
 
         private void DrawRow(int ID, float width) {

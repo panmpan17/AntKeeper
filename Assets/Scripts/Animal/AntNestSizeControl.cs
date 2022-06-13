@@ -58,6 +58,9 @@ public class AntNestSizeControl : MonoBehaviour
 
     void RootPositionTakeDamage(float damageAmount)
     {
+        if (!_hub.enabled)
+            return;
+
         _size -= damageAmount / rootResistent;
         targetTransform.localScale = new Vector3(_size, _size, _size);
 
