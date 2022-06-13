@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         GridManager.ins.ShowAllColor();
 
         yield return new WaitForSecondsRealtime(3);
-        FindObjectOfType<EndMenu>(true).Open();
+
+        MenuManager.ins.OpenMenu("End");
+        // FindObjectOfType<EndMenu>(true).Open();
     }
 }

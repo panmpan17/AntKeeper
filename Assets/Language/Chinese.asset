@@ -73,9 +73,9 @@ MonoBehaviour:
   - ID: 402
     Text: "\u52D5\u7269"
   - ID: 501
-    Text: "\u52D5\u7269\u6578\u91CF"
+    Text: "\u52D5\u7269"
   - ID: 502
-    Text: "\u88AB\u4F54\u9818\u7684\u571F\u5730"
+    Text: "\u5B58\u6D3B\u4E0B\u4F86\u7684\u5DE2\u7A74"
   - ID: 212
     Text: "\u8A2D\u5B9A"
   - ID: 213
@@ -134,3 +134,15 @@ MonoBehaviour:
     Text: "\u9700\u8981\u5169\u500B\u4E0D\u540C\u7684\u5DE2\u7A74"
   - ID: 803
     Text: "\u6709\u5169\u7A2E\u4E0D\u540C\u7684\u879E\u87FB, \u4ED6\u5011\u4E0D\u80FD\u4EA4\u914D"
+  - ID: 503
+    Text: "\u88AB\u6467\u6BC0\u7684\u5DE2\u7A74"
+  - ID: 504
+    Text: "\u57F9\u80B2\u7684\u5DE2\u7A74"
+  - ID: 505
+    Text: "\u5206\u6578"
+  - ID: 607
+    Text: "\u986F\u793A"
+  - ID: 608
+    Text: "\u5168\u87A2\u5E55"
+  - ID: 609
+    Text: "\u8996\u7A97"

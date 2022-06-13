@@ -45,9 +45,6 @@ public class AchievementMenu : AbstractMenu
         if (AchievementStoreData.Read(out AchievementStoreData data))
         {
             _achievedIDs = data.Unlockeds;
-            Debug.Log(_achievedIDs.Length);
-            for (int i = 0; i < _achievedIDs.Length; i++)
-                Debug.Log(_achievedIDs[i]);
         }
         // LoadAchievementSaveData();
 

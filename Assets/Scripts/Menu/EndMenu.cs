@@ -6,196 +6,191 @@ using MPack;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DigitalRuby.Tween;
 
-public class EndMenu : MonoBehaviour
+public class EndMenu : AbstractMenu
 {
-    [SerializeField]
-    [ShortTimer]
-    private Timer fadeTimer;
-
     [Header("UI Elements")]
     [SerializeField]
-    private GameObject replayButton;
+    private TextMeshProUGUI animalText;
     [SerializeField]
-    private TextMeshProUGUI resultAnimalCount;
+    private TextMeshProUGUI aliveNestsText;
     [SerializeField]
-    private TextMeshProUGUI originalAnimalCount;
+    private TextMeshProUGUI destroyNestsText;
+    [SerializeField]
+    private TextMeshProUGUI breedNestsText;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private Color nativeTextColor;
+    [SerializeField]
+    private Color invasiveTextColor;
+    private string nestTextFormat;
 
+    [Header("Grade Calculation")]
     [SerializeField]
-    private RectTransform mask;
+    private Sprite[] gradeSprites;
     [SerializeField]
-    private RectTransform fireAntBar;
+    private float[] requireScore;
     [SerializeField]
-    private RectTransform nativeAntBar;
+    private Image[] gradeStampImages;
     [SerializeField]
-    private AnimationCurve barWidthCurve;
-
-    [Header("Stars")]
-    [SerializeField]
-    private GameObject[] stars;
-    [SerializeField]
-    private float starApearGap = 0.6f;
-    [SerializeField]
-    private float starAnimationTime;
-    [SerializeField]
-    private Vector3 starStartScale;
-    [SerializeField]
-    private AnimationCurveReference starFadeCurve;
-    [SerializeField]
-    private AnimationCurveReference starScaleCurve;
-    private WaitForSecondsRealtime starGapWait;
-
-    [Header("Score Calculation")]
-    [SerializeField]
-    private float oneStarScore = 0.5f;
-    [SerializeField]
-    private float twoStarScore = 0.7f;
-    [SerializeField]
-    private float threeStarScore = 0.9f;
+    private CanvasGroup gradeStampCanvasGroup;
 
     [SerializeField]
     private StatisticProvider statisticProvider;
     [SerializeField]
     private AchievementUnlockMenu achievementUnlockMenu;
 
-    private Canvas _canvas;
-    private CanvasGroup _canvasGroup;
 
-    void Awake()
+    protected override void Awake()
     {
-        _canvas = GetComponent<Canvas>();
-        _canvasGroup = GetComponent<CanvasGroup>();
-        _canvasGroup.alpha = 0;
+        base.Awake();
+        firstSelected.SetActive(false);
 
-        for (int i = 0; i < stars.Length; i++)
-        {
-            stars[i].gameObject.SetActive(false);
-        }
-
-        _canvas.enabled = _canvasGroup.enabled = enabled = false;
-        replayButton.SetActive(false);
-
-        starGapWait = new WaitForSecondsRealtime(starApearGap);
+        nestTextFormat = string.Format(
+            "<color=#{0}>{1}</color> / <color=#{2}>{3}</color>",
+            ColorUtility.ToHtmlStringRGB(nativeTextColor),
+            "{0}",
+            ColorUtility.ToHtmlStringRGB(invasiveTextColor),
+            "{1}"
+        );
+        animalText.text = aliveNestsText.text = destroyNestsText.text = breedNestsText.text = scoreText.text = "";
+        gradeStampCanvasGroup.alpha = 0;
     }
 
-    public void Open()
+
+    protected override void FadeInFinished(ITween<float> tween)
     {
-        _canvas.enabled = _canvasGroup.enabled = enabled = true;
-        fadeTimer.Reset();
-
-        resultAnimalCount.text = "0";
-        originalAnimalCount.text = "/";
-
-        fireAntBar.sizeDelta = new Vector2(0, fireAntBar.sizeDelta.y);
-        nativeAntBar.sizeDelta = new Vector2(0, nativeAntBar.sizeDelta.y);
-
-        StartCoroutine(FadeIn());
-    }
-
-    IEnumerator FadeIn()
-    {
-        fadeTimer.Reset();
-        while (!fadeTimer.UnscaleUpdateTimeEnd)
-        {
-            _canvasGroup.alpha = fadeTimer.Progress;
-            yield return null;
-        }
-
         StartCoroutine(C_ShowStatic());
-        _canvasGroup.alpha = 1;
     }
 
     IEnumerator C_ShowStatic()
     {
         var statistic = statisticProvider.Get();
 
-        yield return StartCoroutine(C_ShowAnimalCount(statistic));
-        yield return StartCoroutine(C_ShowArea(statistic));
-        yield return StartCoroutine(C_ShowStars(statistic));
-        yield return starGapWait;
+        var wait = new WaitForSecondsRealtime(0.5f);
 
+        yield return StartCoroutine(C_ShowAnimalCount(statistic));
+        yield return wait;
+        yield return StartCoroutine(C_ShowAntNestCount(statistic));
+        yield return wait;
+        yield return StartCoroutine(C_ShowDestroyNestsCount(statistic));
+        yield return wait;
+        yield return StartCoroutine(C_ShowBreedNestsCount(statistic));
+        yield return wait;
+        yield return StartCoroutine(C_ShowScore(statistic));
+        yield return wait;
+        yield return StartCoroutine(C_ShowGrade(statistic));
+        yield return wait;
         yield return StartCoroutine(achievementUnlockMenu.C_StartUnlock(statistic));
 
-        replayButton.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(replayButton);
+        _canvasGroup.interactable = true;
+        firstSelected.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
+
 
     IEnumerator C_ShowAnimalCount(GameStatic statistic)
     {
-        resultAnimalCount.text = "0";
-        originalAnimalCount.text = "/" + statistic.OriginalAnimalCount.ToString();
+        string right = " / " + statistic.OriginalAnimalCount.ToString();
+        animalText.text = "0" + right;
 
         yield return null;
 
         for (int count = 1; count <= statistic.ResultAnimalCount; count++)
         {
-            resultAnimalCount.text = count.ToString();
+            animalText.text = count + right;
             yield return null;
         }
     }
 
-    IEnumerator C_ShowArea(GameStatic statistic)
+    IEnumerator C_ShowAntNestCount(GameStatic statistic)
     {
-        float fireAntWidth = statistic.FireAntAreaPercentage * mask.sizeDelta.x;
-        float nativeAntWidth = statistic.NativeAntAreaPercentage * mask.sizeDelta.x + fireAntWidth;
+        aliveNestsText.text = string.Format(nestTextFormat, 0, 0);
 
-        Timer timer = new Timer(1);
+        int nativeAntCount = statistic.NativeAntAliveCount;
+        int fireAntCount = statistic.FireAntAliveCount;
 
-        while (!timer.UnscaleUpdateTimeEnd)
+        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
         {
-            fireAntBar.sizeDelta = new Vector2(Mathf.Lerp(0, fireAntWidth, barWidthCurve.Evaluate(timer.Progress)), fireAntBar.sizeDelta.y);
+            aliveNestsText.text = string.Format(
+                nestTextFormat,
+                Mathf.Clamp(i, 0, nativeAntCount),
+                Mathf.Clamp(i, 0, fireAntCount));
             yield return null;
         }
+    }
 
-        fireAntBar.sizeDelta = new Vector2(fireAntWidth, fireAntBar.sizeDelta.y);
-        nativeAntBar.sizeDelta = new Vector2(fireAntWidth, nativeAntBar.sizeDelta.y);
+    IEnumerator C_ShowDestroyNestsCount(GameStatic statistic)
+    {
+        destroyNestsText.text = string.Format(nestTextFormat, 0, 0);
 
-        timer.Reset();
+        int nativeAntCount = statistic.BucketDestroyNativeAntCount;
+        int fireAntCount = statistic.BucketDestroyFireAntCount;
 
-        while (!timer.UnscaleUpdateTimeEnd)
+        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
         {
-            nativeAntBar.sizeDelta = new Vector2(Mathf.Lerp(fireAntWidth, nativeAntWidth, barWidthCurve.Evaluate(timer.Progress)), fireAntBar.sizeDelta.y);
+            destroyNestsText.text = string.Format(
+                nestTextFormat,
+                Mathf.Clamp(i, 0, nativeAntCount),
+                Mathf.Clamp(i, 0, fireAntCount));
             yield return null;
         }
-
-        nativeAntBar.sizeDelta = new Vector2(nativeAntWidth, nativeAntBar.sizeDelta.y);
     }
-
-    IEnumerator C_ShowStars(GameStatic statistic)
+    IEnumerator C_ShowBreedNestsCount(GameStatic statistic)
     {
-        float score = statistic.CalculateScore();
+        breedNestsText.text = string.Format(nestTextFormat, 0, 0);
 
-        if (score < oneStarScore) yield break;
+        int nativeAntCount = statistic.BreedNativeAntCount;
+        int fireAntCount = statistic.BreedFireAntCount;
 
-        yield return StartCoroutine(C_StarAnimation(stars[0]));
-
-        if (score < twoStarScore) yield break;
-
-        yield return starGapWait;
-        yield return StartCoroutine(C_StarAnimation(stars[1]));
-
-        if (score < threeStarScore) yield break;
-
-        yield return starGapWait;
-        yield return StartCoroutine(C_StarAnimation(stars[2]));
+        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
+        {
+            breedNestsText.text = string.Format(
+                nestTextFormat,
+                Mathf.Clamp(i, 0, nativeAntCount),
+                Mathf.Clamp(i, 0, fireAntCount));
+            yield return null;
+        }
     }
-
-    IEnumerator C_StarAnimation(GameObject star)
+    IEnumerator C_ShowScore(GameStatic statistic)
     {
+        int score = Mathf.CeilToInt(statistic.CalculateScore());
+        yield return null;
 
-        var rectTransform = star.GetComponent<RectTransform>();
-        var image = star.GetComponent<Image>();
-        var timer = new Timer(starAnimationTime);
-        
-        Color color = image.color;
-        star.SetActive(true);
+        for (int count = 1; count <= score; count++)
+        {
+            scoreText.text = count.ToString();
+            yield return null;
+        }
+    }
+    IEnumerator C_ShowGrade(GameStatic statistic)
+    {
+        int score = Mathf.CeilToInt(statistic.CalculateScore());
+
+        Sprite sprite = gradeSprites[0];
+        for (int i = 0; i < requireScore.Length; i++)
+        {
+            if (score >= requireScore[i])
+            {
+                sprite = gradeSprites[i + 1];
+            }
+            else
+                break;
+        }
+
+        for (int i = 0; i < gradeStampImages.Length; i++)
+        {
+            gradeStampImages[i].sprite = sprite;
+        }
+
+
+        var timer = new Timer(0.5f);
 
         while (!timer.UnscaleUpdateTimeEnd)
         {
-            rectTransform.localScale = Vector3.LerpUnclamped(starStartScale, Vector3.one, starScaleCurve.Value.Evaluate(timer.Progress));
-
-            color.a = starFadeCurve.Value.Evaluate(timer.Progress);
-            image.color = color;
+            gradeStampCanvasGroup.alpha = timer.Progress;
             yield return null;
         }
     }
@@ -211,4 +206,16 @@ public class EndMenu : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("TempMainMenu");
     }
+
+
+    // void OnValidate()
+    // {
+
+    //     var text = string.Format(
+    //         "<color=#{0}>3</color> / <color=#{1}>10</color>",
+    //         ColorUtility.ToHtmlStringRGB(nativeTextColor),
+    //         ColorUtility.ToHtmlStringRGB(invasiveTextColor)
+    //     );
+    //     aliveNestsText.text = destroyNestsText.text = breedNestsText.text = text;
+    // }
 }

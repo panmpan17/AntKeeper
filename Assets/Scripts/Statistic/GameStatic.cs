@@ -39,6 +39,17 @@ public class GameStatic : ScriptableObject
 
     [Header("Ants")]
     public AntNestInfo[] NativeAnts;
+    public int NativeAntAliveCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < NativeAnts.Length; i++)
+                if (NativeAnts[i].StillAlive)
+                    count++;
+            return count;
+        }
+    }
     public int NativeAntTotalArea
     {
         get
@@ -58,6 +69,17 @@ public class GameStatic : ScriptableObject
     }
 
     public AntNestInfo[] FireAnts;
+    public int FireAntAliveCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < FireAnts.Length; i++)
+                if (FireAnts[i].StillAlive)
+                    count++;
+            return count;
+        }
+    }
     public int FireAntTotalArea
     {
         get

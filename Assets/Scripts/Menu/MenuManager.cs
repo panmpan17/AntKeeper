@@ -56,9 +56,33 @@ public class MenuManager : MonoBehaviour
         _canvas.enabled = true;
         openedMenus.Push(menu);
         menu.FadeInFromLeft();
-        FloatTween tween = gameObject.Tween("FadeOut", 0, 1, fadeDuration.Value, TweenScaleFunctions.QuadraticEaseInOut, ChangeGradientAlpha);
+        FloatTween tween = gameObject.Tween("FadeIn", 0, 1, fadeDuration.Value, TweenScaleFunctions.QuadraticEaseInOut, ChangeGradientAlpha);
         tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
     }
+    public void OpenMenu(string menuName)
+    {
+        AbstractMenu menu = null;
+        for (int i = 0; i < menus.Length; i++)
+        {
+            if (menus[i].name == menuName)
+            {
+                menu = menus[i];
+                break;
+            }
+        }
+
+        if (menu == null)
+        {
+            return;
+        }
+
+        _canvas.enabled = true;
+        openedMenus.Push(menu);
+        menu.FadeInFromLeft();
+        FloatTween tween = gameObject.Tween("FadeIn", 0, 1, fadeDuration.Value, TweenScaleFunctions.QuadraticEaseInOut, ChangeGradientAlpha);
+        tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
+    }
+
 
     public void CloseMenu(System.Action finishEvent)
     {

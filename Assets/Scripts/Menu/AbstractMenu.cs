@@ -109,7 +109,7 @@ public class AbstractMenu : MonoBehaviour
         tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
     }
 
-    void FadeInFinished(ITween<float> tween)
+    protected virtual void FadeInFinished(ITween<float> tween)
     {
         _canvasGroup.interactable = true;
         EventSystem.current.SetSelectedGameObject(_lastButton != null ? _lastButton : firstSelected);

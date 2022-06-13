@@ -97,9 +97,9 @@ MonoBehaviour:
   - ID: 402
     Text: Animal
   - ID: 501
-    Text: Animal Count
+    Text: Animal
   - ID: 502
-    Text: Occupied Area
+    Text: Alive Nests
   - ID: 601
     Text: Main
   - ID: 602
@@ -152,3 +152,15 @@ MonoBehaviour:
     Text: Need 2 Different Nest
   - ID: 803
     Text: There's two type of ants, they can't breed
+  - ID: 503
+    Text: Destroyed Nest
+  - ID: 504
+    Text: Breed Nests
+  - ID: 505
+    Text: Score
+  - ID: 607
+    Text: Display
+  - ID: 608
+    Text: Fullscreen
+  - ID: 609
+    Text: Windowed

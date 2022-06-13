@@ -17,6 +17,6 @@ public class FakeGameStatistic : MonoBehaviour
     void Start()
     {
         statisticProvider.Get = CollectGameStatic;
-        FindObjectOfType<EndMenu>(true).Open();
+        MenuManager.ins.OpenMenu("End");
     }
 }
