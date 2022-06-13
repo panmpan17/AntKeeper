@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using MPack;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialMenu : MonoBehaviour
 {
     [SerializeField]
     private Button previousButton;
