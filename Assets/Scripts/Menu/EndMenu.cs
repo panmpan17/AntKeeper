@@ -10,6 +10,11 @@ using DigitalRuby.Tween;
 
 public class EndMenu : AbstractMenu
 {
+    [SerializeField]
+    private AnimationCurveReference numberIncreaseCurve;
+    [SerializeField]
+    private Timer numberInrcreaseTimer = new Timer(0.4f);
+
     [Header("UI Elements")]
     [SerializeField]
     private TextMeshProUGUI animalText;
@@ -71,6 +76,7 @@ public class EndMenu : AbstractMenu
 
         var wait = new WaitForSecondsRealtime(0.5f);
 
+        yield return wait;
         yield return StartCoroutine(C_ShowAnimalCount(statistic));
         yield return wait;
         yield return StartCoroutine(C_ShowAntNestCount(statistic));
@@ -98,72 +104,60 @@ public class EndMenu : AbstractMenu
 
         yield return null;
 
-        for (int count = 1; count <= statistic.ResultAnimalCount; count++)
+        int count = statistic.ResultAnimalCount;
+
+        yield return StartCoroutine(C_NumberIncrease((progress) =>
         {
-            animalText.text = count + right;
-            yield return null;
-        }
+            animalText.text = (Mathf.FloorToInt(count * progress)).ToString() + right;
+        }));
     }
 
     IEnumerator C_ShowAntNestCount(GameStatic statistic)
     {
-        aliveNestsText.text = string.Format(nestTextFormat, 0, 0);
-
         int nativeAntCount = statistic.NativeAntAliveCount;
         int fireAntCount = statistic.FireAntAliveCount;
 
-        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
+        yield return StartCoroutine(C_NumberIncrease((progress) =>
         {
             aliveNestsText.text = string.Format(
                 nestTextFormat,
-                Mathf.Clamp(i, 0, nativeAntCount),
-                Mathf.Clamp(i, 0, fireAntCount));
-            yield return null;
-        }
+                Mathf.FloorToInt(nativeAntCount * progress),
+                Mathf.FloorToInt(fireAntCount * progress));
+        }));
     }
 
     IEnumerator C_ShowDestroyNestsCount(GameStatic statistic)
     {
-        destroyNestsText.text = string.Format(nestTextFormat, 0, 0);
-
         int nativeAntCount = statistic.BucketDestroyNativeAntCount;
         int fireAntCount = statistic.BucketDestroyFireAntCount;
 
-        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
+        yield return StartCoroutine(C_NumberIncrease((progress) =>
         {
             destroyNestsText.text = string.Format(
                 nestTextFormat,
-                Mathf.Clamp(i, 0, nativeAntCount),
-                Mathf.Clamp(i, 0, fireAntCount));
-            yield return null;
-        }
+                Mathf.FloorToInt(nativeAntCount * progress),
+                Mathf.FloorToInt(fireAntCount * progress));
+        }));
     }
     IEnumerator C_ShowBreedNestsCount(GameStatic statistic)
     {
-        breedNestsText.text = string.Format(nestTextFormat, 0, 0);
-
         int nativeAntCount = statistic.BreedNativeAntCount;
         int fireAntCount = statistic.BreedFireAntCount;
 
-        for (int i = 0; i <= nativeAntCount || i <= fireAntCount; i++)
+        yield return StartCoroutine(C_NumberIncrease((progress) =>
         {
             breedNestsText.text = string.Format(
                 nestTextFormat,
-                Mathf.Clamp(i, 0, nativeAntCount),
-                Mathf.Clamp(i, 0, fireAntCount));
-            yield return null;
-        }
+                Mathf.FloorToInt(nativeAntCount * progress),
+                Mathf.FloorToInt(fireAntCount * progress));
+        }));
     }
     IEnumerator C_ShowScore(GameStatic statistic)
     {
         int score = Mathf.CeilToInt(statistic.CalculateScore());
-        yield return null;
-
-        for (int count = 1; count <= score; count++)
-        {
-            scoreText.text = count.ToString();
-            yield return null;
-        }
+        yield return StartCoroutine(C_NumberIncrease((progress) => {
+            scoreText.text = Mathf.FloorToInt(score * progress).ToString();
+        }));
     }
     IEnumerator C_ShowGrade(GameStatic statistic)
     {
@@ -185,7 +179,6 @@ public class EndMenu : AbstractMenu
             gradeStampImages[i].sprite = sprite;
         }
 
-
         var timer = new Timer(0.5f);
 
         while (!timer.UnscaleUpdateTimeEnd)
@@ -193,6 +186,20 @@ public class EndMenu : AbstractMenu
             gradeStampCanvasGroup.alpha = timer.Progress;
             yield return null;
         }
+    }
+
+    IEnumerator C_NumberIncrease(System.Action<float> progressUpdate)
+    {
+        progressUpdate.Invoke(0);
+        numberInrcreaseTimer.Reset();
+
+        while (!numberInrcreaseTimer.UnscaleUpdateTimeEnd)
+        {
+            progressUpdate.Invoke(numberIncreaseCurve.Value.Evaluate(numberInrcreaseTimer.Progress));
+            yield return null;
+        }
+
+        progressUpdate.Invoke(1);
     }
 
     public void OnReplayPressed()

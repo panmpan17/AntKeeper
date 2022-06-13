@@ -14,8 +14,10 @@ public class FakeGameStatistic : MonoBehaviour
         return gameStatic;
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 0;
         statisticProvider.Get = CollectGameStatic;
         MenuManager.ins.OpenMenu("End");
     }
