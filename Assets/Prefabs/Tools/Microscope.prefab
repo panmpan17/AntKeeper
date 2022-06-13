@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   examineTimer:
-    TargetTime: 3
+    TargetTime: 1.3
     Running: 0
     ReverseMode: 0
   sortingLayerID: -770170603

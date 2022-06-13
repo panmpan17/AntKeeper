@@ -22,21 +22,9 @@ public class GridManager : MonoBehaviour
 
     [Header("Spawn Ants")]
     [SerializeField]
-    private Transform antNestCollection;
-    [SerializeField]
     private int antNestCountCap = 20;
-
-    [Header("Initial Ants")]
     [SerializeField]
-    private GameObject fireAntPrefab;
-    [SerializeField]
-    private int startFireAntCount;
-    [SerializeField]
-    private GameObject navtiveAntPrefab;
-    [SerializeField]
-    private int startNativeAntCount;
-    [SerializeField]
-    private Transform[] antNestSpawnPoints;
+    private SpawnAnimalNest spawnAnimalNest;
 
     private List<AbstractGroundInteractive> _groundInteractives = new List<AbstractGroundInteractive>();
     private List<AntNestHub> _antNestHubs = new List<AntNestHub>();
@@ -54,42 +42,6 @@ public class GridManager : MonoBehaviour
         ins = this;
 
         routeColliderMapReference.Tilemap = routeColliderMap;
-        InstainateAntNestOnStart();
-
-        // statisticProvider.Get = CollectGameStatic;
-    }
-
-    void InstainateAntNestOnStart()
-    {
-        List<Vector3> positions = new List<Vector3>();
-        for (int i = 0; i < antNestSpawnPoints.Length; i++)
-            positions.Add(antNestSpawnPoints[i].position);
-
-        for (int i = 0; i < startFireAntCount; i++)
-        {
-            int index = Random.Range(0, positions.Count);
-            InstainateAntNestAtPosition(fireAntPrefab, positions[index]);
-            positions.RemoveAt(index);
-        }
-
-        for (int i = 0; i < startNativeAntCount; i++)
-        {
-            int index = Random.Range(0, positions.Count);
-            InstainateAntNestAtPosition(navtiveAntPrefab, positions[index]);
-            positions.RemoveAt(index);
-        }
-    }
-
-    void InstainateAntNestAtPosition(GameObject prefab, Vector3 position)
-    {
-        GameObject newNest = Instantiate(prefab, position, Quaternion.identity, antNestCollection);
-        newNest.transform.position = position;
-
-        var hub = newNest.GetComponent<AntNestHub>();
-        hub.Freeze();
-
-        var growControl = newNest.GetComponent<AntRouteGrowControl>();
-        growControl.InitialSizeOnStart = true;
     }
 
     void Start()
@@ -256,17 +208,13 @@ public class GridManager : MonoBehaviour
         if (_antNestHubs.Count >= antNestCountCap)
             return false;
 
-        GameObject newAntNest = Instantiate(useFireAnt ? fireAntPrefab : navtiveAntPrefab, antNestCollection);
-
-        newAntNest.transform.position = grid.GetCellCenterWorld(position);
-
+        spawnAnimalNest?.Spawn(useFireAnt, grid.GetCellCenterWorld(position));
         return true;
     }
 
     public void InstantiateAntNestOnGridWithoutChecking(Vector3Int position, bool useFireAnt)
     {
-        GameObject newAntNest = Instantiate(useFireAnt ? fireAntPrefab : navtiveAntPrefab, antNestCollection);
-        newAntNest.transform.position = grid.GetCellCenterWorld(position);
+        spawnAnimalNest?.Spawn(useFireAnt, grid.GetCellCenterWorld(position));
     }
     #endregion
 

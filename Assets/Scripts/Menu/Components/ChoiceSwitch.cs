@@ -40,6 +40,19 @@ public class ChoiceSwitch : Selectable
         rightAnchorPosition = right.rectTransform.anchoredPosition;
     }
 
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            SwitchRight();
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            SwitchLeft();
+        }
+        EventSystem.current.SetSelectedGameObject(gameObject);
+    }
+
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
@@ -56,19 +69,14 @@ public class ChoiceSwitch : Selectable
 
     public override void OnMove(AxisEventData eventData)
     {
-        FloatTween tween;
         switch (eventData.moveDir)
         {
             case MoveDirection.Left:
-                tween = gameObject.Tween("Left", 0, 1, tweenTime, TweenScaleFunctions.QuarticEaseOut, ChangeLeftArrowPosition, ResetLeftArrowPosition);
-                tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
-                leftEvent.Invoke();
+                SwitchLeft();
                 break;
 
             case MoveDirection.Right:
-                tween = gameObject.Tween("Right", 0, 1, tweenTime, TweenScaleFunctions.QuarticEaseOut, ChangeRightArrowPosition, ResetRightArrowPosition);
-                tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
-                rightEvent.Invoke();
+                SwitchRight();
                 break;
 
             case MoveDirection.Up:
@@ -76,6 +84,20 @@ public class ChoiceSwitch : Selectable
                 base.OnMove(eventData);
                 break;
         }
+    }
+
+    public void SwitchRight()
+    {
+        FloatTween tween = gameObject.Tween("Right", 0, 1, tweenTime, TweenScaleFunctions.QuarticEaseOut, ChangeRightArrowPosition, ResetRightArrowPosition);
+        tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
+        rightEvent.Invoke();
+    }
+
+    public void SwitchLeft()
+    {
+        FloatTween tween = gameObject.Tween("Left", 0, 1, tweenTime, TweenScaleFunctions.QuarticEaseOut, ChangeLeftArrowPosition, ResetLeftArrowPosition);
+        tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
+        leftEvent.Invoke();
     }
 
     void ChangeArrowAlpha(ITween<float> eventData)

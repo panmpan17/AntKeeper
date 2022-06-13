@@ -348,7 +348,7 @@ MonoBehaviour:
       ReverseMode: 0
     Curve: {fileID: 11400000, guid: 97b83181fa7de4903beab06f2b111f98, type: 2}
   dashColddownTimer:
-    TargetTime: 0.6
+    TargetTime: 0.5
     Running: 0
     ReverseMode: 0
 --- !u!114 &2229355668422195846
@@ -407,10 +407,10 @@ MonoBehaviour:
     HoldItemPosition: {x: 0, y: -0.5, z: -0.1}
     SelectGridPoint: {fileID: 2229355669447207518}
   faceRightSetting:
-    HoldItemPosition: {x: 0.22, y: -0.47, z: -0.1}
+    HoldItemPosition: {x: 0.294, y: -0.538, z: -0.1}
     SelectGridPoint: {fileID: 2229355668783847616}
   faceLeftSetting:
-    HoldItemPosition: {x: -0.2, y: -0.46, z: -0.1}
+    HoldItemPosition: {x: -0.285, y: -0.538, z: -0.1}
     SelectGridPoint: {fileID: 2229355668972987340}
   progressBar: {fileID: 415474457861478287}
   holdItem: {fileID: 0}
@@ -5598,7 +5598,7 @@ Animator:
   m_GameObject: {fileID: 2229355669199412755}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06406ce9e03e24006899f992a351ce9d, type: 2}
+  m_Controller: {fileID: 22100000, guid: d63f13a89e22f49878cff60283e0b60a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

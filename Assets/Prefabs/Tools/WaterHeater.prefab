@@ -4971,7 +4971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4f4aafaaa914782a76c2cb1b753c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillSpeed: 1
+  fillSpeed: 0.9
   sortingLayerID: -770170603
   sortingOrder: 1
   offsetPoint: {fileID: 8550968449021459897}
@@ -5116,18 +5116,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8550968449021459897}
     m_Modifications:
-    - target: {fileID: 1752711141091569833, guid: 7eca9b0f94a5c40ed98a59fc515c635e, type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1752711141091569833, guid: 7eca9b0f94a5c40ed98a59fc515c635e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1752711141091569833, guid: 7eca9b0f94a5c40ed98a59fc515c635e, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -770170603
-      objectReference: {fileID: 0}
     - target: {fileID: 1752711141091569834, guid: 7eca9b0f94a5c40ed98a59fc515c635e, type: 3}
       propertyPath: m_Name
       value: Bucket

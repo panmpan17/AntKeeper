@@ -4920,12 +4920,12 @@ MonoBehaviour:
   alreadyExamine: {fileID: 11400000, guid: 355951ba3db64490588ec84dde7347c1, type: 2}
   particle: {fileID: 313829051}
   collectTimer:
-    TargetTime: 1.9
+    TargetTime: 1.2
     Running: 0
     ReverseMode: 0
   revealTrailParticle: {fileID: 1566297142664734145}
   revealTimer:
-    TargetTime: 0.8
+    TargetTime: 0.3
     Running: 0
     ReverseMode: 0
   trailCurve:
@@ -4934,8 +4934,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -4943,8 +4943,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
