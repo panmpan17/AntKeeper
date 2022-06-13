@@ -22,20 +22,29 @@ public class ButtonTween : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void Awake()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _startAnchorPosition = _rectTransform.anchoredPosition;
-        _originalScale = transform.localScale;
+        if (_rectTransform == null)
+        {
+            _rectTransform = GetComponent<RectTransform>();
+            _startAnchorPosition = _rectTransform.anchoredPosition;
+            _originalScale = transform.localScale;
+        }
     }
 
     public void OnSelect(BaseEventData eventData)
     {
+        if (_rectTransform == null)
+            Awake();
         gameObject.Tween(
             "Move", 0, 1, transitionTime,
             TweenScaleFunctions.QuadraticEaseIn, UpdateAnimation);
+
+        MenuManager.ins?.PlayButtonOnSelectSound();
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
+        if (_rectTransform == null)
+            Awake();
         gameObject.Tween(
             "MoveBack", 1, 0, transitionTime,
             TweenScaleFunctions.QuadraticEaseIn, UpdateAnimation);
@@ -45,5 +54,10 @@ public class ButtonTween : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         _rectTransform.anchoredPosition = Vector2.Lerp(_startAnchorPosition, _startAnchorPosition + positionOffset, tweenData.CurrentValue);
         _rectTransform.localScale = Vector3.Lerp(_originalScale, scale, tweenData.CurrentValue);
+    }
+
+    public void PlaySwitchChangeSound()
+    {
+        MenuManager.ins.PlaySwitchSound();
     }
 }

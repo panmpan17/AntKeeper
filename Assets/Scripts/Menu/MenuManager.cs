@@ -21,6 +21,16 @@ public class MenuManager : MonoBehaviour
     private CanvasGroup graidentCanvasGroup;
     private Canvas _canvas;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip buttonOnSelectSound;
+    [SerializeField]
+    private AudioClip buttonOnSubmitSound;
+    [SerializeField]
+    private AudioClip switchSound;
+    [SerializeField]
+    private AudioSource audioSource;
+
     void Awake()
     {
         ins = this;
@@ -75,6 +85,7 @@ public class MenuManager : MonoBehaviour
 #region  Menu switching
     public void SwitchMenu(string name)
     {
+        PlayButtonOnSubmitSound();
         for (int i = 0; i < menus.Length; i++)
         {
             if (menus[i].name == name)
@@ -90,9 +101,26 @@ public class MenuManager : MonoBehaviour
 
     public void BackToLastMenu()
     {
+        PlayButtonOnSubmitSound();
         openedMenus.Pop().FadeOutToRight();
 
         openedMenus.Peek().FadeInFromLeft();
     }
 #endregion
+
+
+    public void PlayButtonOnSelectSound()
+    {
+        audioSource.PlayOneShot(buttonOnSelectSound);
+    }
+
+    public void PlayButtonOnSubmitSound()
+    {
+        audioSource.PlayOneShot(buttonOnSubmitSound);
+    }
+
+    public void PlaySwitchSound()
+    {
+        audioSource.PlayOneShot(switchSound);
+    }
 }

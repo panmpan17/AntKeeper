@@ -7,7 +7,7 @@ using TMPro;
 
 public class AchievementUnlockMenu : MonoBehaviour
 {
-    [Header("Tween Timeing")]
+    [Header("Tween Timing")]
     [SerializeField]
     [Range(0, 1)]
     private float fadeTime;
@@ -25,6 +25,12 @@ public class AchievementUnlockMenu : MonoBehaviour
     private TextMeshProUGUI nameText;
     [SerializeField]
     private TextMeshProUGUI descriptionText;
+
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip unlockSound;
 
     [Header("Achievement")]
     [SerializeField]
@@ -89,6 +95,8 @@ public class AchievementUnlockMenu : MonoBehaviour
 
     IEnumerator C_ShowAchievement(AchievementItem item)
     {
+        audioSource.PlayOneShot(unlockSound);
+
         iconImage.sprite = item.Icon;
         nameText.text = LanguageMgr.GetTextById(item.NameLanguageID);
         descriptionText.text = LanguageMgr.GetTextById(item.DescriptionLanguageID);
