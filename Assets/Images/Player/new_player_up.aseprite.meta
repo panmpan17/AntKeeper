@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3fb205454fd7a4dbe9b7419ca2ac8fce
+guid: d48e6152fb9e346748aedff8d3e2f654
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -26,28 +26,22 @@ ScriptedImporter:
   animationSettings:
   - animationName: idle
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 5"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 0; To: 2"
   - animationName: walk
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 6; To: 11"
-  - animationName: dash
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 2; To: 2"
-  - animationName: h_idle
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 14; To: 19"
-  - animationName: h_walk
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 20; To: 25"
-  - animationName: h_dash
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 5; To: 5"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 3; To: 8"
   - animationName: dash_
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 13"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 9; To: 10"
+  - animationName: h_idle
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 11; To: 13"
+  - animationName: h_walk
+    loopTime: 1
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 14; To: 19"
   - animationName: h_dash_
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 26; To: 27"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 20; To: 21"
   atlas: {instanceID: 0}
   importType: 0
   bindType: 0

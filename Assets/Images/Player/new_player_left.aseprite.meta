@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3fb205454fd7a4dbe9b7419ca2ac8fce
+guid: 4603d5d9dbd384c08af3f7bad3c42cf6
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -30,21 +30,15 @@ ScriptedImporter:
   - animationName: walk
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 6; To: 11"
-  - animationName: dash
+  - animationName: dash_
     loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 2; To: 2"
+    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 13"
   - animationName: h_idle
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 14; To: 19"
   - animationName: h_walk
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 20; To: 25"
-  - animationName: h_dash
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 5; To: 5"
-  - animationName: dash_
-    loopTime: 1
-    about: "Animation Type:\tForward\nAnimation:\tFrom: 12; To: 13"
   - animationName: h_dash_
     loopTime: 1
     about: "Animation Type:\tForward\nAnimation:\tFrom: 26; To: 27"
