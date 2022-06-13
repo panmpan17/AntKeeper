@@ -2313,7 +2313,7 @@ MonoBehaviour:
   gameTime: 150
   playerBehaviour: {fileID: 915436049}
   overrideGameTime:
-    Enable: 1
+    Enable: 0
     Value: 3
   overrideTimeScale:
     Enable: 0
@@ -2882,11 +2882,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521038075833261338, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
       propertyPath: skipMenu
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447704259108037834, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447704259108037834, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447704259886855006, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447704259886855006, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4634617717697017793, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
       propertyPath: m_text
       value: <color=#81D672>3</color> / <color=#FF4E4E>10</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433915899849804688, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433915899849804688, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6881121734510013862, guid: d8737ce4c55b448fa90090c9a8bcaf36, type: 3}
       propertyPath: m_text
@@ -28110,7 +28134,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784201, y: 1}
+    m_SensorSize: {x: 1.7780952, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -28491,6 +28515,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2229355669199412764, guid: 4b3b3e2ed899d41eb89e8fc4741b89fc, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: d63f13a89e22f49878cff60283e0b60a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b3b3e2ed899d41eb89e8fc4741b89fc, type: 3}
 --- !u!1001 &1974586048
