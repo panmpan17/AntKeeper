@@ -86,6 +86,8 @@ MonoBehaviour:
     Text: Setting
   - ID: 213
     Text: Exit
+  - ID: 214
+    Text: Achievement
   - ID: 301
     Text: Resume
   - ID: 302
@@ -100,6 +102,12 @@ MonoBehaviour:
     Text: Animal
   - ID: 502
     Text: Alive Nests
+  - ID: 503
+    Text: Destroyed Nest
+  - ID: 504
+    Text: Breed Nests
+  - ID: 505
+    Text: Score
   - ID: 601
     Text: Main
   - ID: 602
@@ -112,6 +120,12 @@ MonoBehaviour:
     Text: Back
   - ID: 606
     Text: Audio
+  - ID: 607
+    Text: Display
+  - ID: 608
+    Text: Fullscreen
+  - ID: 609
+    Text: Windowed
   - ID: 701
     Text: Hidden Achievment
   - ID: 702
@@ -144,26 +158,12 @@ MonoBehaviour:
     Text: Hard working
   - ID: 716
     Text: Kill invasive ants 10 time in single game
-  - ID: 214
-    Text: Achievement
-  - ID: 802
-    Text: Already Examined
   - ID: 801
     Text: Need 2 Different Nest
+  - ID: 802
+    Text: Already Examined
   - ID: 803
     Text: There's two type of ants, they can't breed
-  - ID: 503
-    Text: Destroyed Nest
-  - ID: 504
-    Text: Breed Nests
-  - ID: 505
-    Text: Score
-  - ID: 607
-    Text: Display
-  - ID: 608
-    Text: Fullscreen
-  - ID: 609
-    Text: Windowed
   - ID: 804
     Text: New nest need free space
   - ID: 805

@@ -64,10 +64,18 @@ MonoBehaviour:
   - ID: 211
     Text: "<color=#fff><b>Michael Pan \u6F58\u555F\u5143</b></color>\n\u7A0B\u5F0F\n\u7F8E\u8853\n\u97F3\u6A02\n\u97F3\u6548\n\n<color=#fff><b>martinhodler
       (Github)</b></color>\nAseprite-Importer for Unity"
+  - ID: 212
+    Text: "\u8A2D\u5B9A"
+  - ID: 213
+    Text: "\u7D50\u675F"
+  - ID: 214
+    Text: "\u6210\u5C31"
   - ID: 301
     Text: "\u7E7C\u7E8C\u904A\u6232"
   - ID: 302
     Text: "\u4E3B\u9078\u55AE"
+  - ID: 303
+    Text: "\u8A2D\u5B9A"
   - ID: 401
     Text: "\u6642\u9593"
   - ID: 402
@@ -76,12 +84,12 @@ MonoBehaviour:
     Text: "\u52D5\u7269"
   - ID: 502
     Text: "\u5B58\u6D3B\u4E0B\u4F86\u7684\u5DE2\u7A74"
-  - ID: 212
-    Text: "\u8A2D\u5B9A"
-  - ID: 213
-    Text: "\u7D50\u675F"
-  - ID: 303
-    Text: "\u8A2D\u5B9A"
+  - ID: 503
+    Text: "\u88AB\u6467\u6BC0\u7684\u5DE2\u7A74"
+  - ID: 504
+    Text: "\u57F9\u80B2\u7684\u5DE2\u7A74"
+  - ID: 505
+    Text: "\u5206\u6578"
   - ID: 601
     Text: "\u4E3B\u97F3\u91CF"
   - ID: 602
@@ -94,58 +102,50 @@ MonoBehaviour:
     Text: "\u8FD4\u56DE"
   - ID: 606
     Text: "\u8072\u97F3"
-  - ID: 701
-    Text: "\u96B1\u85CF\u6210\u5C31"
-  - ID: 702
-    Text: '?'
-  - ID: 214
-    Text: "\u6210\u5C31"
-  - ID: 705
-    Text: "\u70BA\u4E86\u672A\u4F86?"
-  - ID: 706
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u7E41\u6B96\u5916\u4F86\u7A2E\u879E\u87FB\u5341\u6B21"
-  - ID: 704
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u7E41\u6B96\u672C\u571F\u7A2E\u879E\u87FB\u5341\u6B21"
-  - ID: 703
-    Text: "\u70BA\u4E86\u672A\u4F86"
-  - ID: 708
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u9451\u5B9A\u6240\u6709\u879E\u87FB\u7A2E\u985E"
-  - ID: 707
-    Text: "\u7814\u7A76\u8005"
-  - ID: 709
-    Text: "\u7D50\u675F\u4E86?"
-  - ID: 710
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u879E\u87FB"
-  - ID: 712
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u5916\u4F86\u7A2E\u879E\u87FB"
-  - ID: 711
-    Text: "\u7D50\u675F\u4E86"
-  - ID: 713
-    Text: "\u4F60\u505A\u4E86\u4EC0\u9EBC?"
-  - ID: 714
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u672C\u571F\u7A2E\u879E\u87FB"
-  - ID: 716
-    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u5916\u4F86\u7A2E\u879E\u87FB10\u6B21"
-  - ID: 715
-    Text: "\u52AA\u7684\u4E0D\u61C8"
-  - ID: 802
-    Text: "\u5DF2\u6AA2\u67E5\u904E"
-  - ID: 801
-    Text: "\u9700\u8981\u5169\u500B\u4E0D\u540C\u7684\u5DE2\u7A74"
-  - ID: 803
-    Text: "\u6709\u5169\u7A2E\u4E0D\u540C\u7684\u879E\u87FB, \u4ED6\u5011\u4E0D\u80FD\u4EA4\u914D"
-  - ID: 503
-    Text: "\u88AB\u6467\u6BC0\u7684\u5DE2\u7A74"
-  - ID: 504
-    Text: "\u57F9\u80B2\u7684\u5DE2\u7A74"
-  - ID: 505
-    Text: "\u5206\u6578"
   - ID: 607
     Text: "\u986F\u793A"
   - ID: 608
     Text: "\u5168\u87A2\u5E55"
   - ID: 609
     Text: "\u8996\u7A97"
+  - ID: 701
+    Text: "\u96B1\u85CF\u6210\u5C31"
+  - ID: 702
+    Text: '?'
+  - ID: 703
+    Text: "\u70BA\u4E86\u672A\u4F86"
+  - ID: 704
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u7E41\u6B96\u672C\u571F\u7A2E\u879E\u87FB\u5341\u6B21"
+  - ID: 705
+    Text: "\u70BA\u4E86\u672A\u4F86?"
+  - ID: 706
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u7E41\u6B96\u5916\u4F86\u7A2E\u879E\u87FB\u5341\u6B21"
+  - ID: 707
+    Text: "\u7814\u7A76\u8005"
+  - ID: 708
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u9451\u5B9A\u6240\u6709\u879E\u87FB\u7A2E\u985E"
+  - ID: 709
+    Text: "\u7D50\u675F\u4E86?"
+  - ID: 710
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u879E\u87FB"
+  - ID: 711
+    Text: "\u7D50\u675F\u4E86"
+  - ID: 712
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u5916\u4F86\u7A2E\u879E\u87FB"
+  - ID: 713
+    Text: "\u4F60\u505A\u4E86\u4EC0\u9EBC?"
+  - ID: 714
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u6240\u6709\u672C\u571F\u7A2E\u879E\u87FB"
+  - ID: 715
+    Text: "\u52AA\u7684\u4E0D\u61C8"
+  - ID: 716
+    Text: "\u5728\u55AE\u6B21\u904A\u6232\u4E2D\uFF0C\u6BBA\u6B7B\u5916\u4F86\u7A2E\u879E\u87FB10\u6B21"
+  - ID: 801
+    Text: "\u9700\u8981\u5169\u500B\u4E0D\u540C\u7684\u5DE2\u7A74"
+  - ID: 802
+    Text: "\u5DF2\u6AA2\u67E5\u904E"
+  - ID: 803
+    Text: "\u6709\u5169\u7A2E\u4E0D\u540C\u7684\u879E\u87FB, \u4ED6\u5011\u4E0D\u80FD\u4EA4\u914D"
   - ID: 804
     Text: "\u65B0\u7684\u5DE2\u7A74\u9700\u8981\u7A7A\u5730"
   - ID: 805

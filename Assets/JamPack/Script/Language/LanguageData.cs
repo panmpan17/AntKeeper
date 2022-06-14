@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +19,15 @@ namespace MPack {
             public string Text;
         }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
+        [ContextMenu("Sort By ID")]
+        public void SortByID()
+        {
+            System.Array.Sort(Texts, (pair1, pair2) => {
+                return pair1.ID.CompareTo(pair2.ID);
+            });
+        }
+
         [CustomPropertyDrawer(typeof(IDTextPair))]
         public class _PropertyDrawer : PropertyDrawer {
             private const float Height = 18, LineHeight = 15;
