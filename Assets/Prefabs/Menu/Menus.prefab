@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 521038076835552775}
   - component: {fileID: 2165502182022210706}
   - component: {fileID: 3618839061493243217}
+  - component: {fileID: 1682485612942661635}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -463,9 +464,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 521038075833261338}
-        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: OpenTutorial
+      - m_Target: {fileID: 1682485612942661635}
+        m_TargetAssemblyTypeName: LoadSceneTrigger, Assembly-CSharp
+        m_MethodName: Trigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -516,6 +517,19 @@ MonoBehaviour:
   transitionTime: 0.1
   positionOffset: {x: 5, y: 0}
   scale: {x: 1.03, y: 0.8755, z: 1.03}
+--- !u!114 &1682485612942661635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521038076835552792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd55b2203b6f46d0bbc4ce90d967720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Tutorial
 --- !u!1 &521038076967779062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,6 +3372,7 @@ MonoBehaviour:
   - {fileID: 8389787323563740036}
   - {fileID: 7017491349636135404}
   - {fileID: 4223166459870893510}
+  openFirstOnStart: 1
   graidentCanvasGroup: {fileID: 8389787324764771146}
   buttonOnSelectSound: {fileID: 8300000, guid: 385c90bd1a98a49bcb895ed145d478e8, type: 3}
   buttonOnSubmitSound: {fileID: 8300000, guid: a267b6b63eef442e2bdfb2b115102ad5, type: 3}

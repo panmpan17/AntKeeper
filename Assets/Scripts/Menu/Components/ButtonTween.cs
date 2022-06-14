@@ -52,8 +52,11 @@ public class ButtonTween : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void UpdateAnimation(ITween<float> tweenData)
     {
-        _rectTransform.anchoredPosition = Vector2.Lerp(_startAnchorPosition, _startAnchorPosition + positionOffset, tweenData.CurrentValue);
-        _rectTransform.localScale = Vector3.Lerp(_originalScale, scale, tweenData.CurrentValue);
+        if (_rectTransform != null)
+        {
+            _rectTransform.anchoredPosition = Vector2.Lerp(_startAnchorPosition, _startAnchorPosition + positionOffset, tweenData.CurrentValue);
+            _rectTransform.localScale = Vector3.Lerp(_originalScale, scale, tweenData.CurrentValue);
+        }
     }
 
     public void PlaySwitchChangeSound()

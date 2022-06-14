@@ -13,6 +13,9 @@ public class AntJar : AbstractHoldItem
     [SerializeField]
     private Sprite emptyJarSprite;
 
+    [Header("Prompt")]
+    [SerializeField]
+    private PromptItem onAntAtATime;
     [SerializeField]
     private PromptItem alreadyExamine;
 
@@ -75,7 +78,10 @@ public class AntJar : AbstractHoldItem
         if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition, out AntNestHub targetNest, out AntRouteBranch targetBranch))
         {
             if (HasAnt)
+            {
+                onAntAtATime.Show();
                 return;
+            }
 
             if (preventRepeat && targetNest.IsShowTrueColor)
             {

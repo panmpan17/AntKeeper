@@ -59,6 +59,7 @@ public class WaterHeater : AbstractGroundInteractive
             playerBehaviour.SetHandItem(filledBucket);
             filledBucket = null;
             particleSystem.Stop();
+            barControl.gameObject.SetActive(false);
 
             return true;
         }
