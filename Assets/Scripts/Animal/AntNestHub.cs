@@ -236,6 +236,23 @@ public class AntNestHub : MonoBehaviour
         }
         return list.Count;
     }
+    
+    public Vector3Int PickRandomSpotOnRoute(bool preventRootGrid, int tryCount=10)
+    {
+        Vector3Int position = routeBranches[Random.Range(0, routeBranches.Count)].PickRandomPosition();
+
+        if (preventRootGrid && RootGridPosition == position)
+        {
+            for (int i = 0; i < tryCount; i++)
+            {
+                position = routeBranches[Random.Range(0, routeBranches.Count)].PickRandomPosition();
+                if (position != RootGridPosition)
+                    break;
+            }
+        }
+
+        return position;
+    }
     #endregion
 
 

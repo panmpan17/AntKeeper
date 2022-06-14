@@ -14,6 +14,8 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField]
     private AbstractMenu[] menus;
+    [SerializeField]
+    private bool openFirstOnStart;
 
     private Stack<AbstractMenu> openedMenus = new Stack<AbstractMenu>(5);
 
@@ -37,11 +39,21 @@ public class MenuManager : MonoBehaviour
 
         _canvas = GetComponent<Canvas>();
 
-        openedMenus.Push(menus[0]);
-        menus[0].InstantOpen();
+        if (openFirstOnStart)
+        {
+            openedMenus.Push(menus[0]);
+            menus[0].InstantOpen();
 
-        for (int i = 1; i < menus.Length; i++)
-            menus[i].InstantClose();
+            for (int i = 1; i < menus.Length; i++)
+                menus[i].InstantClose();
+        }
+        else
+        {
+            _canvas.enabled = false;
+            graidentCanvasGroup.alpha = 0;
+            for (int i = 0; i < menus.Length; i++)
+                menus[i].InstantClose();
+        }
     }
 
     void ChangeGradientAlpha(ITween<float> tweenData)

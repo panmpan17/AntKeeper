@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using MPack;
 
 public class CheckTestTubeIsFull : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class CheckTestTubeIsFull : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
     [SerializeField]
-    [Multiline]
-    private string format;
+    [LauguageID]
+    private int formatLanguageID;
     [SerializeField]
     private QueenAntJar.State requireState;
 
@@ -23,6 +24,7 @@ public class CheckTestTubeIsFull : MonoBehaviour
         _playerBehaviour = GameObject.FindWithTag(PlayerBehaviour.Tag).GetComponent<PlayerBehaviour>();
         _playerBehaviour.OnHoldItemChanged += CheckHandItem;
         CheckHandItem();
+        OnTestTubeStateChange(QueenAntJar.State.Empty);
     }
 
     void OnDisable()
@@ -56,6 +58,7 @@ public class CheckTestTubeIsFull : MonoBehaviour
 
     void OnTestTubeStateChange(QueenAntJar.State state)
     {
+        string format = LanguageMgr.GetTextById(formatLanguageID);
         switch(state)
         {
             case QueenAntJar.State.Empty:

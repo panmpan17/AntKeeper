@@ -3357,6 +3357,7 @@ MonoBehaviour:
   - {fileID: 5853211470227390339}
   - {fileID: 8389787323563740036}
   - {fileID: 7017491349636135404}
+  - {fileID: 4223166459870893510}
   graidentCanvasGroup: {fileID: 8389787324764771146}
   buttonOnSelectSound: {fileID: 8300000, guid: 385c90bd1a98a49bcb895ed145d478e8, type: 3}
   buttonOnSubmitSound: {fileID: 8300000, guid: a267b6b63eef442e2bdfb2b115102ad5, type: 3}

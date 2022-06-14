@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf7fb4eb81454d2cbd62bf0d24cf63f, type: 3}
   m_Name: SimplePromptFadeTime
   m_EditorClassIdentifier: 
-  Value: 0.5
+  Value: 0.4

@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TweakParameter.unity
     guid: ad13ff119db444eab9a5d0e4f1fa9463
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 1e6baaf99da554eb1b3391484b46d38f
   m_configObjects: {}

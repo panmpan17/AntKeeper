@@ -43,4 +43,11 @@ public class AntKillAnimalControl : MonoBehaviour
 
         return false;
     }
+
+    public void TriggerKillAnimal(int tryCount)
+    {
+        for (int i = 0; i < tryCount; i++)
+            if (TryKillAnimal())
+                return;
+    }
 }

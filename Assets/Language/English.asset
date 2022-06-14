@@ -170,3 +170,61 @@ MonoBehaviour:
     Text: Need to collect ant from nest hill
   - ID: 806
     Text: Need two ant to breed new nest
+  - ID: 807
+    Text: 'Tutorial
+
+      Complete!'
+  - ID: 808
+    Text: <sprite name="key_space"><sprite name="key_x"> Plant new nest at empty
+      ground
+  - ID: 809
+    Text: 'Need two ant each from different nest
+
+      <sprite name="key_space"><sprite
+      name="key_x"> Collect them on top of the ant hill ({0}/{1})'
+  - ID: 810
+    Text: <sprite name="key_space"><sprite name="key_x"> Pickup test tube
+  - ID: 811
+    Text: Explain
+  - ID: 812
+    Text: <sprite name="key_space"><sprite name="key_x"> Bring bucket back to refill
+  - ID: 813
+    Text: <sprite name="key_space"><sprite name="key_x"> Pour water on the nests
+  - ID: 814
+    Text: <sprite name="key_space"><sprite name="key_x"> Pickup bucket
+  - ID: 815
+    Text: 'Use color to distinguish ant''s type
+
+      Green is native, red is invasive'
+  - ID: 816
+    Text: 'Examine nests
+
+      ({0}/{1})'
+  - ID: 817
+    Text: <sprite name="key_space"><sprite name="key_x"> Bring jar back to microscope
+  - ID: 818
+    Text: Microscope will show the color of the ant
+  - ID: 819
+    Text: <sprite name="key_space"><sprite name="key_x"> Use jar to collect ant
+  - ID: 820
+    Text: <sprite name="key_space"><sprite name="key_x"> Pickup the jar
+  - ID: 821
+    Text: '<sprite name="key_w"><sprite name="key_s"><sprite name="key_a"><sprite
+      name="key_d"> <sprite name="key_arrow_up"><sprite name="key_arrow_down"><sprite
+      name="key_arrow_left"><sprite name="key_arrow_right"> Walk
+
+      <sprite name="key_shift">
+      <sprite name="key_z"> Jump'
+  - ID: 822
+    Text: 'You''re blah blah blah...
+
+      You have to clean up the mess...'
+  - ID: 823
+    Text: 'Ants will compete for land with other
+
+      If there''s more native ant
+
+      They
+      can help defend invasive ant'
+  - ID: 824
+    Text: Invasive will eat the encounter animals

@@ -31,6 +31,12 @@ public class VirtualAnimalSpot : MonoBehaviour
         _spriteRenderer.sprite = emptySprite;
         IsAlive = false;
 
-        HUDManager.ins.UpdateAnimalCount();
+        HUDManager.ins?.UpdateAnimalCount();
+    }
+
+    public void ChangePosition(Vector3 position, Vector3Int gridPosition)
+    {
+        transform.position = position;
+        GridPosition = gridPosition;
     }
 }

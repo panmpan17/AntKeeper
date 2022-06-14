@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MPack;
 using DigitalRuby.Tween;
+using UnityEngine.Events;
 
 public class ShowCanvasGroup : AbstractTutorialStep
 {
@@ -12,6 +13,10 @@ public class ShowCanvasGroup : AbstractTutorialStep
     private FloatReference fadeOutTime;
     [SerializeField]
     private ValueWithEnable<float> autoSkipSeconds;
+    [SerializeField]
+    private UnityEvent fadeInFinishEvent;
+    [SerializeField]
+    private UnityEvent fadeOutFinishEvent;
 
     private CanvasGroup _canvasGroup;
     private Coroutine _waitAutomaticSkip;
@@ -43,11 +48,14 @@ public class ShowCanvasGroup : AbstractTutorialStep
             _waitAutomaticSkip = StartCoroutine(C_WaitSecond(autoSkipSeconds.Value, Skip));
         }
         _fadeTween = null;
+
+        fadeInFinishEvent?.Invoke();
     }
 
     void FadeOutFinished(ITween<float> tweenData)
     {
         TutorialManager.ins.NextStep();
+        fadeOutFinishEvent?.Invoke();
     }
 
     public override void Skip()
