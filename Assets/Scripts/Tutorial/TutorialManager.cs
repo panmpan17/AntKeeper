@@ -59,7 +59,10 @@ public class TutorialManager : MonoBehaviour
         currentStep++;
 
         if (currentStep >= steps.Length)
+        {
+            PlayerPrefs.SetInt("TutorialPlayed", 1);
             return;
+        }
 
         StartCoroutine(WaitBetweenStep());
     }

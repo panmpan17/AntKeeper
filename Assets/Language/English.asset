@@ -189,7 +189,8 @@ MonoBehaviour:
   - ID: 812
     Text: <sprite name="key_space"><sprite name="key_x"> Bring bucket back to refill
   - ID: 813
-    Text: <sprite name="key_space"><sprite name="key_x"> Pour water on the nests
+    Text: <sprite name="key_space"><sprite name="key_x"> Pour water on the invasive
+      nests
   - ID: 814
     Text: <sprite name="key_space"><sprite name="key_x"> Pickup bucket
   - ID: 815
@@ -228,3 +229,5 @@ MonoBehaviour:
       can help defend invasive ant'
   - ID: 824
     Text: Invasive will eat the encounter animals
+  - ID: 825
+    Text: To avoid mixed up jar can only hold one ant

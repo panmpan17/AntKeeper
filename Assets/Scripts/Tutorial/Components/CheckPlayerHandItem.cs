@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheckPlayerHandItem : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class CheckPlayerHandItem : MonoBehaviour
     private bool checkHandIsEmpty;
     [SerializeField]
     private string requireHoldItemTypeName;
+
+    [SerializeField]
+    private UnityEvent callback;
 
     private PlayerBehaviour _playerBehaviour;
 
@@ -31,13 +35,19 @@ public class CheckPlayerHandItem : MonoBehaviour
         if (checkHandIsEmpty)
         {
             if (!_playerBehaviour.IsHolding)
-                step.Skip();
+            {
+                step?.Skip();
+                callback.Invoke();
+            }
             return;
         }
 
         if (!_playerBehaviour.IsHolding)
             return;
-        if (_playerBehaviour.HoldItem.GetType().Name == requireHoldItemTypeName)
-            step.Skip();
+        if (_playerBehaviour.HoldItem.GetType().Name != requireHoldItemTypeName)
+            return;
+
+        step?.Skip();
+        callback.Invoke();
     }
 }

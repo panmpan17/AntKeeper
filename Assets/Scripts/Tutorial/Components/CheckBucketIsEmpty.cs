@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheckBucketIsEmpty : MonoBehaviour
 {
     [SerializeField]
     private AbstractTutorialStep step;
+    [SerializeField]
+    private UnityEvent callback;
 
     private PlayerBehaviour _playerBehaviour;
     private Bucket _bucket;
@@ -46,7 +49,10 @@ public class CheckBucketIsEmpty : MonoBehaviour
         if (_bucket)
         {
             if (_bucket.IsEmpty)
-                step.Skip();
+            {
+                step?.Skip();
+                callback.Invoke();
+            }
         }
     }
 }
