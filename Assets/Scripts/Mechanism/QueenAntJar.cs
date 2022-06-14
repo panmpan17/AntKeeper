@@ -20,17 +20,28 @@ public class QueenAntJar : AbstractHoldItem
     [SerializeField]
     private Sprite twoAntSprite;
 
+    [Header("Prompt")]
     [SerializeField]
     private PromptItem needTwoNests;
     [SerializeField]
     private PromptItem twoTypesOfAnt;
+    [SerializeField]
+    private PromptItem needFreeSpace;
+    [SerializeField]
+    private PromptItem needTwoAnts;
+    [SerializeField]
+    private PromptItem needToCollectFromNest;
 
-    private enum State {
+    public enum State {
         Empty,
         OneAnt,
         TwoAnt,
     }
     private State _state;
+
+    public event System.Action<State> OnStateChange;
+    public event System.Action OnSuccessPlantAnt;
+
 
     private SpriteRenderer _spriteRenderer;
     private bool _firstIsFireAnt;
@@ -78,12 +89,16 @@ public class QueenAntJar : AbstractHoldItem
                     _spriteRenderer.sprite = oneAntSprite;
                     _firstAntNest = _targetAntNest;
                     _firstIsFireAnt = _firstAntNest.IsFireAnt;
+
+                    OnStateChange?.Invoke(_state);
                 }
                 else
                 {
                     _state = State.TwoAnt;
                     _spriteRenderer.sprite = twoAntSprite;
                     _secondIsFireAnt = _targetAntNest.IsFireAnt;
+
+                    OnStateChange?.Invoke(_state);
                 }
 
                 return;
@@ -109,6 +124,8 @@ public class QueenAntJar : AbstractHoldItem
                 _firstAntNest = null;
                 _targetAntNest = null;
                 _spriteRenderer.sprite = emptySprite;
+
+                OnStateChange?.Invoke(_state);
                 return;
             }
 
@@ -154,6 +171,10 @@ public class QueenAntJar : AbstractHoldItem
             particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
             particle.Play();
         }
+        else
+        {
+            needToCollectFromNest.Show();
+        }
     }
 
     void OneAntJarCheck()
@@ -176,12 +197,19 @@ public class QueenAntJar : AbstractHoldItem
             particle.transform.position = PlayerBehaviour.SelectedGridCenterPosition;
             particle.Play();
         }
+        else
+        {
+            needTwoAnts.Show();
+        }
     }
 
     void TwoAntJarCheck()
     {
-        if (GridManager.ins.TryFindAntNestBranch(PlayerBehaviour.SelectedGridPosition))
+        if (!GridManager.ins.CheckGroundAvalibleForNewAnt(PlayerBehaviour.SelectedGridPosition))
+        {
+            needFreeSpace.Show();
             return;
+        }
 
         PlayerBehaviour.Input.enabled = false;
 
@@ -212,5 +240,7 @@ public class QueenAntJar : AbstractHoldItem
         
         StatisticTracker.ins.AddBreedAntRecord(_firstIsFireAnt);
         GridManager.ins.InstantiateAntNestOnGridWithoutChecking(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
+
+        OnSuccessPlantAnt?.Invoke();
     }
 }

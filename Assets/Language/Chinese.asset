@@ -146,3 +146,9 @@ MonoBehaviour:
     Text: "\u5168\u87A2\u5E55"
   - ID: 609
     Text: "\u8996\u7A97"
+  - ID: 804
+    Text: "\u65B0\u7684\u5DE2\u7A74\u9700\u8981\u7A7A\u5730"
+  - ID: 805
+    Text: "\u9700\u9020\u5728\u5DE2\u7A74\u7684\u571F\u5806\u6536\u96C6\u879E\u87FB"
+  - ID: 806
+    Text: "\u9700\u8981\u4F86\u96BB\u879E\u87FB\u4F86\u57F9\u990A\u65B0\u5DE2\u7A74"

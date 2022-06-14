@@ -77,8 +77,6 @@ public class AntJar : AbstractHoldItem
             if (HasAnt)
                 return;
 
-            Debug.Log(preventRepeat);
-            Debug.Log(targetNest.IsShowTrueColor);
             if (preventRepeat && targetNest.IsShowTrueColor)
             {
                 alreadyExamine.Show();

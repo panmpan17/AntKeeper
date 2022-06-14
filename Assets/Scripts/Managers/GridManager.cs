@@ -192,6 +192,15 @@ public class GridManager : MonoBehaviour
 
         return baseMap.HasTile(position);
     }
+    public bool CheckGroundAvalibleForNewAnt(Vector3Int position)
+    {
+        if (TryFindGroundInteractive(position))
+            return false;
+        if (TryFindAntNestBranch(position))
+            return false;
+
+        return baseMap.HasTile(position);
+    }
 
     public bool InstantiateAntNestOnGrid(Vector3 position, bool useFireAnt)
     {

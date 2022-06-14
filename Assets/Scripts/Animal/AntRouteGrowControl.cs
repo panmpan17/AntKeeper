@@ -42,13 +42,10 @@ public class AntRouteGrowControl : MonoBehaviour
 
     [SerializeField]
     private ValueWithEnable<int> showTrueColorAfterSize;
-    // private int showTrueColorAfterSize;
 
     [Header("Die")]
     [SerializeField]
     private RangeReference disconnectDieTime;
-    [SerializeField]
-    private Timer unableToGrowDieTimer;
 
     private int _size;
     public int Size => _size;
@@ -132,7 +129,6 @@ public class AntRouteGrowControl : MonoBehaviour
         {
             if (TryExpandBranch())
             {
-                unableToGrowDieTimer.Reset();
                 _growIntervalTimer.Reset();
                 _growIntervalTimer.TargetTime = growInterval.PickRandomNumber();
             }

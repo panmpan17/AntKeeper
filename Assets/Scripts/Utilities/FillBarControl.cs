@@ -7,6 +7,7 @@ public class FillBarControl : MonoBehaviour
     [SerializeField]
     private SpriteRenderer fillSpriteRenderer;
     private RectTransform rectTransform;
+    private bool _initialize;
     [SerializeField]
     private BarType barType;
 
@@ -14,6 +15,10 @@ public class FillBarControl : MonoBehaviour
 
     void Awake()
     {
+        if (_initialize)
+            return;
+
+        _initialize = true;
         if (fillSpriteRenderer != null)
             _originSize = fillSpriteRenderer.size;
         else
@@ -29,6 +34,9 @@ public class FillBarControl : MonoBehaviour
     /// <param name="amount">0 is 0%, 1 is 100%</param>
     public void SetFillAmount(float amount)
     {
+        if (!_initialize)
+            Awake();
+
         Vector2 newSize = _originSize;
         if (barType == BarType.Horizontal)
         {

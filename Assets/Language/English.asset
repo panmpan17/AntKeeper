@@ -164,3 +164,9 @@ MonoBehaviour:
     Text: Fullscreen
   - ID: 609
     Text: Windowed
+  - ID: 804
+    Text: New nest need free space
+  - ID: 805
+    Text: Need to collect ant from nest hill
+  - ID: 806
+    Text: Need two ant to breed new nest

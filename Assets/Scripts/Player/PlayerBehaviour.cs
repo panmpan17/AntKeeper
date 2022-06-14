@@ -24,6 +24,8 @@ public class PlayerBehaviour : MonoBehaviour
     public FillBarControl ProgressBar => progressBar;
     [SerializeField]
     private AbstractHoldItem holdItem;
+    public AbstractHoldItem HoldItem => holdItem;
+
     [SerializeField]
     private Transform holdItemParent;
     [SerializeField]

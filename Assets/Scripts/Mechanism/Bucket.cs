@@ -32,6 +32,7 @@ public class Bucket : AbstractHoldItem
     }
     public float FillAmountProgress => _currentFillAmount / maxFillAmount;
     public bool IsFull => _currentFillAmount >= maxFillAmount;
+    public bool IsEmpty => _currentFillAmount == 0;
     public bool UseFullBucketSprite => _currentFillAmount > maxFillAmount * 0.9f;
 
     [SerializeField]
