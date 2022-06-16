@@ -5,6 +5,8 @@ using MPack;
 
 public class LanguageManager : MonoBehaviour
 {
+    public const string LanguagePreferenceKey = "Language";
+
     [SerializeField]
     private LanguageData english;
     [SerializeField]
@@ -15,8 +17,8 @@ public class LanguageManager : MonoBehaviour
 
     void Awake()
     {
-        if (PlayerPrefs.HasKey("Language"))
-            isEnglish = PlayerPrefs.GetInt("Language") == english.ID;
+        if (PlayerPrefs.HasKey(LanguagePreferenceKey))
+            isEnglish = PlayerPrefs.GetInt(LanguagePreferenceKey) == english.ID;
         else
         {
             switch(Application.systemLanguage)
@@ -34,13 +36,13 @@ public class LanguageManager : MonoBehaviour
     public void SwitchToEnglish()
     {
         LanguageMgr.AssignLanguageData(english);
-        PlayerPrefs.SetInt("Language", english.ID);
+        PlayerPrefs.SetInt(LanguagePreferenceKey, english.ID);
     }
 
     public void SwitchToChinese()
     {
         LanguageMgr.AssignLanguageData(chinese);
-        PlayerPrefs.SetInt("Language", chinese.ID);
+        PlayerPrefs.SetInt(LanguagePreferenceKey, chinese.ID);
     }
 
     public void Switch(bool boolean)
@@ -56,4 +58,12 @@ public class LanguageManager : MonoBehaviour
         if (isEnglish) SwitchToEnglish();
         else SwitchToChinese();
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Reset Preference")]
+    public void ResetLanguagePreference()
+    {
+        PlayerPrefs.DeleteKey(LanguagePreferenceKey);
+    }
+#endif
 }

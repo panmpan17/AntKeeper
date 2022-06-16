@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Redirect.unity
+    guid: e15f4a64e15cb4621a07456e45e4b9de
+  - enabled: 1
     path: Assets/Scenes/TweakParameter.unity
     guid: ad13ff119db444eab9a5d0e4f1fa9463
   - enabled: 1

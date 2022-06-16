@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using MPack;
 using TMPro;
@@ -49,6 +50,15 @@ public class SettingMenu : AbstractMenu
             soundEffectVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(AudioVolumeAdjust.SoundEffectVolumeParameterKey));
         else
             soundEffectVolumeSlider.SetValueWithoutNotify(0.5f);
+    }
+
+    void Update()
+    {
+        if (Keyboard.current.rightCommandKey.isPressed && Keyboard.current.backslashKey.wasPressedThisFrame)
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+        }
     }
 
     protected override void FadeInFinished(ITween<float> tweenData)

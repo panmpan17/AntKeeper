@@ -217,9 +217,22 @@ MonoBehaviour:
       <sprite name="key_shift">
       <sprite name="key_z"> Jump'
   - ID: 822
-    Text: 'You''re blah blah blah...
+    Text: 'You''re an ant biologist who just started learning
 
-      You have to clean up the mess...'
+
+      Want to know
+      practically
+
+      how to deal with the invasive ants
+
+
+      With the equipment
+      at hand
+
+      took a boat to a small island
+
+
+      Ready to start ...'
   - ID: 823
     Text: 'Ants will compete for land with other
 
@@ -231,3 +244,5 @@ MonoBehaviour:
     Text: Invasive will eat the encounter animals
   - ID: 825
     Text: To avoid mixed up jar can only hold one ant
+  - ID: 11
+    Text: Choose your language
