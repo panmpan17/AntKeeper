@@ -227,7 +227,7 @@ MonoBehaviour:
   audioSource: {fileID: 33375769}
   submitSound: {fileID: 8300000, guid: a267b6b63eef442e2bdfb2b115102ad5, type: 3}
   changeSceneDelay: 0.2
-  gameSceneName: TweakParameter
+  gameSceneName: MainGame
   tutorialSceneName: Tutorial
 --- !u!114 &33375768
 MonoBehaviour:

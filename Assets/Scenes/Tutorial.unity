@@ -830,7 +830,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332066121}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -16051,7 +16051,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &1818818279
 GameObject:
@@ -17328,7 +17328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd55b2203b6f46d0bbc4ce90d967720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: TweakParameter
+  sceneName: MainGame
 --- !u!1 &2004163626
 GameObject:
   m_ObjectHideFlags: 0
@@ -19813,7 +19813,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7779503, y: 1}
+    m_SensorSize: {x: 1.7774193, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -20391,8 +20391,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 4223166459766776588}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: -100, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 0}
+    UseVariable: 0
   pauseEvent: {fileID: 11400000, guid: 76bede270433b463c9668fc3d017714a, type: 2}
   resumeEvent: {fileID: 11400000, guid: 7c49f7e668a0a4c8395242af09107cca, type: 2}
 --- !u!1 &4223166459453645755

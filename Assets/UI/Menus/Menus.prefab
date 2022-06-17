@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 521038075833261339}
   - component: {fileID: 521038075833261338}
-  - component: {fileID: 4558999943609470705}
   - component: {fileID: 521038075833261340}
   m_Layer: 5
   m_Name: StartMenu
@@ -63,45 +62,13 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 521038076967779062}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: -100, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: 7b6d90f82acf64233950cae061b374b5, type: 2}
+    UseVariable: 1
   startCountDownEvent: {fileID: 11400000, guid: f8e9ad97705634558a0c2c41f29542bd, type: 2}
-  openTutorialEvent: {fileID: 11400000, guid: b50a12c2fe29e402181b86a0522ba422, type: 2}
+  tutorialScene: {fileID: 0}
   skipMenu: 0
---- !u!114 &4558999943609470705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521038075833261343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bd2ea85556d4d4891493bc303336bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventReference: {fileID: 11400000, guid: 76ba68af72dd141d6bfe327285f7dcd0, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 521038075833261338}
-        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: OnPopupClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BooleanEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  FloatEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!225 &521038075833261340
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -183,8 +150,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 8389787323269288263}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: 0, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: 7b6d90f82acf64233950cae061b374b5, type: 2}
+    UseVariable: 1
   creditText: {fileID: 521038077251386956}
   format: '<color=#fff><b>{0}</b></color>
 
@@ -1942,8 +1911,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 4223166459625919856}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: -100, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: 7b6d90f82acf64233950cae061b374b5, type: 2}
+    UseVariable: 1
   pauseEvent: {fileID: 11400000, guid: 76bede270433b463c9668fc3d017714a, type: 2}
   resumeEvent: {fileID: 11400000, guid: 7c49f7e668a0a4c8395242af09107cca, type: 2}
 --- !u!225 &572398456
@@ -3054,8 +3025,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 8389787323389383892}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: 0, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: 7b6d90f82acf64233950cae061b374b5, type: 2}
+    UseVariable: 1
   achievements:
   - {fileID: 11400000, guid: 747aa4de136b548dfa0f34f0bb0b9848, type: 2}
   - {fileID: 11400000, guid: f8740d87197f14d6086d67e1e05aa820, type: 2}
@@ -4079,14 +4052,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8389787324347692583}
     m_Modifications:
-    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2039538424255997451, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3930415149701072257, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4175,30 +4140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting
       objectReference: {fileID: 0}
-    - target: {fileID: 3930415149701072284, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5035958445814563202, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8389787324347692579}
-    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.517
-      objectReference: {fileID: 0}
-    - target: {fileID: 8717970647941155153, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.517
-      objectReference: {fileID: 0}
-    - target: {fileID: 8717970648250769093, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed95fd8d0a5b4c71b8a9d661fb1e358, type: 3}
 --- !u!114 &5853211470227390339 stripped

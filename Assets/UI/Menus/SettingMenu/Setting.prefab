@@ -995,7 +995,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.517, y: 1}
   m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1071,7 +1071,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.517, y: 1}
   m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1414,7 +1414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3930415149701072257
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1465,8 +1465,10 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: d7defb7ceae8449458ea7d3877595c1e, type: 2}
     UseVariable: 1
   firstSelected: {fileID: 8216347047820707020}
-  fadeFromRightPosition: {x: 100, y: 0}
-  fadeFromLeftPosition: {x: 0, y: 0}
+  fadeDeltaX:
+    Constant: 0
+    Variable: {fileID: 11400000, guid: 7b6d90f82acf64233950cae061b374b5, type: 2}
+    UseVariable: 1
   mainVolumeSlider: {fileID: 8216347047820707010}
   musicVolumeSlider: {fileID: 1636994018094590872}
   soundEffectVolumeSlider: {fileID: 1636994017766145036}
@@ -3747,7 +3749,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -1.5, y: 0}
   m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
