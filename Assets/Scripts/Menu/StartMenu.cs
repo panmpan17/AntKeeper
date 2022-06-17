@@ -11,8 +11,6 @@ public class StartMenu : AbstractMenu
 {
     [SerializeField]
     private EventReference startCountDownEvent;
-    [SerializeField]
-    private EventReference openTutorialEvent;
 
 #if UNITY_EDITOR
     [Header("Editor Only")]
@@ -43,22 +41,11 @@ public class StartMenu : AbstractMenu
         MenuManager.ins.CloseMenu(startCountDownEvent.Invoke);
     }
 
-    public void OpenTutorial()
-    {
-        _lastButton = EventSystem.current.currentSelectedGameObject;
-        openTutorialEvent.Invoke();
-    }
-
     public void ExitButtonPreseed()
     {
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
         Application.Quit();
-    }
-
-    public void OnPopupClose()
-    {
-        EventSystem.current.SetSelectedGameObject(_lastButton);
     }
 }

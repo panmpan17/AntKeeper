@@ -15,9 +15,25 @@ public class AbstractMenu : MonoBehaviour
     protected GameObject firstSelected;
 
     [SerializeField]
-    private Vector2 fadeFromRightPosition;
-    [SerializeField]
-    private Vector2 fadeFromLeftPosition;
+    private FloatReference fadeDeltaX;
+    private Vector2 fadeLeftAnchoredPosition
+    {
+        get
+        {
+            Vector2 position = _originAnchorPosition;
+            position.x -= fadeDeltaX.Value;
+            return position;
+        }
+    }
+    private Vector2 fadeRightAnchoredPosition
+    {
+        get
+        {
+            Vector2 position = _originAnchorPosition;
+            position.x += fadeDeltaX.Value;
+            return position;
+        }
+    }
 
     protected CanvasGroup _canvasGroup;
     protected GameObject _lastButton;
@@ -46,7 +62,8 @@ public class AbstractMenu : MonoBehaviour
         (tweenData) => {
             _rectTransform.anchoredPosition = Vector2.Lerp(
                 _originAnchorPosition,
-                _originAnchorPosition + fadeFromLeftPosition, tweenData.CurrentValue);
+                fadeLeftAnchoredPosition,
+                tweenData.CurrentValue);
             _canvasGroup.alpha = 1 - tweenData.CurrentValue;
         }, FadeOutFinished);
         tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
@@ -62,7 +79,8 @@ public class AbstractMenu : MonoBehaviour
         {
             _rectTransform.anchoredPosition = Vector2.Lerp(
                 _originAnchorPosition,
-                _originAnchorPosition + fadeFromRightPosition, tweenData.CurrentValue);
+                fadeRightAnchoredPosition,
+                tweenData.CurrentValue);
             _canvasGroup.alpha = 1 - tweenData.CurrentValue;
         }, FadeOutFinished);
         tween.TimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
@@ -88,7 +106,7 @@ public class AbstractMenu : MonoBehaviour
         (tweenData) =>
         {
             _rectTransform.anchoredPosition = Vector2.Lerp(
-                _originAnchorPosition + fadeFromLeftPosition,
+                fadeLeftAnchoredPosition,
                 _originAnchorPosition, tweenData.CurrentValue);
             _canvasGroup.alpha = tweenData.CurrentValue;
         }, FadeInFinished);
@@ -102,7 +120,7 @@ public class AbstractMenu : MonoBehaviour
         FloatTween tween = gameObject.Tween("FadeInFromRight", 0, 1, fadeDuration.Value, TweenScaleFunctions.CubicEaseInOut,
         (tweenData) => {
             _rectTransform.anchoredPosition = Vector2.Lerp(
-                _originAnchorPosition + fadeFromRightPosition,
+                fadeRightAnchoredPosition,
                 _originAnchorPosition, tweenData.CurrentValue);
             _canvasGroup.alpha = tweenData.CurrentValue;
         }, FadeInFinished);
