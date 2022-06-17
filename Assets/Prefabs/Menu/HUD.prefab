@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6978071816498430166}
   - component: {fileID: 7444257400546764860}
   - component: {fileID: 4619586792524800531}
+  - component: {fileID: 4009428107849884770}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -122,7 +123,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7444257400546764860}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4009428107849884770}
+        m_TargetAssemblyTypeName: EventTrigger, MPack
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4009428107849884770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144913442396036762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6bc2d346178741d4947af80cf278e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference: {fileID: 11400000, guid: 4522acb19011d468eb3c8ddd87904e77, type: 2}
 --- !u!1 &2083121576324515234
 GameObject:
   m_ObjectHideFlags: 0
