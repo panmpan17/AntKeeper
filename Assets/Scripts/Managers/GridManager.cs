@@ -292,13 +292,6 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public struct AntCountInfo
-    {
-        public int NativeAnt;
-        public int NativeAntDisabled;
-        public int FireAnt;
-        public int FireAntDisabled;
-    }
 
 
     [System.Serializable]
@@ -306,5 +299,6 @@ public class GridManager : MonoBehaviour
     {
         public Tilemap BaseMap;
         public Tilemap WallMap;
+        public Tilemap EdgeMap;
     }
 }

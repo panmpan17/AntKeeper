@@ -122,11 +122,6 @@ public class HUDManager : MonoBehaviour
         animalCountText.text = GridManager.ins.CountAliveAnimal().ToString();
     }
 
-    void UpdateAntCount(GridManager.AntCountInfo countInfo)
-    {
-        fireAntCountText.text = countInfo.FireAnt.ToString();
-    }
-
     void OnPauseClicked()
     {
         inputEvent.OnPause?.Invoke();
