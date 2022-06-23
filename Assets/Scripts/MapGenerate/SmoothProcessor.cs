@@ -6,7 +6,7 @@ using UnityEngine;
 namespace MapGenerate
 {
     [System.Serializable]
-    public class SmoothProcessor : IMapProcessor
+    public class SmoothProcessor
     {
         static Vector2Int[] EightDirections = new Vector2Int[] {
             new Vector2Int(-1, -1),

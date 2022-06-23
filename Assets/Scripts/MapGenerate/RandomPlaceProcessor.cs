@@ -22,18 +22,22 @@ namespace MapGenerate
         [Range(0, 1)]
         private float coverage;
 
-        public void Process(ref int[,] map)
+        public void Process(ref int[,,] map)
         {
-            int width = map.GetLength(0);
-            int height = map.GetLength(1);
+            int layerCount = map.GetLength(0);
+            int width = map.GetLength(1);
+            int height = map.GetLength(2);
 
-            for (int x = 0; x < width; x++)
+            for (int layerIndex = 0; layerIndex < layerCount; layerIndex ++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
-                    if (Random.value <= coverage)
+                    for (int y = 0; y < height; y++)
                     {
-                        map[x, y] = (int) ((PlaceItem)map[x, y] | placeItem);
+                        if (Random.value <= coverage)
+                        {
+                            map[layerIndex, x, y] = (int) ((PlaceItem)map[layerIndex, x, y] | placeItem);
+                        }
                     }
                 }
             }

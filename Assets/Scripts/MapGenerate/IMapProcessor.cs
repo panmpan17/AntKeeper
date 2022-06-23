@@ -6,6 +6,6 @@ namespace MapGenerate
 {
     public interface IMapProcessor
     {
-        void Process(ref int[,] map);
+        void Process(ref int[,,] map);
     }
 }

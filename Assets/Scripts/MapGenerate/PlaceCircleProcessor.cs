@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MapGenerate
 {
     [System.Serializable]
-    public class PlaceCircleProcessor : IMapProcessor
+    public class PlaceCircleProcessor
     {
         [SerializeField]
         private PlaceItem placeItem;
