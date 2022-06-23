@@ -177,18 +177,18 @@ public class AntRouteGrowControl : MonoBehaviour
         {
             branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
             Vector3Int nextPosition = branch.FindNextGrowPosition();
-            return GrowBranchInGridPosition(branch, nextPosition);
+            return GrowBranchInGridPosition(branch, _hub.RootGridPosition, nextPosition);
         }
 
-        return GrowBranchInGridPosition(branch, position);
+        return GrowBranchInGridPosition(branch, branch.LastPosition, position);
     }
 
-    bool GrowBranchInGridPosition(AntRouteBranch branch, Vector3Int position)
+    bool GrowBranchInGridPosition(AntRouteBranch branch, Vector3Int fromPosition, Vector3Int toPosition)
     {
-        if (!GridManager.ins.CheckGroundAvalibleForAnt(position))
+        if (!GridManager.ins.CheckGroundAvalibleForAnt(fromPosition, toPosition))
             return false;
 
-        if (GridManager.ins.TryFindAntNestBranch(position, out AntNestHub overlapNest, out AntRouteBranch overlapBranch))
+        if (GridManager.ins.TryFindAntNestBranch(toPosition, out AntNestHub overlapNest, out AntRouteBranch overlapBranch))
         {
             if (overlapNest == _hub)
             {
@@ -199,18 +199,18 @@ public class AntRouteGrowControl : MonoBehaviour
 
                 overlapBranch.IsConnectedToNest = true;
                 RouteSizeIncrease();
-                branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
+                branch.AddGrowPosition(toPosition, routeMap.GetCellCenterWorld(toPosition));
                 branch.AddBranchOff(overlapBranch);
                 return true;
             }
 
-            if (!CompeteOtherNest(position, overlapNest, overlapBranch))
+            if (!CompeteOtherNest(toPosition, overlapNest, overlapBranch))
                 return false;
         }
 
         RouteSizeIncrease();
-        branch.AddGrowPosition(position, routeMap.GetCellCenterWorld(position));
-        routeMap.SetTile(position, tilemapReference.ColliderTile);
+        branch.AddGrowPosition(toPosition, routeMap.GetCellCenterWorld(toPosition));
+        routeMap.SetTile(toPosition, tilemapReference.ColliderTile);
         return true;
     }
 
@@ -220,7 +220,7 @@ public class AntRouteGrowControl : MonoBehaviour
             return false;
         if (newBranchData.ExccedPositionCount >= _maxSize)
             return false;
-        if (!GridManager.ins.CheckGroundAvalibleForAnt(newBranchData.NextPosition))
+        if (!GridManager.ins.CheckGroundAvalibleForAnt(newBranchData.Root, newBranchData.NextPosition))
             return false;
         
 

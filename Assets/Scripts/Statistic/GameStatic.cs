@@ -60,13 +60,6 @@ public class GameStatic : ScriptableObject
             return count;
         }
     }
-    public float NativeAntAreaPercentage
-    {
-        get
-        {
-            return (float) NativeAntTotalArea / (float) TotalMapArea;
-        }
-    }
 
     public AntNestInfo[] FireAnts;
     public int FireAntAliveCount
@@ -88,13 +81,6 @@ public class GameStatic : ScriptableObject
             for (int i = 0; i < FireAnts.Length; i++)
                 count += FireAnts[i].AreaSize;
             return count;
-        }
-    }
-    public float FireAntAreaPercentage
-    {
-        get
-        {
-            return (float) FireAntTotalArea / (float) TotalMapArea;
         }
     }
 

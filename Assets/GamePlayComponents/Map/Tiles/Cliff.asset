@@ -80,7 +80,7 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: -1, y: 0, z: 0}
     m_RuleTransform: 0
-  - m_Id: 0
+  - m_Id: 4
     m_Sprites:
     - {fileID: 1506635837, guid: 8f7b6f2f3eebe427db3eee6156c8d998, type: 3}
     m_GameObject: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: 1, y: 0, z: 0}
     m_RuleTransform: 0
-  - m_Id: 4
+  - m_Id: 5
     m_Sprites:
     - {fileID: -1096564374, guid: 8f7b6f2f3eebe427db3eee6156c8d998, type: 3}
     - {fileID: 725168810, guid: 8f7b6f2f3eebe427db3eee6156c8d998, type: 3}

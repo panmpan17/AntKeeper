@@ -44,6 +44,14 @@ public class AntRouteSpreadControl : MonoBehaviour
         relativeVector.Normalize();
         relativeVector *= radiusRange.PickRandomNumber();
 
-        return GridManager.ins.InstantiateAntNestOnGrid(transform.position + (Vector3)relativeVector, _hub.IsFireAnt);
+        Vector3Int newNestGridPosition = GridManager.ins.WorldToCell(transform.position + (Vector3)relativeVector);
+
+        if (GridManager.ins.CheckGroundAvalibleForNewAntAndCap(newNestGridPosition))
+        {
+            GridManager.ins.InstantiateAntNest(newNestGridPosition, _hub.IsFireAnt);
+            return true;
+        }
+
+        return false;
     }
 }

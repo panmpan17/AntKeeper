@@ -239,7 +239,7 @@ public class QueenAntJar : AbstractHoldItem
         }
         
         StatisticTracker.ins.AddBreedAntRecord(_firstIsFireAnt);
-        GridManager.ins.InstantiateAntNestOnGridWithoutChecking(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
+        GridManager.ins.InstantiateAntNest(PlayerBehaviour.SelectedGridPosition, _firstAntNest.IsFireAnt);
 
         OnSuccessPlantAnt?.Invoke();
     }

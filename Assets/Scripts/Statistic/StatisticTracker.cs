@@ -27,7 +27,6 @@ public class StatisticTracker : MonoBehaviour
     public GameStatic CollectGameStatic()
     {
         CollectAntNestHubData();
-        CollectBaseMapTiles();
         _statistic.OriginalAnimalCount = GridManager.ins.OriginAnimalCount;
         _statistic.ResultAnimalCount = GridManager.ins.CountAliveAnimal();
         _statistic.BucketDestroyFireAntCount = _bucketDestroyFireAntCount;
@@ -71,22 +70,6 @@ public class StatisticTracker : MonoBehaviour
 
         _statistic.FireAnts = fireAnts.ToArray();
         _statistic.NativeAnts = nativeAnts.ToArray();
-    }
-
-    public void CollectBaseMapTiles()
-    {
-        Tilemap baseMap = GridManager.ins.BaseMap;
-
-        int totalTileCount = 0;
-        for (int x = baseMap.cellBounds.xMin; x < baseMap.cellBounds.xMax; x++)
-        {
-            for (int y = baseMap.cellBounds.yMin; y < baseMap.cellBounds.yMax; y++)
-            {
-                if (baseMap.HasTile(new Vector3Int(x, y, 0)))
-                    totalTileCount += 1;
-            }
-        }
-        _statistic.TotalMapArea = totalTileCount;
     }
 
     public void AddPlayerDestroyHubRecord(bool isFireAnt)

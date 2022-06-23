@@ -76,6 +76,9 @@ public class PlayerBehaviour : MonoBehaviour
     #region Player Input Event
     void OnIneractPerformed()
     {
+        if (!selectedGridIndicator.gameObject.activeSelf)
+            return;
+
         if (holdItem != null)
         {
             if (holdItem.CanPlaceDownToGrounInteractive(out AbstractGroundInteractive groundInteractive))

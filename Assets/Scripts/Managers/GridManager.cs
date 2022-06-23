@@ -11,14 +11,17 @@ public class GridManager : MonoBehaviour
     [Header("Reference")]
     [SerializeField]
     private Grid grid;
-    public Grid Grid => grid;
-    [SerializeField]
-    private Tilemap baseMap;
-    public Tilemap BaseMap => baseMap;
+
     [SerializeField]
     private Tilemap routeColliderMap;
     [SerializeField]
     private TilemapReference routeColliderMapReference;
+
+
+    [SerializeField]
+    private GridLayer[] layers;
+    private int _currentLayerIndex;
+    public int CurrentLayer => _currentLayerIndex;
 
     [Header("Spawn Ants")]
     [SerializeField]
@@ -59,6 +62,7 @@ public class GridManager : MonoBehaviour
             _antNestHubs[i].Unfreeze();
         }
     }
+
 
     #region Register and unregister
     public void RegisterGroundInteractive(AbstractGroundInteractive groundInteractive, out Vector3Int gridPosition)
@@ -176,54 +180,104 @@ public class GridManager : MonoBehaviour
     #endregion
 
 
+    #region Layer
+    public int GetCurrentLayer(Vector3 worldPosition)
+    {
+        Vector3Int gridPosition = grid.WorldToCell(worldPosition);
+        for (int i = layers.Length - 1; i >= 0; i--)
+        {
+            if (layers[i].BaseMap.HasTile(gridPosition))
+                return i;
+        }
+        return -1;
+    }
+    public int GetCurrentLayer(Vector3Int gridPosition)
+    {
+        for (int i = layers.Length - 1; i >= 0; i--)
+        {
+            if (layers[i].BaseMap.HasTile(gridPosition))
+                return i;
+        }
+        return -1;
+    }
+
+    public void SwitchLayer(int activeLayer)
+    {
+        for (int i = 0; i < layers.Length; i++)
+        {
+            layers[i].WallMap.gameObject.SetActive(i == activeLayer);
+        }
+        _currentLayerIndex = activeLayer;
+    }
+    #endregion
+
+
     #region Utilities
     public bool RaycastCell(Vector3 position, out Vector3Int cellPosition, out Vector3 centerPosition)
     {
         cellPosition = grid.WorldToCell(position);
         centerPosition = grid.GetCellCenterWorld(cellPosition);
 
-        return baseMap.HasTile(cellPosition);
+        if (layers[_currentLayerIndex].WallMap.HasTile(cellPosition))
+            return false;
+        // for (int i = layers.Length - 1; i > _currentLayerIndex; i--)
+        // {
+        //     if (layers[i].BaseMap.HasTile(cellPosition))
+        //         return false;
+        // }
+        return layers[_currentLayerIndex].BaseMap.HasTile(cellPosition);
     }
 
-    public bool CheckGroundAvalibleForAnt(Vector3Int position)
+    public bool CheckGroundAvalibleForAnt(Vector3Int fromPosition, Vector3Int toPosition)
     {
-        if (TryFindGroundInteractive(position))
+        if (TryFindGroundInteractive(toPosition))
             return false;
 
-        return baseMap.HasTile(position);
-    }
-    public bool CheckGroundAvalibleForNewAnt(Vector3Int position)
-    {
-        if (TryFindGroundInteractive(position))
+        int fromPositionLayer = GetCurrentLayer(fromPosition);
+
+        if (fromPositionLayer == -1)
             return false;
-        if (TryFindAntNestBranch(position))
+        if (layers[fromPositionLayer].WallMap.HasTile(toPosition))
             return false;
 
-        return baseMap.HasTile(position);
+        return layers[fromPositionLayer].BaseMap.HasTile(toPosition);
     }
+    public bool CheckGroundAvalibleForNewAnt(Vector3Int gridPosition)
+    {
+        if (TryFindGroundInteractive(gridPosition))
+            return false;
+        if (TryFindAntNestBranch(gridPosition))
+            return false;
 
-    public bool InstantiateAntNestOnGrid(Vector3 position, bool useFireAnt)
-    {
-        return InstantiateAntNestOnGrid(grid.WorldToCell(position), useFireAnt);
+        int newNestLayer = GetCurrentLayer(gridPosition);
+
+        if (newNestLayer == -1)
+            return false;
+        if (layers[newNestLayer].WallMap.HasTile(gridPosition))
+            return false;
+        // for (int i = layers.Length - 1; i > _currentLayerIndex; i--)
+        // {
+        //     if (layers[i].BaseMap.HasTile(gridPosition))
+        //         return false;
+        // }
+        return layers[newNestLayer].BaseMap.HasTile(gridPosition);
     }
-    public bool InstantiateAntNestOnGrid(Vector3Int position, bool useFireAnt)
+    public bool CheckGroundAvalibleForNewAntAndCap(Vector3Int gridPosition)
     {
-        if (TryFindGroundInteractive(position))
-            return false;
-        if (!baseMap.HasTile(position))
-            return false;
-        if (TryFindAntNestBranch(position))
-            return false;
         if (_antNestHubs.Count >= antNestCountCap)
             return false;
-
-        spawnAnimalNest?.Spawn(useFireAnt, grid.GetCellCenterWorld(position));
-        return true;
+        return CheckGroundAvalibleForNewAnt(gridPosition);
     }
 
-    public void InstantiateAntNestOnGridWithoutChecking(Vector3Int position, bool useFireAnt)
+
+    public void InstantiateAntNest(Vector3Int gridPosition, bool useFireAnt)
     {
-        spawnAnimalNest?.Spawn(useFireAnt, grid.GetCellCenterWorld(position));
+        spawnAnimalNest?.Spawn(useFireAnt, grid.GetCellCenterWorld(gridPosition));
+    }
+
+    public Vector3Int WorldToCell(Vector3 worldPosition)
+    {
+        return grid.WorldToCell(worldPosition);
     }
     #endregion
 
@@ -244,5 +298,13 @@ public class GridManager : MonoBehaviour
         public int NativeAntDisabled;
         public int FireAnt;
         public int FireAntDisabled;
+    }
+
+
+    [System.Serializable]
+    public struct GridLayer
+    {
+        public Tilemap BaseMap;
+        public Tilemap WallMap;
     }
 }
