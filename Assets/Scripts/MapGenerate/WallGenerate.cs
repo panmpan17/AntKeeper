@@ -3,56 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class WallGenerate : MonoBehaviour
+
+namespace MapGenerate
 {
-    [SerializeField]
-    private GridManager.GridLayer[] layers;
-    [SerializeField]
-    private TileBase wallTile;
-
-    IEnumerator Start()
+    [System.Serializable]
+    public class WallGenerate
     {
-        yield return new WaitForEndOfFrame();
+        [SerializeField]
+        private TileBase wallTile;
 
-        for (int i = 0; i < layers.Length; i++)
-            GenerateWall(i);
-    }
+        private GridManager.GridLayer[] _layers;
 
-    void GenerateWall(int index)
-    {
-        Tilemap wallMap = layers[index].WallMap;
-
-        LoopThroughTileMap(layers[index].BaseMap, (gridPosition, hasTile) => {
-            if (!hasTile)
-                wallMap.SetTile(gridPosition, wallTile);
-        });
-
-        for (int i = index + 1; i < layers.Length; i++)
+        public void Process(GridManager.GridLayer[] layers)
         {
-            LoopThroughTileMap(layers[i].EdgeMap, (gridPosition, hasTile) =>
-            {
-                if (hasTile)
-                    wallMap.SetTile(gridPosition, wallTile);
-            });
+            _layers = layers;
 
-            LoopThroughTileMap(layers[i].BaseMap, (gridPosition, hasTile) =>
-            {
-                if (hasTile)
-                    wallMap.SetTile(gridPosition, wallTile);
-            });
+            for (int i = 0; i < layers.Length; i++)
+                GenerateWall(i);
+
+            _layers = null;
         }
 
-        wallMap.GetComponent<CompositeCollider2D>().GenerateGeometry();
-    }
-
-    void LoopThroughTileMap(Tilemap map, System.Action<Vector3Int, bool> callback)
-    {
-        for (int x = map.cellBounds.xMin - 1; x <= map.cellBounds.xMax; x++)
+        void GenerateWall(int index)
         {
-            for (int y = map.cellBounds.yMin - 1; y <= map.cellBounds.yMax; y++)
+            Tilemap wallMap = _layers[index].WallMap;
+
+            LoopThroughTileMap(_layers[index].BaseMap, (gridPosition, hasTile) => {
+                if (!hasTile)
+                    wallMap.SetTile(gridPosition, wallTile);
+            });
+
+            for (int i = index + 1; i < _layers.Length; i++)
             {
-                Vector3Int gridPosition = new Vector3Int(x, y, 0);
-                callback.Invoke(gridPosition, map.HasTile(gridPosition));
+                LoopThroughTileMap(_layers[i].EdgeMap, (gridPosition, hasTile) =>
+                {
+                    if (hasTile)
+                        wallMap.SetTile(gridPosition, wallTile);
+                });
+
+                LoopThroughTileMap(_layers[i].BaseMap, (gridPosition, hasTile) =>
+                {
+                    if (hasTile)
+                        wallMap.SetTile(gridPosition, wallTile);
+                });
+            }
+
+            wallMap.GetComponent<CompositeCollider2D>().GenerateGeometry();
+        }
+
+        void LoopThroughTileMap(Tilemap map, System.Action<Vector3Int, bool> callback)
+        {
+            for (int x = map.cellBounds.xMin - 1; x <= map.cellBounds.xMax; x++)
+            {
+                for (int y = map.cellBounds.yMin - 1; y <= map.cellBounds.yMax; y++)
+                {
+                    Vector3Int gridPosition = new Vector3Int(x, y, 0);
+                    callback.Invoke(gridPosition, map.HasTile(gridPosition));
+                }
             }
         }
     }

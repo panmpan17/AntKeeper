@@ -4,67 +4,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class EdgeGenerate : MonoBehaviour
+namespace MapGenerate
 {
-    [SerializeField]
-    private GridManager.GridLayer[] layers;
-    [SerializeField]
-    private Tilemap edgeWaveTilemap;
-
-    [Header("Tile")]
-    [SerializeField]
-    private TileBase tallEdge;
-    [SerializeField]
-    private TileBase tallEdgeRight;
-    [SerializeField]
-    private TileBase smallEdge;
-    [SerializeField]
-    private TileBase edgeWaveTile;
-
-    void Start()
+    [System.Serializable]
+    public class EdgeGenerate
     {
-        for (int i = 0; i < layers.Length; i++)
-            ScanLayer(i);
-    }
+        [Header("Tile")]
+        [SerializeField]
+        private TileBase tallEdge;
+        [SerializeField]
+        private TileBase tallEdgeRight;
+        [SerializeField]
+        private TileBase smallEdge;
+        [SerializeField]
+        private TileBase edgeWaveTile;
 
-    void ScanLayer(int index)
-    {
-        Tilemap map = layers[index].BaseMap;
-        for (int x = map.cellBounds.xMin; x <= map.cellBounds.xMax; x++)
+
+        private GridManager.GridLayer[] _layers;
+        private Tilemap _edgeWaveTilemap;
+
+        public void Process(GridManager.GridLayer[] layers, Tilemap edgeWaveTilemap)
         {
-            bool lastHasTile = false;
+            _layers = layers;
+            _edgeWaveTilemap = edgeWaveTilemap;
 
-            for (int y = map.cellBounds.yMax; y >= map.cellBounds.yMin - 1; y--)
+            for (int i = 0; i < _layers.Length; i++)
             {
-                Vector3Int gridPosition = new Vector3Int(x, y, 0);
+                ScanLayer(i);
+            }
+        }
 
-                if (map.HasTile(gridPosition))
+        void ScanLayer(int index)
+        {
+            Tilemap map = _layers[index].BaseMap;
+            for (int x = map.cellBounds.xMin; x <= map.cellBounds.xMax; x++)
+            {
+                bool lastHasTile = false;
+
+                for (int y = map.cellBounds.yMax; y >= map.cellBounds.yMin - 1; y--)
                 {
-                    lastHasTile = true;
-                    continue;
-                }
+                    Vector3Int gridPosition = new Vector3Int(x, y, 0);
 
-                if (!lastHasTile)
-                    continue;
-                lastHasTile = false;
-
-                if (index > 0)
-                {
-                    if (layers[index - 1].BaseMap.HasTile(gridPosition))
+                    if (map.HasTile(gridPosition))
                     {
-                        layers[index].EdgeMap.SetTile(gridPosition, smallEdge);
+                        lastHasTile = true;
                         continue;
                     }
 
-                    layers[index - 1].EdgeMap.SetTile(gridPosition, tallEdge);
-                    layers[index - 1].EdgeMap.SetTile(gridPosition + Vector3Int.down, tallEdge);
-                    edgeWaveTilemap.SetTile(gridPosition + Vector3Int.down, edgeWaveTile);
-                    continue;
-                }
+                    if (!lastHasTile)
+                        continue;
+                    lastHasTile = false;
 
-                layers[index].EdgeMap.SetTile(gridPosition, tallEdge);
-                layers[index].EdgeMap.SetTile(gridPosition + Vector3Int.down, tallEdge);
-                edgeWaveTilemap.SetTile(gridPosition + Vector3Int.down, edgeWaveTile);
+                    if (index > 0)
+                    {
+                        if (_layers[index - 1].BaseMap.HasTile(gridPosition))
+                        {
+                            _layers[index].EdgeMap.SetTile(gridPosition, smallEdge);
+                            continue;
+                        }
+
+                        _layers[index - 1].EdgeMap.SetTile(gridPosition, tallEdge);
+                        _layers[index - 1].EdgeMap.SetTile(gridPosition + Vector3Int.down, tallEdge);
+                        _edgeWaveTilemap.SetTile(gridPosition + Vector3Int.down, edgeWaveTile);
+                        continue;
+                    }
+
+                    _layers[index].EdgeMap.SetTile(gridPosition, tallEdge);
+                    _layers[index].EdgeMap.SetTile(gridPosition + Vector3Int.down, tallEdge);
+                    _edgeWaveTilemap.SetTile(gridPosition + Vector3Int.down, edgeWaveTile);
+                }
             }
         }
     }

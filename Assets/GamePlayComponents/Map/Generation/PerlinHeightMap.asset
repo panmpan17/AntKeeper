@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PerlinHeightMap
   m_EditorClassIdentifier: 
   processorList:
-  - processorType: 0
+  - processorType: 3
     randomPlaceProcessor:
       placeItem: 1
       coverage: 0.604
@@ -26,8 +26,9 @@ MonoBehaviour:
       circleMinSize: 15
       circleMaxSize: 43
     perlinNoiseProccessor:
-      placeItem: 0
-      step: 0
-      randomOffset: 0
-      offset: {x: 0, y: 0}
-      scale: 0
+      placeItem: 1
+      stepMin: 0.352
+      stepMax: 0.814
+      randomOffset: 1
+      offset: {x: -70.93916, y: -74.09177}
+      scale: 2.9

@@ -11630,7 +11630,7 @@ GameObject:
   - component: {fileID: 1331276454}
   - component: {fileID: 1331276453}
   m_Layer: 0
-  m_Name: EdgeWithWave
+  m_Name: EdgeWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12074,8 +12074,6 @@ GameObject:
   - component: {fileID: 1538095602}
   - component: {fileID: 1538095604}
   - component: {fileID: 1538095605}
-  - component: {fileID: 1538095606}
-  - component: {fileID: 1538095607}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -12162,7 +12160,9 @@ MonoBehaviour:
   layerCount: 3
   generateMapProcess:
   - {fileID: 11400000, guid: a6c98ef015f9f42dfa0c36954e2b5e2d, type: 2}
+  mapPostProcess: {fileID: 11400000, guid: fa76bcf79046b4c3bb23485aee1b4d3a, type: 2}
   grassMap: {fileID: 1359100414}
+  edgeWaveTilemap: {fileID: 1331276454}
   baseMapPrefab: {fileID: 654961442317723294, guid: d8145db89115c4f4eb983c3303688640, type: 3}
   edgeMapPrefab: {fileID: 7012288445143626756, guid: 409297379bd6f46b1befbc349aa1aec3, type: 3}
   wallMapPrefab: {fileID: 2178873488497275174, guid: 9373c21408b19463cb9bd94b4c4db8e5, type: 3}
@@ -12171,50 +12171,6 @@ MonoBehaviour:
   grassTite: {fileID: 11400000, guid: 0685d9da31f684ea9bfa44d76cbb6f26, type: 2}
   animalCollection: {fileID: 1131411192}
   animalPrefab: {fileID: 2631744256395693434, guid: 601e9573f58a443f58e812b89f857dc6, type: 3}
---- !u!114 &1538095606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538095601}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08af56f92580b48549ee7ef8602c7a6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layers:
-  - BaseMap: {fileID: 0}
-    WallMap: {fileID: 0}
-    EdgeMap: {fileID: 0}
-  - BaseMap: {fileID: 0}
-    WallMap: {fileID: 0}
-    EdgeMap: {fileID: 0}
-  edgeWaveTilemap: {fileID: 1331276454}
-  tallEdge: {fileID: 11400000, guid: 81bc449fa1f6a430d820b31eb1290a57, type: 2}
-  tallEdgeRight: {fileID: 11400000, guid: 36e659cb8bbc6439da2bebfab1138648, type: 2}
-  smallEdge: {fileID: 11400000, guid: 4745e9dddf93b451da05d32f5842d718, type: 2}
-  edgeWaveTile: {fileID: 11400000, guid: 76937a52626644f50ae94e2c2655e063, type: 2}
---- !u!114 &1538095607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538095601}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99344f70a3dd944809d09bc4cb6c756f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layers:
-  - BaseMap: {fileID: 0}
-    WallMap: {fileID: 0}
-    EdgeMap: {fileID: 0}
-  - BaseMap: {fileID: 0}
-    WallMap: {fileID: 0}
-    EdgeMap: {fileID: 0}
-  wallTile: {fileID: 11400000, guid: 712b4543642d944daaa34546fc5125c3, type: 2}
 --- !u!1 &1547543310
 GameObject:
   m_ObjectHideFlags: 0

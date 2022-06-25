@@ -28,10 +28,14 @@ namespace MapGenerate
 
         [SerializeField]
         private GenerateMapProcess[] generateMapProcess;
+        [SerializeField]
+        private MapPostProcess mapPostProcess;
 
         [Header("Tilemap")]
         [SerializeField]
         private Tilemap grassMap;
+        [SerializeField]
+        private Tilemap edgeWaveTilemap;
 
         [SerializeField]
         private GameObject baseMapPrefab;
@@ -55,6 +59,9 @@ namespace MapGenerate
 
         public void ClearMap()
         {
+            grassMap.ClearAllTiles();
+            edgeWaveTilemap.ClearAllTiles();
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 Transform child = transform.GetChild(i);
@@ -108,6 +115,8 @@ namespace MapGenerate
                     }
                 }
             }
+
+            mapPostProcess.Process(layers, edgeWaveTilemap);
         }
 
         void InstantiateTilemapLayers()
@@ -125,6 +134,11 @@ namespace MapGenerate
                     EdgeMap = Instantiate(edgeMapPrefab, newLayerObject.transform).GetComponent<Tilemap>(),
                     WallMap = Instantiate(wallMapPrefab, newLayerObject.transform).GetComponent<Tilemap>(),
                 };
+
+                var renderer = layers[i].BaseMap.GetComponent<TilemapRenderer>();
+                renderer.sortingOrder += 3 * i;
+                renderer = layers[i].EdgeMap.GetComponent<TilemapRenderer>();
+                renderer.sortingOrder += 3 * i;
             }
         }
 
