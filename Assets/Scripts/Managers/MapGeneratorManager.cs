@@ -56,6 +56,7 @@ namespace MapGenerate
         [SerializeField]
         private GameObject animalPrefab;
 
+        private int[,,] _map;
 
         public void ClearMap()
         {
@@ -96,7 +97,7 @@ namespace MapGenerate
         {
             InstantiateTilemapLayers();
 
-            int[,,] map = RunThroughGenerateProcess();
+            _map = RunThroughGenerateProcess();
 
 
             int xOffset = width / 2;
@@ -110,8 +111,8 @@ namespace MapGenerate
                     {
                         Vector3Int gridPosition = new Vector3Int(x - xOffset, y - yOffset, 0);
 
-                        int cell = map[layerIndex, x, y];
-                        PlaceTile(layerIndex, gridPosition, cell);
+                        // int cell = _map[layerIndex, x, y];
+                        PlaceTile(layerIndex, x, y, gridPosition);
                     }
                 }
             }
@@ -177,40 +178,67 @@ namespace MapGenerate
             return map;
         }
 
-        void PlaceTile(int layerIndex, Vector3Int position, int cell)
+        void PlaceTile(int layerIndex, int x, int y, Vector3Int position)
         {
-            var item = (PlaceItem) cell;
+            var item = (PlaceItem) _map[layerIndex, x, y];
 
             var hasGround = (item & PlaceItem.Ground) == PlaceItem.Ground;
-            var hasAnimal = (item & PlaceItem.Animal) == PlaceItem.Animal;
-            var hasGrass = (item & PlaceItem.Grass) == PlaceItem.Grass;
+            var lowerHasGround = false;
 
-            if (hasGround)
+            if (!hasGround)
             {
-                layers[layerIndex].BaseMap.SetTile(position, groundTile);
-
-                if (hasAnimal)
+                for (int i = layerIndex - 1; i >= 0; i--)
                 {
-                    GameObject newAnimal;
-#if UNITY_EDITOR
-                    if (!EditorApplication.isPlaying)
+                    if ((((PlaceItem)_map[i, x, y]) & PlaceItem.Ground) == PlaceItem.Ground)
                     {
-                        newAnimal = (GameObject)PrefabUtility.InstantiatePrefab(animalPrefab, animalCollection);
+                        lowerHasGround = true;
+                        break;
                     }
-                    else
-                        newAnimal = Instantiate(animalPrefab, animalCollection);
-#else
-                    newAnimal = Instantiate(animalPrefab, animalCollection);
-#endif
-
-                    newAnimal.transform.position = layers[layerIndex].BaseMap.GetCellCenterWorld(position);
                 }
-
-                grassMap.SetTile(position, hasGrass ? grassTite : null);
             }
-            else
+
+            if (!hasGround && !lowerHasGround)
             {
                 grassMap.SetTile(position, null);
+                return;
+            }
+
+            var hasGrass = (item & PlaceItem.Grass) == PlaceItem.Grass;
+            grassMap.SetTile(position, hasGrass ? grassTite : null);
+
+            if (!hasGround)
+            {
+                layers[layerIndex].BaseMap.SetTile(position, null);
+                return;
+            }
+
+            layers[layerIndex].BaseMap.SetTile(position, groundTile);
+
+
+            var hasAnimal = (item & PlaceItem.Animal) == PlaceItem.Animal;
+            if (hasAnimal)
+            {
+                for (int i = layerIndex - 1; i >= 0; i--)
+                {
+                    if ((((PlaceItem)_map[i, x, y]) & PlaceItem.Animal) == PlaceItem.Animal)
+                    {
+                        // Animal already exist in lower level
+                        return;
+                    }
+                }
+
+                GameObject newAnimal;
+
+#if UNITY_EDITOR
+                if (!EditorApplication.isPlaying)
+                    newAnimal = (GameObject)PrefabUtility.InstantiatePrefab(animalPrefab, animalCollection);
+                else
+                    newAnimal = Instantiate(animalPrefab, animalCollection);
+#else
+                newAnimal = Instantiate(animalPrefab, animalCollection);
+#endif
+
+                newAnimal.transform.position = layers[layerIndex].BaseMap.GetCellCenterWorld(position);
             }
         }
     }
