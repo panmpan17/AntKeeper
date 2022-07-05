@@ -11,11 +11,11 @@ namespace MapGenerate
     {
         public ProcessRule[] Processes;
 
-        public void Process(GridManager.GridLayer[] layers, Tilemap edgeWaveTilemap)
+        public void Process(MapGeneratorManager manager)
         {
             for (int i = 0; i < Processes.Length; i++)
             {
-                Processes[i].Process(layers, edgeWaveTilemap);
+                Processes[i].Process(manager);
             }
         }
 
@@ -24,6 +24,7 @@ namespace MapGenerate
         {
             WallGenerate,
             EdgeGenerate,
+            RemoveEdgeOverlap,
         }
 
         [System.Serializable]
@@ -33,17 +34,21 @@ namespace MapGenerate
 
             public WallGenerate WallGenerate;
             public EdgeGenerate EdgeGenerate;
+            public RemoveEdgeOverlap RemoveEdgeOverlap;
 
 
-            public void Process(GridManager.GridLayer[] layers, Tilemap edgeWaveTilemap)
+            public void Process(MapGeneratorManager manager)
             {
                 switch (ProcessType)
                 {
                     case ProcessType.WallGenerate:
-                        WallGenerate.Process(layers);
+                        WallGenerate.Process(manager.Layers);
                         break;
                     case ProcessType.EdgeGenerate:
-                        EdgeGenerate.Process(layers, edgeWaveTilemap);
+                        EdgeGenerate.Process(manager.Layers, manager.EdgeWaveTilemap);
+                        break;
+                    case ProcessType.RemoveEdgeOverlap:
+                        RemoveEdgeOverlap.Process(manager);
                         break;
                 }
             }

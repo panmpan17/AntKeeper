@@ -23,8 +23,7 @@ namespace MapGenerate
         private int height;
         [SerializeField]
         private int layerCount;
-        // [SerializeField]
-        private GridManager.GridLayer[] layers;
+        private GridManager.GridLayer[] _layers;
 
         [SerializeField]
         private GenerateMapProcess[] generateMapProcess;
@@ -56,6 +55,12 @@ namespace MapGenerate
         [SerializeField]
         private GameObject animalPrefab;
 
+
+        public GridManager.GridLayer[] Layers => _layers;
+        public Tilemap GrassMap => grassMap;
+        public Tilemap EdgeWaveTilemap => edgeWaveTilemap;
+
+
         private int[,,] _map;
 
         public void ClearMap()
@@ -68,28 +73,14 @@ namespace MapGenerate
                 Transform child = transform.GetChild(i);
                 if (child.name.StartsWith("layer-"))
                 {
-#if UNITY_EDITOR
-                    if (!EditorApplication.isPlaying)
-                        DestroyImmediate(child.gameObject);
-                    else
-                        Destroy(child.gameObject);
-#else
-                    Destroy(child.gameObject);
-#endif
+                    DestroyRelay(child.gameObject);
                     i--;
                 }
             }
 
             while (animalCollection.childCount > 0)
             {
-#if UNITY_EDITOR
-                if (!EditorApplication.isPlaying)
-                    DestroyImmediate(animalCollection.GetChild(0).gameObject);
-                else
-                    Destroy(animalCollection.GetChild(0).gameObject);
-#else
-                    Destroy(animalCollection.GetChild(0).gameObject);
-#endif
+                DestroyRelay(animalCollection.GetChild(0).gameObject);
             }
         }
 
@@ -117,28 +108,28 @@ namespace MapGenerate
                 }
             }
 
-            mapPostProcess.Process(layers, edgeWaveTilemap);
+            mapPostProcess.Process(this);
         }
 
         void InstantiateTilemapLayers()
         {
-            layers = new GridManager.GridLayer[layerCount];
+            _layers = new GridManager.GridLayer[layerCount];
             for (int i = 0; i < layerCount; i++)
             {
                 var newLayerObject = new GameObject("layer-" + (i + 1));
                 newLayerObject.transform.SetParent(transform);
                 newLayerObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-                layers[i] = new GridManager.GridLayer
+                _layers[i] = new GridManager.GridLayer
                 {
                     BaseMap = Instantiate(baseMapPrefab, newLayerObject.transform).GetComponent<Tilemap>(),
                     EdgeMap = Instantiate(edgeMapPrefab, newLayerObject.transform).GetComponent<Tilemap>(),
                     WallMap = Instantiate(wallMapPrefab, newLayerObject.transform).GetComponent<Tilemap>(),
                 };
 
-                var renderer = layers[i].BaseMap.GetComponent<TilemapRenderer>();
+                var renderer = _layers[i].BaseMap.GetComponent<TilemapRenderer>();
                 renderer.sortingOrder += 3 * i;
-                renderer = layers[i].EdgeMap.GetComponent<TilemapRenderer>();
+                renderer = _layers[i].EdgeMap.GetComponent<TilemapRenderer>();
                 renderer.sortingOrder += 3 * i;
             }
         }
@@ -208,11 +199,11 @@ namespace MapGenerate
 
             if (!hasGround)
             {
-                layers[layerIndex].BaseMap.SetTile(position, null);
+                _layers[layerIndex].BaseMap.SetTile(position, null);
                 return;
             }
 
-            layers[layerIndex].BaseMap.SetTile(position, groundTile);
+            _layers[layerIndex].BaseMap.SetTile(position, groundTile);
 
 
             var hasAnimal = (item & PlaceItem.Animal) == PlaceItem.Animal;
@@ -238,8 +229,37 @@ namespace MapGenerate
                 newAnimal = Instantiate(animalPrefab, animalCollection);
 #endif
 
-                newAnimal.transform.position = layers[layerIndex].BaseMap.GetCellCenterWorld(position);
+                newAnimal.transform.position = _layers[layerIndex].BaseMap.GetCellCenterWorld(position);
             }
+        }
+    
+        public void RemoveAnimal(Vector3Int position)
+        {
+            for (int i = 0; i < animalCollection.childCount; i++)
+            {
+                Transform child = animalCollection.GetChild(i);
+                Vector3Int childGridPosition = grassMap.WorldToCell(child.transform.position);
+
+                if (childGridPosition == position)
+                {
+                    DestroyRelay(child.gameObject);
+                    Debug.Log(position);
+                    break;
+                }
+            }
+        }
+
+        void DestroyRelay(UnityEngine.Object obj)
+        {
+
+#if UNITY_EDITOR
+            if (!EditorApplication.isPlaying)
+                DestroyImmediate(obj);
+            else
+                Destroy(obj);
+#else
+            Destroy(obj);
+#endif
         }
     }
 
