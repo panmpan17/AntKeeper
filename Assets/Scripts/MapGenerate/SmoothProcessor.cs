@@ -39,45 +39,44 @@ namespace MapGenerate
         int _width;
         int _height;
 
-        public void Process(ref int[,] map)
+        public void Process(ref int[,,] map)
         {
-            _width = map.GetLength(0);
-            _height = map.GetLength(1);
+            int layerCount = map.GetLength(0);
+            _width = map.GetLength(1);
+            _height = map.GetLength(2);
 
-            for (int i = 0; i < smoothCount; i++)
-                Smooth(ref map);
+            for (int i = 0; i < layerCount; i++)
+                for (int e = 0; e < smoothCount; e++)
+                    Smooth(ref map, i);
         }
 
-        void Smooth(ref int[,] map)
+        void Smooth(ref int[,,] map, int layerIndex)
         {
             for (int x = 0; x < _width; x++)
             {
                 for (int y = 0; y < _height; y++)
                 {
-                    int neighborCount = CountEightNeighbor(map, x, y);
+                    int neighborCount = CountEightNeighbor(map, layerIndex, x, y);
 
-                    if (map[x, y] > 0)
+                    if (map[layerIndex, x, y] > 0)
                     {
                         // Is alive, check is there enough neighbor to keep alive
                         if (neighborCount < keepAliveNeighborNeedCount)
-                            map[x, y] = 0;
+                            map[layerIndex, x, y] = 0;
                     }
                     else
                     {
                         // Is dead, check is there enough neighbor to become alive
                         if (neighborCount >= becomeAliveNeighborNeedCount)
-                            map[x, y] = 1;
+                            map[layerIndex, x, y] = 1;
                     }
                 }
             }
         }
 
-        public static int CountEightNeighbor(int[,] map, int x, int y)
+        public int CountEightNeighbor(int[,,] map, int layerIndex, int x, int y)
         {
             int count = 0;
-
-            int width = map.GetLength(0);
-            int height = map.GetLength(1);
 
             for (int i = 0; i < EightDirections.Length; i++)
             {
@@ -85,9 +84,9 @@ namespace MapGenerate
                 position.x += x;
                 position.y += y;
 
-                if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
+                if (position.x >= 0 && position.x < _width && position.y >= 0 && position.y < _height)
                 {
-                    if (map[position.x, position.y] == 1)
+                    if (map[layerIndex, position.x, position.y] != 0)
                         count++;
                 }
             }
@@ -95,12 +94,9 @@ namespace MapGenerate
             return count;
         }
 
-        public static int CountFourNeighbor(int[,] map, int x, int y)
+        public int CountFourNeighbor(int[,,] map, int layerIndex, int x, int y)
         {
             int count = 0;
-
-            int width = map.GetLength(0);
-            int height = map.GetLength(1);
 
             for (int i = 0; i < FourDirections.Length; i++)
             {
@@ -108,9 +104,9 @@ namespace MapGenerate
                 position.x += x;
                 position.y += y;
 
-                if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
+                if (position.x >= 0 && position.x < _width && position.y >= 0 && position.y < _height)
                 {
-                    if (map[position.x, position.y] == 1)
+                    if (map[layerIndex, position.x, position.y] != 0)
                         count++;
                 }
             }

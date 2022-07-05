@@ -86,6 +86,8 @@ namespace MapGenerate
             float originHeight = position.height;
             position.height = 20;
 
+            property.serializedObject.Update();
+
             SerializedProperty processorTypeProperty = property.FindPropertyRelative("processorType");
             EditorGUI.PropertyField(position, processorTypeProperty);
 
@@ -98,6 +100,8 @@ namespace MapGenerate
                 settingProperty.isExpanded = true;
                 EditorGUI.PropertyField(position, settingProperty, true);
             }
+
+            property.serializedObject.ApplyModifiedProperties();
         }
     }
     #endif

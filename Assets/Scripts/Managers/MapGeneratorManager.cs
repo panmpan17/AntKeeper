@@ -108,7 +108,7 @@ namespace MapGenerate
                 }
             }
 
-            mapPostProcess.Process(this);
+            mapPostProcess?.Process(this);
         }
 
         void InstantiateTilemapLayers()
@@ -153,12 +153,12 @@ namespace MapGenerate
                         case ProcessorType.RandomPlace:
                             process.randomPlaceProcessor.Process(ref map);
                             break;
-                        // case ProcessorType.Smooth:
-                        //     process.smoothProcessor.Process(ref map);
-                        //     break;
-                        // case ProcessorType.PlaceCircle:
-                        //     process.placeCircleProcessor.Process(ref map);
-                        //     break;
+                        case ProcessorType.Smooth:
+                            process.smoothProcessor.Process(ref map);
+                            break;
+                        case ProcessorType.PlaceCircle:
+                            process.placeCircleProcessor.Process(ref map);
+                            break;
                         case ProcessorType.PerlinNoise:
                             process.perlinNoiseProccessor.Process(ref map);
                             break;
@@ -243,7 +243,6 @@ namespace MapGenerate
                 if (childGridPosition == position)
                 {
                     DestroyRelay(child.gameObject);
-                    Debug.Log(position);
                     break;
                 }
             }

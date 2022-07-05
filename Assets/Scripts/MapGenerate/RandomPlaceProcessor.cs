@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MPack;
 
 namespace MapGenerate
 {
@@ -21,23 +22,40 @@ namespace MapGenerate
         [SerializeField]
         [Range(0, 1)]
         private float coverage;
+        [SerializeField]
+        private ValueWithEnable<int> specificLayer;
+
+        private int _width;
+        private int _height;
 
         public void Process(ref int[,,] map)
         {
+            _width = map.GetLength(1);
+            _height = map.GetLength(2);
+
+            if (specificLayer.Enable)
+            {
+                PlaceTile(ref map, specificLayer.Value);
+                return;
+            }
+
             int layerCount = map.GetLength(0);
-            int width = map.GetLength(1);
-            int height = map.GetLength(2);
 
             for (int layerIndex = 0; layerIndex < layerCount; layerIndex ++)
             {
-                for (int x = 0; x < width; x++)
+                PlaceTile(ref map, layerIndex);
+            }
+        }
+
+        void PlaceTile(ref int[,,] map, int layerIndex)
+        {
+            for (int x = 0; x < _width; x++)
+            {
+                for (int y = 0; y < _height; y++)
                 {
-                    for (int y = 0; y < height; y++)
+                    if (Random.value <= coverage)
                     {
-                        if (Random.value <= coverage)
-                        {
-                            map[layerIndex, x, y] = (int) ((PlaceItem)map[layerIndex, x, y] | placeItem);
-                        }
+                        map[layerIndex, x, y] = (int)((PlaceItem)map[layerIndex, x, y] | placeItem);
                     }
                 }
             }

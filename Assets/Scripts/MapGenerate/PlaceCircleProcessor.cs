@@ -8,19 +8,21 @@ namespace MapGenerate
     public class PlaceCircleProcessor
     {
         [SerializeField]
+        private int layerIndex;
+        [SerializeField]
         private PlaceItem placeItem;
         [SerializeField]
-        [Range(1, 100)]
+        [Range(1, 60)]
         private int circleMinSize;
         [SerializeField]
-        [Range(1, 100)]
+        [Range(1, 60)]
         private int circleMaxSize;
 
-        public void Process(ref int[,] map)
+        public void Process(ref int[,,] map)
         {
             int size = Random.Range(circleMinSize, circleMaxSize);
-            int width = map.GetLength(0);
-            int height = map.GetLength(1);
+            int width = map.GetLength(1);
+            int height = map.GetLength(2);
 
             Vector2 min = new Vector2(size, size);
             Vector2 max = new Vector2(width - size - 1, height - size - 1);
@@ -35,7 +37,7 @@ namespace MapGenerate
 
                     if ((center - position).sqrMagnitude < size * size)
                     {
-                        map[x, y] = (int) ((PlaceItem)map[x, y] | placeItem);
+                        map[layerIndex, x, y] = (int) ((PlaceItem)map[layerIndex, x, y] | placeItem);
                     }
                 }
             }
